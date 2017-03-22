@@ -1,3 +1,7 @@
+#personal config
+.idea/
+
 #output
 out/
 *.class
+target
