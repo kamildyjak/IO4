@@ -10,7 +10,7 @@ import java.util.List;
  *
  * Odpowied� testowa, zawiera opis bazy danych.
  */
-  /*
+
 public class TestResponse extends Response {
 
 	private List<String> names;
@@ -21,4 +21,3 @@ public class TestResponse extends Response {
 	}
 	
 }
-*/

@@ -11,7 +11,7 @@ public class Response {
 	
 	public final boolean wasSuccessful;
 	
-	Response(boolean status){
+	protected Response(boolean status){
 		wasSuccessful = status;
 	}
 	
