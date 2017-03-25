@@ -6,9 +6,10 @@ package pl.io4.model;
  * Klasa obsługująca komunikację z bazą danych.
  */
 
+import org.hibernate.Session;
 import pl.io4.model.Query;
 import pl.io4.model.Response;
- 
+import pl.io4.resources.hibernateUtil;
 public class Database {
 
 	private boolean connected = false;
@@ -21,10 +22,13 @@ public class Database {
     }
 	
     public boolean connect(){
-		//TODO: Połączenie z bazą danych
+        final Session session = hibernateUtil.getSession();
+        connected = session.isConnected();
+        //TODO: Połączenie z bazą danych
         return connected;
     }
-	
+
+
     public Response sendQuery(Query query){
 		//TODO: Wysyłanie zapytań
         return new Response(false); //rezultat zapytania
