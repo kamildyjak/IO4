@@ -9,8 +9,8 @@ import java.util.Date;
  */
 
 public abstract class Transaction {
-    private Date date;
-    private Employee employee;
+    protected Date date;
+    protected Employee employee;
 
     public abstract Query toQuery();
 }

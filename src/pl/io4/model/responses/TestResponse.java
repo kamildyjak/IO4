@@ -1,12 +1,13 @@
 package pl.io4.model.responses;
 
+import pl.io4.model.Response;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Zax37 on 22.03.2017.
  *
- * OdpowiedŸ testowa, zawiera opis bazy danych.
+ * Odpowiedï¿½ testowa, zawiera opis bazy danych.
  */
   
 public class TestResponse extends Response {

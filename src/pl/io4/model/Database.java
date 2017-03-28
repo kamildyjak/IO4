@@ -8,7 +8,7 @@ package pl.io4.model;
 
 import pl.io4.model.Query;
 import pl.io4.model.Response;
- 
+
 public class Database {
 
 	private boolean connected = false;
@@ -29,5 +29,5 @@ public class Database {
 		//TODO: Wysyłanie zapytań
         return new Response(false); //rezultat zapytania
     }
-	
+
 }
