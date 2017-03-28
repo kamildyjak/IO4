@@ -1,5 +1,7 @@
 #personal config
 .idea/
+#jars
+*.jar
 
 #output
 out/
