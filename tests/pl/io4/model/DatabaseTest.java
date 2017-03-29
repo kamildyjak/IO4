@@ -1,8 +1,8 @@
 package pl.io4.model;
 
 import org.junit.Test;
-import pl.io4.model.queries;
-import pl.io4.model.responses;
+import pl.io4.model.queries.TestQuery;
+import pl.io4.model.responses.TestResponse;
 
 /**
  * Created by Zax37 on 22.03.2017.
@@ -20,7 +20,7 @@ public class DatabaseTest {
 	public void testQuery(){
 		Database db = Model.getDatabase();
         db.connect();
-		TestResponse response = db.sendQuery(new TestQuery());
+		Response response = db.sendQuery(new TestQuery());
 		assert(response.wasSuccessful);
 	}
 }
