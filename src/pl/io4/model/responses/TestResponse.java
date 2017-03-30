@@ -1,6 +1,7 @@
 package pl.io4.model.responses;
 
 import pl.io4.model.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * Odpowied� testowa, zawiera opis bazy danych.
  */
-  
+
 public class TestResponse extends Response {
 
 	private List<String> names;

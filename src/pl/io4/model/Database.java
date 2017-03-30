@@ -6,25 +6,30 @@ package pl.io4.model;
  * Klasa obsługująca komunikację z bazą danych.
  */
 
+import org.hibernate.Session;
+import org.hibernate.SessionEventListener;
+import org.hibernate.event.spi.LoadEventListener;
 import pl.io4.model.Query;
 import pl.io4.model.Response;
-
+import pl.io4.resources.hibernateUtil;
 public class Database {
 
-	private boolean connected = false;
-	private final String host = "mssql5.gear.host";
-	private final String login = "io4";
-	private final String password = "Ry1Rn9DZ~?s1";
+    Session session;
 	
 	public boolean isConnect(){
-        return connected;
+        if(session == null) return false;
+	    return session.isConnected();
     }
-	
+
     public boolean connect(){
-		//TODO: Połączenie z bazą danych
-        return connected;
+        session = hibernateUtil.getSession();
+        return session.isConnected();
     }
-	
+
+    public void disconnect(){
+        hibernateUtil.closeSession();
+    }
+
     public Response sendQuery(Query query){
 		//TODO: Wysyłanie zapytań
         return new Response(false); //rezultat zapytania

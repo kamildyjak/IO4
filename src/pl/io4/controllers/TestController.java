@@ -1,22 +1,40 @@
 package pl.io4.controllers;
 
-import pl.io4.model.Model;
-import pl.io4.views.TestView;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import org.hibernate.BaseSessionEventListener;
+import org.hibernate.SessionEventListener;
+import pl.io4.NextGen;
+import pl.io4.model.Database;
 
 /**
  * Created by Zax37 on 14.03.2017.
- *
- * Kontroler stanowi najważniejszy element, łączy pl.io4.model z widokiem.
  */
 
-public class TestController {
-    private TestView view;
-    private Model model;
+public class TestController extends Controller {
 
-    public TestController(TestView view, Model model){
-        this.view = view;
-        this.model = model;
+    public TestController(NextGen app) throws NoSuchElementException {
+        super(app);
+        Database db = app.getModel().getDatabase();
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                db.connect();
+                try {
+                    ((Label) getElement("testLabel")).setText(db.isConnect()?"connected to database":"NOT connected to database");
+                } catch (NoSuchElementException e){
 
-        view.setTestText(model.getTestString());
+                }
+            }
+        };
+        addButtonClickListener("testButton", new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                ((TextButton)actor).setText("Clicked!");
+            }
+        });
+        app.setScreen(view);
+        thread.start();
     }
 }
