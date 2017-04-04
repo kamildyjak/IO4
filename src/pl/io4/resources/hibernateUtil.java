@@ -2,33 +2,28 @@ package pl.io4.resources;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
-import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import javax.persistence.metamodel.EntityType;
-
-import java.util.Map;
 
 /**
  * Created by jacob on 25.03.2017.
  */
 public class hibernateUtil {
-    private static final SessionFactory ourSessionFactory;
+    private static final SessionFactory ourSessionFactory = buildSessionFactory();
 
-    static {
+   private static SessionFactory buildSessionFactory() {
         try {
-            Configuration configuration = new Configuration();
-            configuration.configure();
-<<<<<<< HEAD
-
-=======
->>>>>>> 78d3deb62d4cc83276d1ec6440335100f6df9a3f
-            ourSessionFactory = configuration.buildSessionFactory();
+            return new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
+    }
+    public static SessionFactory getSessionFactory() {
+        return ourSessionFactory;
     }
 
     public static Session getSession() throws HibernateException {
