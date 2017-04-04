@@ -3,6 +3,9 @@
 #jars
 *.jar
 
+#jar files
+*.jar
+
 #output
 out/
 *.class

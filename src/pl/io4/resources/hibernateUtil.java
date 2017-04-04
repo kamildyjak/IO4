@@ -21,7 +21,10 @@ public class hibernateUtil {
         try {
             Configuration configuration = new Configuration();
             configuration.configure();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 78d3deb62d4cc83276d1ec6440335100f6df9a3f
             ourSessionFactory = configuration.buildSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
