@@ -1,4 +1,4 @@
-package pl.io4.model;
+package pl.io4.model.transactions;
 
 import java.util.List;
 import java.util.LinkedList;

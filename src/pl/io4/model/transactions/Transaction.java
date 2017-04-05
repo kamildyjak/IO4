@@ -1,4 +1,6 @@
-package pl.io4.model;
+package pl.io4.model.transactions;
+
+import pl.io4.model.Employee;
 
 import java.util.Date;
 
@@ -11,6 +13,4 @@ import java.util.Date;
 public abstract class Transaction {
     protected Date date;
     protected Employee employee;
-
-    public abstract Query toQuery();
 }

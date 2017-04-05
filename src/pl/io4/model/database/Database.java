@@ -1,4 +1,4 @@
-package pl.io4.model;
+package pl.io4.model.database;
 
 /**
  * Created by Zax37 on 22.03.2017.
@@ -7,10 +7,8 @@ package pl.io4.model;
  */
 
 import org.hibernate.Session;
-import org.hibernate.SessionEventListener;
-import org.hibernate.event.spi.LoadEventListener;
-import pl.io4.model.Query;
-import pl.io4.model.Response;
+import pl.io4.model.database.queries.Query;
+import pl.io4.model.database.responses.Response;
 import pl.io4.resources.hibernateUtil;
 public class Database {
 
@@ -30,9 +28,9 @@ public class Database {
         hibernateUtil.closeSession();
     }
 
-    public Response sendQuery(Query query){
+    /*public Response sendQuery(Query query){
 		//TODO: Wysyłanie zapytań
         return new Response(false); //rezultat zapytania
-    }
+    }*/
 
 }

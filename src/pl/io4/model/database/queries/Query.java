@@ -1,4 +1,4 @@
-package pl.io4.model;
+package pl.io4.model.database.queries;
 
 /**
  * Created by Zax37 on 22.03.2017.

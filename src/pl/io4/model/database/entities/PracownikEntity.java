@@ -1,4 +1,4 @@
-package pl.io4.model.entities;
+package pl.io4.model.database.entities;
 
 import javax.persistence.*;
 

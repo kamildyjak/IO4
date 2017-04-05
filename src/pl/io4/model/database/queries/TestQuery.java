@@ -1,6 +1,4 @@
-package pl.io4.model.queries;
-
-import pl.io4.model.Query;
+package pl.io4.model.database.queries;
 
 /**
  * Created by Zax37 on 22.03.2017.

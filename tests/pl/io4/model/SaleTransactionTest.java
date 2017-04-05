@@ -2,6 +2,7 @@ package pl.io4.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.io4.model.transactions.*;
 
 import static org.junit.Assert.*;
 

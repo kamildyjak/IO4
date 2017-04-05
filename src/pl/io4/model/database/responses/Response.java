@@ -1,4 +1,4 @@
-package pl.io4.model;
+package pl.io4.model.database.responses;
 
 /**
  * Created by Zax37 on 22.03.2017.
@@ -11,7 +11,7 @@ public class Response {
 	
 	public final boolean wasSuccessful;
 	
-	protected Response(boolean status){
+	public Response(boolean status){
 		wasSuccessful = status;
 	}
 	

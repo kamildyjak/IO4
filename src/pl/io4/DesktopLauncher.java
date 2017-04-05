@@ -2,9 +2,6 @@ package pl.io4;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import pl.io4.controllers.TestController;
-import pl.io4.model.Model;
-import pl.io4.views.TestView;
 
 /**
  * Created by Zax37 on 14.03.2017.
