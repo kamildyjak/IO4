@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import pl.io4.controllers.Controller;
 import pl.io4.controllers.TestController;
 import pl.io4.model.Model;
+import pl.io4.views.SaleTransactionView;
 import pl.io4.views.TestView;
 import pl.io4.views.View;
 
