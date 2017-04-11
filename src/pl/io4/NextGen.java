@@ -2,6 +2,7 @@ package pl.io4;
 
 import com.badlogic.gdx.Game;
 import pl.io4.controllers.Controller;
+import pl.io4.controllers.SaleTransactionController;
 import pl.io4.controllers.TestController;
 import pl.io4.model.Model;
 import pl.io4.views.SaleTransactionView;
@@ -15,10 +16,12 @@ public class NextGen extends Game {
     public Model getModel() {
         return model;
     }
-
     public View getView() {
         return view;
     }
+
+    public static final int V_WIDTH = 800;
+    public static final int V_HEIGHT = 600;
 
     private Model model;
     private View view;
@@ -26,9 +29,9 @@ public class NextGen extends Game {
 
     public void create () {
         model = new Model();
-        view = new TestView();
+        view = new SaleTransactionView();
         try {
-            controller = new TestController(this);
+            controller = new SaleTransactionController(this);
             setScreen(view);
         } catch (Controller.NoSuchElementException e){
             System.out.println(e.toString());

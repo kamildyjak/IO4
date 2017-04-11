@@ -22,11 +22,26 @@ public class SaleTransaction extends Transaction {
         return productList;
     }
 
+    public void addProduct(Product product, double quantity) {
+        TransactionItem item = null;
+        for (TransactionItem transactionItem : productList) {
+            if (transactionItem.getProduct().equals(product)) {
+                item = transactionItem;
+            }
+        }
+        if ( item == null ) {
+            item = new TransactionItem(product, quantity);
+            totalPrice += item.getTotalPrice();
+            productList.add(item);
+        } else {
+            totalPrice -= item.getTotalPrice();
+            item.incrementQuantity(quantity);
+            totalPrice += item.getTotalPrice();
+        }
+    }
+
     public void addProduct(Product product) {
-        TransactionItem transactionItem = getTransactionItem(product);
-        transactionItem.incrementQuantity();
-        totalPrice += product.getPrice();
-        productList.add(transactionItem);
+        addProduct(product, 1);
     }
 
     public void addDiscount(Discount discount) throws DiscountException {
@@ -35,14 +50,5 @@ public class SaleTransaction extends Transaction {
 
     public double calculateTotalPrice() {
         return totalPrice - discountHandler.calculateTotalDiscount(totalPrice);
-    }
-
-    private TransactionItem getTransactionItem(Product product) {
-        for(TransactionItem transactionItem : productList) {
-            if(transactionItem.getProduct().equals(product)) {
-                return transactionItem;
-            }
-        }
-        return new TransactionItem(product);
     }
 }

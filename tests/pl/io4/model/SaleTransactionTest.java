@@ -32,8 +32,8 @@ public class SaleTransactionTest {
                 .findFirst()
                 .get();
 
-        int expected = 1;
-        int actual = transactionItem.getQuantity();
+        double expected = 1;
+        double actual = transactionItem.getQuantity();
 
         assertEquals(expected , actual);
     }
@@ -51,8 +51,8 @@ public class SaleTransactionTest {
                 .findFirst()
                 .get();
 
-        int expected = 2;
-        int actual = transactionItem.getQuantity();
+        double expected = 2;
+        double actual = transactionItem.getQuantity();
 
         assertEquals(expected , actual);
     }

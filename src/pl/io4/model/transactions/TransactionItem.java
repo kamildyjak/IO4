@@ -7,14 +7,14 @@ package pl.io4.model.transactions;
 public class TransactionItem {
 
     private final Product product;
-    private int quantity;
+    private double quantity;
 
-    public TransactionItem(Product product) {
+    public TransactionItem(Product product, double quantity) {
         this.product = product;
-        quantity = 0;
+        this.quantity = quantity;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
@@ -22,7 +22,9 @@ public class TransactionItem {
         return product;
     }
 
-    public void incrementQuantity() {
-        quantity++;
+    public void incrementQuantity(double increment) {
+        quantity += increment;
     }
+
+    public double getTotalPrice() { return product.getPrice() * quantity; }
 }

@@ -32,7 +32,6 @@ public class TestController extends Controller {
                 ((TextButton)actor).setText("Clicked!");
             }
         });
-        app.setScreen(view);
         thread.start();
     }
 }
