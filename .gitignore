@@ -1,0 +1,10 @@
+#personal config
+.idea/
+
+#jar files
+*.jar
+
+#output
+out/
+*.class
+target
