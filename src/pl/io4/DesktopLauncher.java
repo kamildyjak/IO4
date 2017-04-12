@@ -15,7 +15,7 @@ public class DesktopLauncher {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.width = V_WIDTH;
         cfg.height = V_HEIGHT;
-        cfg.title = "NextGen";
+        cfg.title = "LoginView";
         new LwjglApplication(new NextGen(), cfg);
     }
 }
