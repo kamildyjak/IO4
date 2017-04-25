@@ -33,7 +33,7 @@ public class Product {
             return false;
         }
         Product product = (Product) obj;
-        if(product.getId() == this.getId()) {
+        if(product.getId().equals(this.getId())) {
             return true;
         }
         return false;
