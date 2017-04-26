@@ -7,7 +7,7 @@ package pl.io4.model.database;
  */
 
 import org.hibernate.Session;
-import pl.io4.resources.HibernateUtil;
+import pl.io4.model.database.HibernateUtil;
 public class Database {
 
     Session session;

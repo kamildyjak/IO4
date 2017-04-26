@@ -7,7 +7,7 @@ import org.junit.Test;
 import pl.io4.model.database.Database;
 import pl.io4.model.database.entities.EmployeeEntity;
 import pl.io4.model.database.responses.Response;
-import pl.io4.resources.HibernateUtil;
+import pl.io4.model.database.HibernateUtil;
 
 /**
  * Created by Zax37 on 22.03.2017.
