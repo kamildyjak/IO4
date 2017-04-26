@@ -1,4 +1,4 @@
-package pl.io4.model;
+package pl.io4.model.database;
 
 /**
  * Created by Zax37 on 22.03.2017.
@@ -7,11 +7,7 @@ package pl.io4.model;
  */
 
 import org.hibernate.Session;
-import org.hibernate.SessionEventListener;
-import org.hibernate.event.spi.LoadEventListener;
-import pl.io4.model.Query;
-import pl.io4.model.Response;
-import pl.io4.resources.hibernateUtil;
+import pl.io4.resources.HibernateUtil;
 public class Database {
 
     Session session;
@@ -22,17 +18,17 @@ public class Database {
     }
 
     public boolean connect(){
-        session = hibernateUtil.getSession();
+        session = HibernateUtil.getSession();
         return session.isConnected();
     }
 
     public void disconnect(){
-        hibernateUtil.closeSession();
+        HibernateUtil.closeSession();
     }
 
-    public Response sendQuery(Query query){
+    /*public Response sendQuery(Query query){
 		//TODO: Wysyłanie zapytań
         return new Response(false); //rezultat zapytania
-    }
+    }*/
 
 }

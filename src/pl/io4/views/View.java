@@ -3,6 +3,7 @@ package pl.io4.views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,11 +18,13 @@ public abstract class View implements Screen {
     private Stage stage;
     protected Table table;
     protected HashMap<String, Actor> interactiveElements;
+    protected TextureAtlas atlas;
 
     public View(){
         interactiveElements = new HashMap<String, Actor>();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        atlas = new TextureAtlas(Gdx.files.internal("ui/ui.atlas"));
 
         table = new Table();
         table.setFillParent(true);

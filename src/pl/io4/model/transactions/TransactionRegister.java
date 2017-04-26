@@ -1,4 +1,7 @@
-package pl.io4.model;
+package pl.io4.model.transactions;
+
+import pl.io4.model.Model;
+import pl.io4.model.database.responses.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,7 @@ public class TransactionRegister {
     private List<Transaction> added;
     private List<Transaction> failed;
 
-    TransactionRegister(){
+    public TransactionRegister(){
         pending = new ArrayList<Transaction>();
         added = new ArrayList<Transaction>();
         failed = new ArrayList<Transaction>();
@@ -28,7 +31,7 @@ public class TransactionRegister {
         if(pending.isEmpty()) return; //Nic do dodania.
         Transaction transaction = pending.remove(0);
         //TODO: cache lokalny transakcji
-        Response response = Model.getDatabase().sendQuery(transaction.toQuery());
+        Response response = new Response(false);//Model.getDatabase().sendQuery(transaction.toQuery());
         if(response.wasSuccessful) added.add(transaction);
         else failed.add(transaction);
     }

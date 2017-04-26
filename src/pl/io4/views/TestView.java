@@ -34,19 +34,13 @@ public class TestView extends View {
         interactiveElements.put("testLabel", testLabel2);
 
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-        buttonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("assets/button.up.png"))));
-        buttonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("assets/button.down.png"))));
+        buttonStyle.up = new TextureRegionDrawable(atlas.findRegion("button.up"));
+        buttonStyle.down = new TextureRegionDrawable(atlas.findRegion("button.down"));
         buttonStyle.font = font;
         button = new TextButton("Click me", buttonStyle);
         interactiveElements.put("testButton", button);
         button.pad(12);
         table.add(button).padTop(10);
     }
-
-    @Override
-    public HashMap<String, Actor> getInteractiveElements() {
-        return interactiveElements;
-    }
-
 
 }

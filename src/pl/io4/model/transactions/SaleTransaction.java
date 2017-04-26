@@ -1,4 +1,4 @@
-package pl.io4.model;
+package pl.io4.model.transactions;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -44,10 +44,5 @@ public class SaleTransaction extends Transaction {
             }
         }
         return new TransactionItem(product);
-    }
-
-    @Override
-    public Query toQuery() {
-        return null;
     }
 }
