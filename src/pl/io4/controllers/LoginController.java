@@ -15,7 +15,7 @@ public class LoginController extends Controller {
     private String password;
     private LoginView view;
     private LoginMachine loginMachine;
-    private boolean succes;
+    private boolean success;
     private int count;
 
 
@@ -37,8 +37,8 @@ public class LoginController extends Controller {
                     view.EmptyInput();
                     count++;
                 }else{
-                    succes = loginMachine.checkPassword(login, password);
-                    if(succes){
+                    success = loginMachine.checkPassword(login, password);
+                    if(success){
                         view.Succes();
                     }else{
                         view.LoginError();

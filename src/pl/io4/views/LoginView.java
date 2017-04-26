@@ -39,7 +39,7 @@ public class LoginView extends View {
         inner.clear();
         inner.add("Wypełnij wszystkie pola").center();
         inner.row();
-        LoginInputs();
+        loginInputs();
     }
 
     public void LoginError(){
@@ -47,7 +47,7 @@ public class LoginView extends View {
         inner.clear();
         inner.add("Wprowadziłeś błędne dane").center();
         inner.row();
-        LoginInputs();
+        loginInputs();
     }
 
     public void Succes(){
@@ -66,10 +66,10 @@ public class LoginView extends View {
         skin.add("cursor", new Texture("assets/raw/cursor.png"));
         skin.add("selection", new Texture("assets/raw/selection.png"));
         submit = new TextButton("Zaloguj", skin);
-        LoginInputs();
+        loginInputs();
     }
 
-    public void LoginInputs(){
+    public void loginInputs(){
         TextField.TextFieldStyle textfieldstyle = new TextField.TextFieldStyle();
         textfieldstyle.background = skin.getDrawable("textfieldback");
         textfieldstyle.disabledFontColor= Color.BLACK;
