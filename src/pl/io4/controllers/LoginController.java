@@ -10,6 +10,7 @@ import pl.io4.views.LoginView;
  * Created by kamil on 12.04.2017.
  */
 public class LoginController extends Controller {
+
     private String login;
     private String password;
     private LoginView view;
@@ -27,26 +28,27 @@ public class LoginController extends Controller {
         addButtonClickListener("submit", new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 if(count > 4){
-                    view.tooManyErrors();
+                    view.TooManyErrors();
                     return;
                 }
-                login = view.getLogin();
-                password = view.getPassword();
+                login = view.GetLogin();
+                password = view.GetPassword();
                 if(login == null || password == null){
-                    view.emptyInput();
+                    view.EmptyInput();
                     count++;
-                }
-                else{
+                }else{
                     succes = loginMachine.checkPassword(login, password);
                     if(succes){
-                        view.succes();
-                    }
-                    else{
-                        view.loginError();
+                        view.Succes();
+                    }else{
+                        view.LoginError();
                         count++;
                     }
                 }
             }
         });
+
     }
+
+
 }

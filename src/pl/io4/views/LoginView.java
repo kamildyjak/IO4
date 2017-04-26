@@ -20,37 +20,37 @@ public class LoginView extends View {
     private final String[] data = new String[2];
     private TextButton submit;
 
-    public String getLogin(){
+    public String GetLogin(){
         return data[0];
     }
 
-    public String getPassword(){
+    public String GetPassword(){
         return data[1];
     }
 
-    public void tooManyErrors(){
+    public void TooManyErrors(){
         data[0] = data[1] = null;
         inner.clear();
-        inner.add("Przekroczyłeś limit prób").center();
+        inner.add("Przekroczyles limit prob").center();
     }
 
-    public void emptyInput(){
+    public void EmptyInput(){
         data[0] = data[1] = null;
         inner.clear();
         inner.add("Wypełnij wszystkie pola").center();
         inner.row();
-        loginInputs();
+        LoginInputs();
     }
 
-    public void loginError(){
+    public void LoginError(){
         data[0] = data[1] = null;
         inner.clear();
         inner.add("Wprowadziłeś błędne dane").center();
         inner.row();
-        loginInputs();
+        LoginInputs();
     }
 
-    public void succes(){
+    public void Succes(){
         inner.clear();
         inner.add("Poprawnie zalogowałeś się do systemu");
     }
@@ -61,14 +61,15 @@ public class LoginView extends View {
         inner.defaults().pad(10);
         ScrollPane scroll = new ScrollPane(inner);
         table.add(scroll).expand().left().bottom().width((int)(V_WIDTH)).height(V_HEIGHT);
+
         skin.add("textfieldback", new Texture("assets/raw/bg.png"));
         skin.add("cursor", new Texture("assets/raw/cursor.png"));
         skin.add("selection", new Texture("assets/raw/selection.png"));
         submit = new TextButton("Zaloguj", skin);
-        loginInputs();
+        LoginInputs();
     }
 
-    public void loginInputs(){
+    public void LoginInputs(){
         TextField.TextFieldStyle textfieldstyle = new TextField.TextFieldStyle();
         textfieldstyle.background = skin.getDrawable("textfieldback");
         textfieldstyle.disabledFontColor= Color.BLACK;
@@ -105,6 +106,7 @@ public class LoginView extends View {
         inner.add(password).width(300).height(30);
         inner.row();
         inner.add(submit).center();
-        interactiveElements.put("submit", submit);
+        if(!interactiveElements.containsValue("submit"))
+            interactiveElements.put("submit", submit);
     }
 }
