@@ -4,10 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import org.hibernate.BaseSessionEventListener;
-import org.hibernate.SessionEventListener;
 import pl.io4.NextGen;
-import pl.io4.model.Database;
+import pl.io4.model.database.Database;
 
 /**
  * Created by Zax37 on 14.03.2017.
@@ -34,7 +32,6 @@ public class TestController extends Controller {
                 ((TextButton)actor).setText("Clicked!");
             }
         });
-        app.setScreen(view);
         thread.start();
     }
 }

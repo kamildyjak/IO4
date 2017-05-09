@@ -9,8 +9,6 @@ import org.hibernate.cfg.Configuration;
 
 import javax.persistence.metamodel.EntityType;
 
-import java.util.Map;
-
 /**
  * Created by jacob on 25.03.2017.
  */
@@ -20,7 +18,7 @@ public class hibernateUtil {
     static {
         try {
             Configuration configuration = new Configuration();
-            configuration.configure();
+            configuration.configure("/pl/io4/model/database/config/hibernate.cfg.xml");
             ourSessionFactory = configuration.buildSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);

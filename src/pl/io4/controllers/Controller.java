@@ -18,9 +18,10 @@ public class Controller {
     protected View view;
 
     public Controller(NextGen app){
-        this.model = app.getModel();
-        this.view = app.getView();
+        model = app.getModel();
+        view = app.getView();
         interactiveElements = view.getInteractiveElements();
+        app.setScreen(view);
     }
 
     public static class NoSuchElementException extends Exception{}

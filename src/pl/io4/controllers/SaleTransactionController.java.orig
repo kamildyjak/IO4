@@ -1,0 +1,141 @@
+package pl.io4.controllers;
+
+<<<<<<< Updated upstream
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import pl.io4.NextGen;
+import pl.io4.model.transactions.Product;
+import pl.io4.model.transactions.SaleTransaction;
+import pl.io4.views.SaleTransactionView;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ * Created by Zax37 on 08.04.2017.
+ */
+
+public class SaleTransactionController extends Controller {
+    private ArrayList<Product> products;
+    private SaleTransaction saleTransaction;
+    private SaleTransactionView view;
+    private Iterator<Product> iterator;
+
+    private static final Product productWithWeight = new Product("4", "Marchew", 1.99);
+
+    public SaleTransactionController (NextGen app) throws NoSuchElementException {
+        super(app);
+        view = (SaleTransactionView)super.view;
+        saleTransaction = new SaleTransaction();
+        products = new ArrayList<Product>(); //imitacja skanera lub wyboru ręcznego produktów
+        products.add(new Product("0", "Mleko", 1.80));
+        products.add(products.get(0));
+        products.add(new Product("1", "Masło", 1.20));
+        products.add(new Product("2", "Jajka", 3.99));
+        products.add(new Product("3", "Śmietanka", 2.26));
+        iterator = products.iterator();
+
+        addButtonClickListener("addButton", new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                if (!iterator.hasNext()) {
+                    saleTransaction.addProduct(productWithWeight, 0.20001);
+                } else {
+                    saleTransaction.addProduct(iterator.next());
+                }
+                view.setProductsList(saleTransaction.getProductList(), saleTransaction.calculateTotalPrice());
+                ((ScrollPane)interactiveElements.get("scroll")).setScrollPercentY(100);
+            }
+        });
+
+        view.setProductsList(saleTransaction.getProductList(), saleTransaction.calculateTotalPrice());
+    }
+=======
+import pl.io4.model.*;
+
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Created by Marcin on 28.04.2017.
+ */
+public class SaleTransactionController {
+
+    private List<SaleTransaction> saleTransaction;
+    private ActualSaleTransaction actualSaleTransaction;
+    private ProductService productService;
+
+    public SaleTransactionController() {
+        saleTransaction = new LinkedList<>();
+        actualSaleTransaction = new ActualSaleTransaction();
+        productService = new ProductService();
+    }
+
+    public void makeNewSale() throws SaleTransactionException{
+        actualSaleTransaction.newSaleTransaction();
+        saleTransaction.add(actualSaleTransaction.getSaleTransaction());
+    }
+
+    public SaleTransaction getActualSaleTransaction() throws SaleTransactionException {
+        return actualSaleTransaction.getSaleTransaction();
+    }
+
+    public void finishSale() {
+        actualSaleTransaction.finishSaleTransaction();
+    }
+
+    public String addProduct(String barCode) {
+        try {
+            SaleTransaction saleTransaction = getActualSaleTransaction();
+            Product product = productService.findByBarCode(barCode);
+            saleTransaction.addProduct(product);
+            return "success";
+        } catch(SaleTransactionException exc) {
+            return exc.getMessage();
+        } catch (ProductException exc) {
+            return exc.getMessage();
+        }
+    }
+
+    public List<TransactionItem> getTransactionItems() throws SaleTransactionException {
+        return getActualSaleTransaction().getProductList();
+    }
+
+    private class ActualSaleTransaction {
+
+        private SaleTransaction saleTransaction;
+        private boolean isActive;
+
+        public ActualSaleTransaction() {
+            isActive = false;
+        }
+
+        public void newSaleTransaction() throws SaleTransactionException {
+            if(isActive == true) {
+                throw new SaleTransactionException("Transaction has not been finished");
+            }
+            saleTransaction = new SaleTransaction();
+        }
+
+        public SaleTransaction getSaleTransaction() throws SaleTransactionException{
+            if(isActive == false) {
+                throw new SaleTransactionException("Transaction is not exists");
+            }
+
+            return saleTransaction;
+        }
+
+        public void finishSaleTransaction() {
+            isActive = false;
+        }
+    }
+
+    private class SaleTransactionException extends Exception {
+
+        public SaleTransactionException(String message) {
+            super(message);
+        }
+    }
+
+>>>>>>> Stashed changes
+}
