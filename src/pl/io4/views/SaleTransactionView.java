@@ -132,7 +132,8 @@ public class SaleTransactionView extends View {
         interactiveElements.put("addDiscountButton", addDiscountButton);
         interactiveElements.put("addProductButton", addProductButton);
         interactiveElements.put("scroll", scroll);
-    }
+        interactiveElements.put("endButton", endButton);
+}
 
     public String getProductCode() {
         return productCodeTextField.getText();

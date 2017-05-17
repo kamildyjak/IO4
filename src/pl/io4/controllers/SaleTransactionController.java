@@ -22,6 +22,7 @@ public class SaleTransactionController extends Controller {
     private DataProvider dataProvider;
     private ProductService productService;
     private SaleTransactionView view;
+    private Authorization auth;
 
     public SaleTransactionController (NextGen app) throws NoSuchElementException {
         super(app);
@@ -72,6 +73,19 @@ public class SaleTransactionController extends Controller {
                     view.addErrorMessage(exc.getMessage());
                 } finally {
                     view.clearTextFields();
+                }
+            }
+        });
+
+        addButtonClickListener("endButton", new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor)  {
+                try{
+                    auth = new AuthMethod1();
+                    auth.authorize(0, 0, actualSaleTransaction.calculateTotalPrice());
+                } catch (Exception exc) {
+                    view.addErrorMessage(exc.getMessage());
                 }
             }
         });

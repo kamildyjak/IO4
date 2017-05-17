@@ -1,5 +1,8 @@
 package pl.io4.model.transactions;
 
+import pl.io4.model.TaxCalculator;
+import pl.io4.model.TaxCalculator1;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,12 +13,14 @@ import java.util.List;
 public class SaleTransaction extends Transaction {
 
     private List<TransactionItem> productList;
+    private TaxCalculator taxCalculator;
     private DiscountHandler discountHandler;
     private double totalPrice;
 
     public SaleTransaction(){
         productList = new LinkedList<>();
         discountHandler = new DiscountHandler();
+        taxCalculator = new TaxCalculator1();
     }
 
     public List<TransactionItem> getProductList() {
@@ -34,7 +39,7 @@ public class SaleTransaction extends Transaction {
             }
         }
         if ( item == null ) {
-            item = new TransactionItem(product, quantity);
+            item = new TransactionItem(product, taxCalculator.calculateTax(product), quantity);
             totalPrice += item.getTotalPrice();
             productList.add(item);
         } else {
