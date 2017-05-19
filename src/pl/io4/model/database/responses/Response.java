@@ -8,11 +8,9 @@ package pl.io4.model.database.responses;
  */
  
 public class Response {
-	
 	public final boolean wasSuccessful;
 	
 	public Response(boolean status){
 		wasSuccessful = status;
 	}
-	
 }

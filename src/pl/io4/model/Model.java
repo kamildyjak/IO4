@@ -10,13 +10,9 @@ import pl.io4.model.transactions.TransactionRegister;
  */
 
 public class Model {
-    private String test = "test";
     private static Database db = new Database();
     private static TransactionRegister tr = new TransactionRegister();
-
-    public String getTestString(){
-        return test;
-    }
+    private static StringsMachine sm = new StringsMachine();
 
     public static Database getDatabase(){
         return db;
@@ -24,5 +20,9 @@ public class Model {
 
     public static TransactionRegister getTransactionRegister(){
         return tr;
+    }
+
+    public static String getString(String string) {
+        return sm.getString(string);
     }
 }

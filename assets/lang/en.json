@@ -1,0 +1,5 @@
+{
+  "DATABASE_CONNECTING": "Connecting to database...",
+  "DATABASE_CONNECT_SUCCESS": "Connected to database!",
+  "DATABASE_CONNECT_FAILURE": "NOT connected to database!"
+}

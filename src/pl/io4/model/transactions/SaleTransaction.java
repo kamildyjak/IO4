@@ -1,5 +1,4 @@
 package pl.io4.model.transactions;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +21,11 @@ public class SaleTransaction extends Transaction {
         return productList;
     }
 
-    public void addProduct(Product product, double quantity) {
+    public List<DiscountItem> getDiscountList() {
+        return discountHandler.getDiscountList();
+    }
+
+    public TransactionItem addProduct(Product product, double quantity) {
         TransactionItem item = null;
         for (TransactionItem transactionItem : productList) {
             if (transactionItem.getProduct().equals(product)) {
@@ -38,14 +41,20 @@ public class SaleTransaction extends Transaction {
             item.incrementQuantity(quantity);
             totalPrice += item.getTotalPrice();
         }
+
+        return item;
     }
 
-    public void addProduct(Product product) {
-        addProduct(product, 1);
+    public TransactionItem addProduct(Product product) {
+        return addProduct(product, 1);
     }
 
-    public void addDiscount(Discount discount) throws DiscountException {
-        discountHandler.add(discount, totalPrice);
+    public Discount addDiscount(Discount discount, int quantity) throws DiscountException {
+        return discountHandler.add(discount, quantity, totalPrice);
+    }
+
+    public Discount addDiscount(Discount discount) throws DiscountException {
+        return discountHandler.add(discount, 1, totalPrice);
     }
 
     public double calculateTotalPrice() {

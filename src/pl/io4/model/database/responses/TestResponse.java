@@ -13,9 +13,9 @@ public class TestResponse extends Response {
 
 	private List<String> names;
 	
-	public TestResponse(boolean status){
-		super(status);
-		names = new ArrayList<String>();
+	public TestResponse(List<String> names){
+		super(true);
+		this.names = names;
 	}
 	
 }

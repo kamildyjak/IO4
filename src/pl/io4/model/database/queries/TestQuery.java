@@ -1,5 +1,9 @@
 package pl.io4.model.database.queries;
 
+import org.hibernate.Session;
+import pl.io4.model.database.responses.Response;
+import pl.io4.model.database.responses.TestResponse;
+
 /**
  * Created by Zax37 on 22.03.2017.
  *
@@ -7,11 +11,10 @@ package pl.io4.model.database.queries;
  */
 
 public class TestQuery extends Query {
+	private final String sql = "FROM ShopEntity";
 
-	private final String sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES";
-
-	public String toSQL(){
-		return sql;
+	public Response execute(Session session){
+		return new TestResponse(session.createQuery(sql).getResultList());
 	}
 	
 }

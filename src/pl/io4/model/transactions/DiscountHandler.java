@@ -8,32 +8,57 @@ import java.util.LinkedList;
  */
 public class DiscountHandler {
 
-    private List<Discount> discountList;
+    private List<DiscountItem> discountItemList;
 
     public DiscountHandler() {
-        discountList = new LinkedList<>();
+        discountItemList = new LinkedList<>();
     }
 
-    public void add(Discount discount, double totalPrice) throws DiscountException {
+    public List<DiscountItem> getDiscountList() {
+        return discountItemList;
+    }
+
+    public Discount add(Discount discount, int quantity, double totalPrice) throws DiscountException {
+        DiscountItem item = null;
+        for(DiscountItem discountItem : discountItemList) {
+            if(discountItem.getDiscount().equals(discount)) {
+                item = discountItem;
+            }
+        }
+
+        if(item == null) {
+            item = new DiscountItem(discount);
+            discountItemList.add(item);
+        } else {
+            item.incrementQuantity(quantity);
+        }
+
         try {
-            discountList.add(discount);
-            checkForOverlow(totalPrice);
+            checkForOverflow(totalPrice);
+            return discount;
         } catch (DiscountException exc) {
-            discountList.remove(discount);
+            removeDiscount(item, quantity);
             throw exc;
         }
     }
 
-    private void checkForOverlow(double totalPrice) throws DiscountException {
+    private void removeDiscount(DiscountItem discountItem, int quantity) {
+        discountItem.decrementQuantity(quantity);
+        if(discountItem.getQuantity() <= 0) {
+            discountItemList.remove(discountItem);
+        }
+    }
+
+    private void checkForOverflow(double totalPrice) throws DiscountException {
         if(calculateTotalDiscount(totalPrice) > totalPrice) {
-            throw new DiscountException("Discount overlow");
+            throw new DiscountException("Nadmiar zniżek");
         }
     }
 
     public double calculateTotalDiscount(double totalPrice) {
         double totalPercentageDiscount = getTotalPercentageDiscount();
         double totalVoucherDiscount = getTotalVoucherDiscount();
-        return totalVoucherDiscount + totalPercentageDiscount * totalPrice;
+        return totalVoucherDiscount + totalPercentageDiscount * totalPrice / 100;
     }
 
     private double getTotalPercentageDiscount() {
@@ -45,10 +70,10 @@ public class DiscountHandler {
     }
 
     private double getTotalDiscount(DiscountType type) {
-        return discountList
+        return discountItemList
                 .stream()
-                .filter(d -> d.getType() == type)
-                .mapToDouble(d -> d.getValue())
+                .filter(d -> d.getDiscount().getType() == type)
+                .mapToDouble(d -> d.getTotalDiscount())
                 .sum();
     }
 }

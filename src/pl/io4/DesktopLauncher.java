@@ -8,6 +8,8 @@ import static pl.io4.NextGen.V_WIDTH;
 
 /**
  * Created by Zax37 on 14.03.2017.
+ *
+ * Klasa uruchamiająca główną aplikację na komputerach PC.
  */
 
 public class DesktopLauncher {

@@ -1,4 +1,4 @@
-package pl.io4.resources;
+package pl.io4.model.database;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
@@ -12,7 +12,7 @@ import javax.persistence.metamodel.EntityType;
 /**
  * Created by jacob on 25.03.2017.
  */
-public class hibernateUtil {
+public class HibernateUtil {
     private static final SessionFactory ourSessionFactory;
 
     static {

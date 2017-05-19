@@ -11,17 +11,15 @@ import pl.io4.model.database.responses.Response;
 public class DatabaseTest {
     
 	@Test
-    public void connectionTest(){
+    public void connectionTest() throws Exception {
         Database db = Model.getDatabase();
-        db.connect();
-        assert(db.isConnect());
+        db.start();
+		db.sendQuery(new TestQuery(), new Database.Callback(){
+			public void run(){
+				assert(db.isConnected());
+				db.end();
+			}
+		});
+        db.join();
     }
-	
-	@Test
-	public void testQuery(){
-		Database db = Model.getDatabase();
-        db.connect();
-		Response response = new Response(false);//db.sendQuery(new TestQuery());
-		assert(response.wasSuccessful);
-	}
 }

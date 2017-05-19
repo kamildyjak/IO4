@@ -22,11 +22,11 @@ import java.util.HashMap;
  */
 
 public abstract class View implements Screen {
-    Stage stage;
-    Table table;
-    HashMap<String, Actor> interactiveElements;
-    TextureAtlas atlas;
-    Skin skin;
+    protected Stage stage;
+    protected Table table;
+    protected HashMap<String, Actor> interactiveElements;
+    protected TextureAtlas atlas;
+    protected Skin skin;
 
     public View(){
         interactiveElements = new HashMap<String, Actor>();
@@ -37,12 +37,18 @@ public abstract class View implements Screen {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal("fonts/Uni Sans Thin.otf") );
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS.concat("ąęćłóśźżĄĘĆŁÓŚŹŻ");
-        parameter.size = 14;
-        parameter.color = Color.BLACK;
-        parameter.borderColor = Color.BLACK;
+        parameter.size = 27;
+        parameter.color = Color.WHITE;
+        parameter.borderColor = Color.WHITE;
         parameter.borderWidth = 1;
         BitmapFont font = generator.generateFont(parameter);
+        skin.add("heading", font);
+        parameter.size = 15;
+        font = generator.generateFont(parameter);
         skin.add("default", font);
+        parameter.color = Color.BLACK;
+        parameter.borderColor = Color.BLACK;
+        font = generator.generateFont(parameter);
         skin.add("default", new Label.LabelStyle(font, Color.BLACK));
         skin.load(Gdx.files.internal("styles/button.json"));
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
