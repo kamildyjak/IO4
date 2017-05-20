@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pl.io4.model.database.entities.Transaction" table="Transaction" schema="dbo" catalog="io4">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+        </id>
+        <property name="employee">
+            <column name="employee" sql-type="char(11)" length="11"/>
+        </property>
+        <property name="date">
+            <column name="date" sql-type="datetime"/>
+        </property>
+    </class>
+</hibernate-mapping>
