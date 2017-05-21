@@ -3,4 +3,4 @@
  *
  * Pakiet opisujący encje bazy danych
  */
-package pl.io4.model.database.entities;
+package pl.io4.model.entities;

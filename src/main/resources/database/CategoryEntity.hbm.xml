@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="pl.io4.model.database.entities.Category" table="Category" schema="dbo" catalog="io4">
+    <class name="pl.io4.model.entities.Category" table="Category" schema="dbo" catalog="io4">
         <id name="id">
             <column name="id" sql-type="int"/>
         </id>

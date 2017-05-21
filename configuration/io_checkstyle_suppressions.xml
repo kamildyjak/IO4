@@ -6,4 +6,5 @@
 
 <suppressions>
     <suppress files="[/\\]out[/\\]" checks=".*"/>
+    <suppress files="[/\\]pl[/\\]io4[/\\]model[/\\]entities" checks=".*"/>
 </suppressions>

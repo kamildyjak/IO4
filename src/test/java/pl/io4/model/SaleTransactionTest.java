@@ -2,10 +2,10 @@ package pl.io4.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import pl.io4.model.database.entities.Product;
+import pl.io4.model.entities.Product;
 import pl.io4.model.transactions.*;
 import pl.io4.model.transactions.discounts.Discount;
-import pl.io4.model.transactions.discounts.DiscountException;
+import pl.io4.model.exceptions.DiscountException;
 import pl.io4.model.transactions.discounts.DiscountType;
 
 import static org.junit.Assert.*;

@@ -3,7 +3,7 @@ package pl.io4.controllers;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.io4.NextGen;
-import pl.io4.model.LoginMachine;
+import pl.io4.model.machines.LoginMachine;
 import pl.io4.model.Model;
 import pl.io4.views.LoginView;
 import pl.io4.views.SaleTransactionView;
@@ -40,7 +40,7 @@ public final class LoginController extends Controller {
                     view.inputsNotFilled();
                     count++;
                 } else {
-                    succes = loginMachine.checkPassword(login, password);
+                    succes = loginMachine.tryToLogIn(login, password);
                     if (succes) {
                         view.loginSucces();
                         app.switchTo(SaleTransactionView.class,

@@ -1,17 +1,19 @@
-package pl.io4.model.database.entities;
+package pl.io4.model.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Basic;
+import org.json.JSONObject;
+import pl.io4.model.Cachable;
 
 /**
  * Created by jacob on 25.04.2017.
  */
 @Entity
 @Table(name = "Employee", schema = "dbo", catalog = "io4")
-public final class Employee {
+public final class Employee extends Cachable {
     private String pesel;
     private String firstName;
     private String lastName;
@@ -135,5 +137,25 @@ public final class Employee {
         result = 31 * result + (hashSha1 != null ? hashSha1.hashCode() : 0);
         result = 31 * result + (hashMd5 != null ? hashMd5.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    protected JSONObject cache() {
+        JSONObject ret = new JSONObject();
+        ret.put("pesel", this.pesel);
+        ret.put("firstName", this.firstName);
+        ret.put("lastName", this.lastName);
+        ret.put("email", this.email);
+        ret.put("hash", this.hashSha1);
+        return ret;
+    }
+
+    @Override
+    protected void load(JSONObject data) {
+        this.pesel = data.getString("pesel");
+        this.firstName = data.getString("firstName");
+        this.lastName = data.getString("lastName");
+        this.email = data.getString("email");
+        this.hashSha1 = data.getString("hash");
     }
 }

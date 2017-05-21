@@ -7,19 +7,19 @@
         <property name="connection.url">jdbc:sqlserver://mssql5.gear.host:1433;user=io4;password=Ry1Rn9DZ~?s1;</property>
         <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
         <mapping resource="database/CashRegisterEntity.hbm.xml"/>
-        <mapping class="pl.io4.model.database.entities.CashRegister"/>
+        <mapping class="pl.io4.model.entities.CashRegister"/>
         <mapping resource="database/CategoryEntity.hbm.xml"/>
-        <mapping class="pl.io4.model.database.entities.Category"/>
+        <mapping class="pl.io4.model.entities.Category"/>
         <mapping resource="database/EmployeeEntity.hbm.xml"/>
-        <mapping class="pl.io4.model.database.entities.Employee"/>
+        <mapping class="pl.io4.model.entities.Employee"/>
         <mapping resource="database/ProductEntity.hbm.xml"/>
-        <mapping class="pl.io4.model.database.entities.Product"/>
+        <mapping class="pl.io4.model.entities.Product"/>
         <mapping resource="database/ShopEntity.hbm.xml"/>
-        <mapping class="pl.io4.model.database.entities.Shop"/>
+        <mapping class="pl.io4.model.entities.Shop"/>
         <mapping resource="database/TaxRuleEntity.hbm.xml"/>
-        <mapping class="pl.io4.model.database.entities.TaxRule"/>
+        <mapping class="pl.io4.model.entities.TaxRule"/>
         <mapping resource="database/TransactionEntity.hbm.xml"/>
-        <mapping class="pl.io4.model.database.entities.Transaction"/>
+        <mapping class="pl.io4.model.entities.Transaction"/>
         <mapping resource="database/TransactionEntity.hbm.xml"/>
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->

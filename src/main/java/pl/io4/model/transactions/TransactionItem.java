@@ -1,6 +1,6 @@
 package pl.io4.model.transactions;
 
-import pl.io4.model.database.entities.Product;
+import pl.io4.model.entities.Product;
 
 /**
  * Created by Marcin on 26.03.2017.

@@ -24,7 +24,6 @@ public final class NextGen extends Game {
     public static final int V_HEIGHT = 600;
 
     public void create() {
-        Model.getLoginMachine().pushLoginData("Test", "test");
         switchTo(LoadingView.class,
                 LoadingController.class);
     }
@@ -46,5 +45,6 @@ public final class NextGen extends Game {
 
     public void dispose() {
         view.dispose();
+        Model.cacheData();
     }
 }

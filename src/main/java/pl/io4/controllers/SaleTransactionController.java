@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.io4.NextGen;
-import pl.io4.model.database.entities.Product;
+import pl.io4.model.entities.Product;
 import pl.io4.model.transactions.SaleTransaction;
 import pl.io4.views.SaleTransactionView;
 

@@ -2,6 +2,7 @@ package pl.io4.model.transactions.discounts;
 
 import java.util.List;
 import java.util.LinkedList;
+import pl.io4.model.exceptions.DiscountException;
 
 /**
  * Created by Marcin on 27.03.2017.

@@ -1,6 +1,6 @@
 package pl.io4.model.transactions;
 
-import pl.io4.model.database.entities.Transaction;
+import pl.io4.model.entities.Transaction;
 import pl.io4.model.database.responses.Response;
 
 import java.util.ArrayList;

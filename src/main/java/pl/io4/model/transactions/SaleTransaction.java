@@ -1,8 +1,8 @@
 package pl.io4.model.transactions;
-import pl.io4.model.database.entities.Product;
-import pl.io4.model.database.entities.Transaction;
+import pl.io4.model.entities.Product;
+import pl.io4.model.entities.Transaction;
 import pl.io4.model.transactions.discounts.Discount;
-import pl.io4.model.transactions.discounts.DiscountException;
+import pl.io4.model.exceptions.DiscountException;
 import pl.io4.model.transactions.discounts.DiscountHandler;
 import pl.io4.model.transactions.discounts.DiscountItem;
 

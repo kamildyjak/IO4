@@ -1,5 +1,9 @@
 {
   "DATABASE_CONNECTING": "Connecting to database...",
   "DATABASE_CONNECT_SUCCESS": "Connected to database!",
-  "DATABASE_CONNECT_FAILURE": "NOT connected to database!"
+  "DATABASE_CONNECT_FAILURE": "NOT connected to database!",
+
+  "CACHE_LOADING": "Parsing cached data...",
+  "CACHE_SUCCESS": "Successfully parsed cached data!",
+  "CACHE_FAILURE": "Failed on parsing cached data!"
 }

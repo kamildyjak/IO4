@@ -1,4 +1,4 @@
-package pl.io4.model.database.entities;
+package pl.io4.model.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +35,7 @@ public class Transaction {
         return date;
     }
 
-    public final void setDate(Timestamp date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -65,11 +65,11 @@ public class Transaction {
 
     @Basic
     @Column(name = "employee", nullable = false, length = LENGTH_PESEL)
-    public final String getEmployee() {
+    public String getEmployee() {
         return employee;
     }
 
-    public final void setEmployee(String employee) {
+    public void setEmployee(String employee) {
         this.employee = employee;
     }
 }
