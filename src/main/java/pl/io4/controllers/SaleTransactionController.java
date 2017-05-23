@@ -4,39 +4,94 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.io4.NextGen;
+import pl.io4.model.Model;
 import pl.io4.model.entities.Product;
+import pl.io4.model.machines.DiscountsMachine;
+import pl.io4.model.machines.ProductsMachine;
 import pl.io4.model.transactions.SaleTransaction;
+import pl.io4.model.entities.Discount;
+import pl.io4.views.PaymentView;
 import pl.io4.views.SaleTransactionView;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Zax37 on 08.04.2017.
  */
-
 public class SaleTransactionController extends Controller {
-    private ArrayList<Product> products;
     private SaleTransaction saleTransaction;
+    private ProductsMachine productsMachine;
+    private DiscountsMachine discountsMachine;
     private SaleTransactionView view;
-    private Iterator<Product> iterator;
-
     private static final int TO_BOTTOM = 100;
 
     public SaleTransactionController(NextGen app) throws NoSuchElementException {
         super(app);
         view = getView();
         saleTransaction = new SaleTransaction();
+        productsMachine = Model.getProductsMachine();
+        discountsMachine = Model.getDiscountsMachine();
 
-        ScrollPane scroll = getElement("scroll");
-
-        addButtonClickListener("addButton", new ChangeListener() {
+        addButtonClickListener("addProductButton", new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                view.setProductsList(saleTransaction.getProductList(), saleTransaction.calculateTotalPrice());
-                scroll.setScrollPercentY(TO_BOTTOM);
+                try {
+                    Product product = productsMachine.getProduct(Integer.parseInt(view.getProductCode()));
+                    double quantity = getQuantity(view.getProductQuantity());
+                    saleTransaction.addProduct(product, quantity);
+
+                    view.setProductsList(
+                            saleTransaction.getProductList(),
+                            saleTransaction.getDiscountList(),
+                            saleTransaction.calculateTotalPrice()
+                    );
+                    ScrollPane scroll = getElement("scroll");
+                    scroll.setScrollPercentY(TO_BOTTOM);
+                } catch (Exception exc) {
+                    view.addErrorMessage(exc.getMessage());
+                } finally {
+                    view.clearTextFields();
+                }
             }
         });
 
-        view.setProductsList(saleTransaction.getProductList(), saleTransaction.calculateTotalPrice());
+        addButtonClickListener("addDiscountButton", new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    Discount discount = discountsMachine.getDiscount(Integer.parseInt(view.getDiscountCode()));
+                    saleTransaction.addDiscount(discount);
+
+                    view.setProductsList(
+                            saleTransaction.getProductList(),
+                            saleTransaction.getDiscountList(),
+                            saleTransaction.calculateTotalPrice()
+                    );
+                    ScrollPane scroll = getElement("scroll");
+                    scroll.setScrollPercentY(TO_BOTTOM);
+                } catch (Exception exc) {
+                    view.addErrorMessage(exc.getMessage());
+                } finally {
+                    view.clearTextFields();
+                }
+            }
+        });
+
+        addButtonClickListener("endButton", new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor)  {
+                try {
+                    switchTo(PaymentView.class, PaymentController.class);
+                    PaymentController controller = app.getController();
+                    controller.setSaleTransaction(saleTransaction);
+                } catch (Exception exc) {
+                    view.addErrorMessage(exc.getMessage());
+                }
+            }
+        });
+    }
+
+    private double getQuantity(String quantity) {
+        if (quantity.isEmpty()) {
+            return 1;
+        }
+        return Double.valueOf(quantity);
     }
 }

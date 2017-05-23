@@ -5,5 +5,11 @@
 
   "CACHE_LOADING": "Parsing cached data...",
   "CACHE_SUCCESS": "Successfully parsed cached data!",
-  "CACHE_FAILURE": "Failed on parsing cached data!"
+  "CACHE_FAILURE": "Failed on parsing cached data!",
+
+  "START_NEW_SALE_TRANSACTION": "New sale transaction",
+
+  "TOTAL": "Total",
+  "PAY_BY_CASH": "Pay by cash",
+  "PAY_WITH_CARD": "Pay with credit card"
 }

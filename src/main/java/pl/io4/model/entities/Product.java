@@ -5,17 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Basic;
+import org.json.JSONObject;
+import pl.io4.model.Cachable;
+import pl.io4.model.Model;
 
 /**
  * Created by jacob on 25.04.2017.
  */
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "io4")
-public final class Product {
+public final class Product extends Cachable {
     private int id;
     private String name;
-    private Integer category;
-    private Integer taxRule;
+    private Category category;
+    private TaxRule taxRule;
     private double price;
 
     public Product() {
@@ -28,7 +31,7 @@ public final class Product {
         this.price = price;
     }
 
-    public Product(int id, String name, Integer category, Integer taxRule, double price) {
+    public Product(int id, String name, Category category, TaxRule taxRule, double price) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -59,21 +62,21 @@ public final class Product {
 
     @Basic
     @Column(name = "category", nullable = true)
-    public Integer getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Integer category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
     @Basic
     @Column(name = "taxRule", nullable = true)
-    public Integer getTaxRule() {
+    public TaxRule getTaxRule() {
         return taxRule;
     }
 
-    public void setTaxRule(Integer taxRule) {
+    public void setTaxRule(TaxRule taxRule) {
         this.taxRule = taxRule;
     }
 
@@ -124,5 +127,29 @@ public final class Product {
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    protected JSONObject cache() {
+        JSONObject ret = new JSONObject();
+        ret.put("id", this.id);
+        ret.put("name", this.name);
+        ret.put("category", this.category.getId());
+        if (this.taxRule != null) {
+            ret.put("taxRule", this.taxRule.getId());
+        }
+        ret.put("price", this.price);
+        return ret;
+    }
+
+    @Override
+    protected void load(JSONObject data) {
+        id = data.getInt("id");
+        name = data.getString("name");
+        category = Model.getCategoriesMachine().getCategory(data.getInt("category"));
+        if(data.has("taxRule")) {
+            taxRule = Model.getTaxesMachine().getTaxRule(data.getInt("taxRule"));
+        }
+        price = data.getDouble("price");
     }
 }

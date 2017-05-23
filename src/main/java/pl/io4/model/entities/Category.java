@@ -5,13 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Basic;
+import org.json.JSONObject;
+import pl.io4.model.Cachable;
 
 /**
  * Created by jacob on 25.04.2017.
  */
 @Entity
 @Table(name = "Category", schema = "dbo", catalog = "io4")
-public final class Category {
+public final class Category extends Cachable {
     private int id;
     private String name;
 
@@ -56,5 +58,19 @@ public final class Category {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    protected JSONObject cache() {
+        JSONObject ret = new JSONObject();
+        ret.put("id", this.id);
+        ret.put("name", this.name);
+        return ret;
+    }
+
+    @Override
+    protected void load(JSONObject data) {
+        id = data.getInt("id");
+        name = data.getString("name");
     }
 }

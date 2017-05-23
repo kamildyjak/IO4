@@ -3,6 +3,7 @@ package pl.io4.model;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,10 +11,14 @@ import org.json.JSONObject;
  * Created by Zax37 on 20.05.2017.
  *
  * Klasa abstrakcyjna upraszczająca cache'owanie danych do plików JSON.
+ * Pozwala również na przeładowanie metody ładującej zawartość z bazy danych.
  */
 public abstract class Cachable {
     protected abstract JSONObject cache();
     protected abstract void load(JSONObject data);
+    public void load(Session session) {
+
+    }
 
     protected static <V> JSONObject cache(Map<String, V> map) {
         JSONObject ret = new JSONObject();

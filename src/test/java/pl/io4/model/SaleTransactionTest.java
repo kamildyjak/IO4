@@ -4,9 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.io4.model.entities.Product;
 import pl.io4.model.transactions.*;
-import pl.io4.model.transactions.discounts.Discount;
+import pl.io4.model.entities.Discount;
 import pl.io4.model.exceptions.DiscountException;
-import pl.io4.model.transactions.discounts.DiscountType;
+import pl.io4.model.entities.Discount.DiscountType;
 
 import static org.junit.Assert.*;
 
@@ -84,7 +84,7 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             Double discountValue = 0.2;
-            Discount discount = new Discount(discountValue, DiscountType.PERCENTAGE);
+            Discount discount = new Discount(1, DiscountType.PERCENTAGE, discountValue);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount);
@@ -105,10 +105,10 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue1 = 0.2;
-            Discount discount1 = new Discount(discountValue1, DiscountType.PERCENTAGE);
+            Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
             double discountValue2 = 0.3;
-            Discount discount2 = new Discount(discountValue2, DiscountType.PERCENTAGE);
+            Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
@@ -130,7 +130,7 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue = 3;
-            Discount discount = new Discount(discountValue, DiscountType.VOUCHER);
+            Discount discount = new Discount(1, DiscountType.VOUCHER, discountValue);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount);
@@ -151,10 +151,10 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue1 = 3;
-            Discount discount1 = new Discount(discountValue1, DiscountType.VOUCHER);
+            Discount discount1 = new Discount(1, DiscountType.VOUCHER, discountValue1);
 
             double discountValue2 = 5;
-            Discount discount2 = new Discount(discountValue2, DiscountType.VOUCHER);
+            Discount discount2 = new Discount(2, DiscountType.VOUCHER, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
@@ -176,10 +176,10 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue1 = 3;
-            Discount discount1 = new Discount(discountValue1, DiscountType.VOUCHER);
+            Discount discount1 = new Discount(1, DiscountType.VOUCHER, discountValue1);
 
             double discountValue2 = 0.2;
-            Discount discount2 = new Discount(discountValue2, DiscountType.PERCENTAGE);
+            Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
@@ -201,10 +201,10 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue1 = 0.6;
-            Discount discount1 = new Discount(discountValue1, DiscountType.PERCENTAGE);
+            Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
             double discountValue2 = 0.5;
-            Discount discount2 = new Discount(discountValue2, DiscountType.PERCENTAGE);
+            Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
@@ -224,10 +224,10 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue1 = 5;
-            Discount discount1 = new Discount(discountValue1, DiscountType.VOUCHER);
+            Discount discount1 = new Discount(1, DiscountType.VOUCHER, discountValue1);
 
             double discountValue2 = 6;
-            Discount discount2 = new Discount(discountValue2, DiscountType.VOUCHER);
+            Discount discount2 = new Discount(2, DiscountType.VOUCHER, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
@@ -247,10 +247,10 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue1 = 5;
-            Discount discount1 = new Discount(discountValue1, DiscountType.VOUCHER);
+            Discount discount1 = new Discount(1, DiscountType.VOUCHER, discountValue1);
 
             double discountValue2 = 0.7;
-            Discount discount2 = new Discount(discountValue2, DiscountType.PERCENTAGE);
+            Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
@@ -270,10 +270,10 @@ public class SaleTransactionTest {
             Product product = new Product(1, "test", price);
 
             double discountValue1 = 0.8;
-            Discount discount1 = new Discount(discountValue1, DiscountType.PERCENTAGE);
+            Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
             double discountValue2 = 3;
-            Discount discount2 = new Discount(discountValue2, DiscountType.VOUCHER);
+            Discount discount2 = new Discount(2, DiscountType.VOUCHER, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
@@ -294,10 +294,10 @@ public class SaleTransactionTest {
                 Product product = new Product(1, "test", price);
 
                 double discountValue1 = 0.5;
-                Discount discount1 = new Discount(discountValue1, DiscountType.PERCENTAGE);
+                Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
                 double discountValue2 = 7;
-                Discount discount2 = new Discount(discountValue2, DiscountType.VOUCHER);
+                Discount discount2 = new Discount(2, DiscountType.VOUCHER, discountValue1);
 
                 saleTransaction.addProduct(product);
                 saleTransaction.addDiscount(discount1);
@@ -307,7 +307,7 @@ public class SaleTransactionTest {
             } catch (DiscountException exc) {
 
                 double discountValue3 = 3;
-                Discount discount3 = new Discount(discountValue3, DiscountType.VOUCHER);
+                Discount discount3 = new Discount(3, DiscountType.VOUCHER, discountValue3);
                 saleTransaction.addDiscount(discount3);
 
                 assertTrue( true);

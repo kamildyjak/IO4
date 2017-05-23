@@ -6,12 +6,16 @@ import java.io.OutputStreamWriter;
 import org.json.JSONObject;
 import pl.io4.model.database.Database;
 import pl.io4.model.entities.Employee;
+import pl.io4.model.machines.CategoriesMachine;
+import pl.io4.model.machines.DiscountsMachine;
 import pl.io4.model.machines.EmployeesMachine;
 import pl.io4.model.machines.EncryptionMachine;
 import pl.io4.model.machines.LoginMachine;
 import pl.io4.model.machines.PermissionsMachine;
+import pl.io4.model.machines.ProductsMachine;
 import pl.io4.model.machines.ShopsMachine;
-import pl.io4.model.machines.StringsMachine;
+import pl.io4.model.machines.LocalizationMachine;
+import pl.io4.model.machines.TaxesMachine;
 import pl.io4.model.transactions.TransactionRegister;
 
 /**
@@ -25,9 +29,13 @@ public final class Model {
     private static TransactionRegister tr = new TransactionRegister();
     private static EmployeesMachine em = new EmployeesMachine();
     private static LoginMachine lm = new LoginMachine();
-    private static StringsMachine stm = new StringsMachine();
+    private static LocalizationMachine stm = new LocalizationMachine();
     private static ShopsMachine shm = new ShopsMachine();
-    private static PermissionsMachine pm = new PermissionsMachine();
+    private static PermissionsMachine pem = new PermissionsMachine();
+    private static CategoriesMachine cm = new CategoriesMachine();
+    private static ProductsMachine prm = new ProductsMachine();
+    private static DiscountsMachine dm = new DiscountsMachine();
+    private static TaxesMachine tm = new TaxesMachine();
 
     private static Employee currentlyLoggedInUser;
 
@@ -58,7 +66,23 @@ public final class Model {
     }
 
     public static PermissionsMachine getPermissionsMachine() {
-        return pm;
+        return pem;
+    }
+
+    public static CategoriesMachine getCategoriesMachine() {
+        return cm;
+    }
+
+    public static ProductsMachine getProductsMachine() {
+        return prm;
+    }
+
+    public static TaxesMachine getTaxesMachine() {
+        return tm;
+    }
+
+    public static DiscountsMachine getDiscountsMachine() {
+        return dm;
     }
 
     public static String getString(String string) {
@@ -78,7 +102,10 @@ public final class Model {
         model.put("EmployeesMachine", em.cache());
         model.put("LoginMachine", lm.cache());
         model.put("ShopsMachine", shm.cache());
-        model.put("PermissionsMachine", pm.cache());
+        model.put("PermissionsMachine", pem.cache());
+        model.put("CategoriesMachine", cm.cache());
+        model.put("ProductsMachine", prm.cache());
+        model.put("DiscountsMachine", dm.cache());
         try {
             FileOutputStream fos = new FileOutputStream(MODEL_CACHE_PATH);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -99,9 +126,13 @@ public final class Model {
             lm.load(model.getJSONObject("LoginMachine"));
             lm.reloadLogins(em);
             shm.load(model.getJSONObject("ShopsMachine"));
-            pm.load(model.getJSONObject("PermissionsMachine"));
+            pem.load(model.getJSONObject("PermissionsMachine"));
+            cm.load(model.getJSONObject("CategoriesMachine"));
+            prm.load(model.getJSONObject("ProductsMachine"));
+            dm.load(model.getJSONObject("DiscountsMachine"));
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

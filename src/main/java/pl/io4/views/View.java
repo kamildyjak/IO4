@@ -53,6 +53,7 @@ public abstract class View implements Screen {
         font = generator.generateFont(parameter);
         skin.add("default", new Label.LabelStyle(font, Color.BLACK));
         skin.load(Gdx.files.internal("styles/button.json"));
+        skin.load(Gdx.files.internal("styles/window.json"));
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
@@ -61,7 +62,7 @@ public abstract class View implements Screen {
         pixmap.fill();
         skin.add("gray", new Texture(pixmap));
 
-        table = new Table();
+        table = new Table(skin);
         table.setFillParent(true);
         stage.addActor(table);
 
@@ -74,6 +75,10 @@ public abstract class View implements Screen {
 
     final Skin getSkin() {
         return skin;
+    }
+
+    final Stage getStage() {
+        return stage;
     }
 
     @Override

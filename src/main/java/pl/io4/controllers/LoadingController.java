@@ -58,6 +58,7 @@ public class LoadingController extends Controller {
                     @Override
                     public void run() {
                         changeInfoString(Model.getString("DATABASE_CONNECT_SUCCESS"));
+                        shortDelay();
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
@@ -70,6 +71,14 @@ public class LoadingController extends Controller {
                     @Override
                     public void run() {
                         changeInfoString(Model.getString("DATABASE_CONNECT_FAILURE"));
+                        shortDelay();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                app.switchTo(LoginView.class,
+                                        LoginController.class);
+                            }
+                        });
                     }
                 });
             }

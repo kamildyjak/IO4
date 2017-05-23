@@ -5,13 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Basic;
+import org.json.JSONObject;
+import pl.io4.model.Cachable;
 
 /**
  * Created by jacob on 25.04.2017.
  */
 @Entity
 @Table(name = "TaxRule", schema = "dbo", catalog = "io4")
-public final class TaxRule {
+public final class TaxRule extends Cachable {
     private int id;
     private String symbol;
     private byte percent;
@@ -72,5 +74,21 @@ public final class TaxRule {
         result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
         result = 31 * result + (int) percent;
         return result;
+    }
+
+    @Override
+    protected JSONObject cache() {
+        JSONObject ret = new JSONObject();
+        ret.put("id", this.id);
+        ret.put("symbol", this.symbol);
+        ret.put("percent", this.percent);
+        return ret;
+    }
+
+    @Override
+    protected void load(JSONObject data) {
+        id = data.getInt("id");
+        symbol = data.getString("symbol");
+        percent = (byte)data.getInt("percent");
     }
 }

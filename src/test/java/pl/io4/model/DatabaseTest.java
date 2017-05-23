@@ -9,7 +9,6 @@ import pl.io4.model.database.responses.Response;
  * Created by Zax37 on 22.03.2017.
  */
 public class DatabaseTest {
-    
 	@Test
     public void connectionTest() throws Exception {
         Database db = Model.getDatabase();
