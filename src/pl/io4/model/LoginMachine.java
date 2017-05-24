@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by Zax37 on 22.03.2017.
  */
 
-public class LoginMachine {
+public class LoginMachine implements Cachable{
     public enum loginMethod {
       threeFirstLetters;
     };
@@ -32,5 +32,12 @@ public class LoginMachine {
     public boolean checkPassword(String login, String password) {
         if(!users.containsKey(login)) return false;
         return users.get(login).equals(localPasswordEncryption(password));
+    }
+
+    public void cache() {
+
+    }
+    public void load() {
+
     }
 }

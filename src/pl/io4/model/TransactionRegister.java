@@ -9,7 +9,7 @@ import java.util.List;
  * Klasa obsługująca rejestr transakcji.
  */
 
-public class TransactionRegister {
+public class TransactionRegister implements Cachable {
     private List<Transaction> pending;
     private List<Transaction> added;
     private List<Transaction> failed;
@@ -31,5 +31,13 @@ public class TransactionRegister {
         Response response = Model.getDatabase().sendQuery(transaction.toQuery());
         if(response.wasSuccessful) added.add(transaction);
         else failed.add(transaction);
+    }
+
+    public void cache() {
+
+    }
+
+    public void load() {
+
     }
 }
