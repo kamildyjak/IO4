@@ -17,14 +17,4 @@ public class Employee {
         this.lastName = lastName;
         this.hashSHA1 = hashSHA1;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o != null && o instanceof Employee) {
-            Employee e = (Employee)o;
-            return id == e.id && firstName.equals(e.firstName) && lastName.equals(e.lastName)
-                    && hashSHA1.equals(e.hashSHA1);
-        }
-        return false;
-    }
 }

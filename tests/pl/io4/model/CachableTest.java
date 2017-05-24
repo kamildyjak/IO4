@@ -16,6 +16,42 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+
+// prototyp (w sensie jak to rozumiem):
+interface Cachable {
+	void cache();
+	void load();
+}
+
+// definicja Employee potrzebna zeby nadpisac equals na potrzeby testow
+class Employee {
+	private final int id;
+	private final String firstName;
+	private final String lastName;
+	private final String hashSHA1;
+	private String hashMD5;
+
+	Employee(int id, String firstName, String lastName, String hashSHA1){
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashSHA1 = hashSHA1;
+	}
+	@Override
+	public boolean equals(Object o) {
+		if (o != null && o instanceof Employee) {
+			Employee e = (Employee)o;
+			return id == e.id && firstName.equals(e.firstName) && lastName.equals(e.lastName)
+					&& hashSHA1.equals(e.hashSHA1);
+		}
+		return false;
+	}
+	@Override
+	public String toString() {
+		return id + ": " + firstName + " " + lastName + " " + hashSHA1;
+	}
+}
+
 class ModelMock implements Cachable {
 	private EmployeeDBMock employees;
 	private ProductsDBMock products;
@@ -51,6 +87,65 @@ class ModelMock implements Cachable {
 	@Override
 	public String toString() {
 		return employees.toString() + "\n" + products.toString();
+	}
+}
+
+// i te klasy agregujące produkty czy pracowników tez implementowalyby cachable, zapisujac do pliku
+class DatabaseMock<T> implements Cachable {
+	private ArrayList<T> records;
+	public void insert(T r) {
+		records.add(r);
+	}
+	public DatabaseMock() {
+		records = new ArrayList<T>();
+	}
+	public DatabaseMock(DatabaseMock<T> d) {
+		records = new ArrayList<T>(d.records);
+	}
+	@Override
+	public boolean equals(Object o) {
+		//return records.equals(((DatabaseMock<T>)o).records); ?
+		if (o != null && o instanceof DatabaseMock) {
+			DatabaseMock<T> rhs = (DatabaseMock<T>)o;
+			if (records.size() == rhs.records.size()) {
+				Iterator<T> it1 = records.iterator(), it2 = rhs.records.iterator();
+				while (it1.hasNext()) {
+					T rec1 = it1.next();
+					T rec2 = it2.next();
+					if (!rec1.equals(rec2))
+						return false;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+	@Override
+	public void cache() {
+		try {
+			Writer writer = new OutputStreamWriter(new FileOutputStream("db_cache.json"), "UTF-8");
+			Gson gson = new GsonBuilder().create();
+			gson.toJson(records, writer);
+			writer.close();
+		} catch (IOException e) {}
+	}
+	@Override
+	public void load() {
+		try {
+			Reader reader = new InputStreamReader(new FileInputStream("db_cache.json"), "UTF-8");
+			Gson gson = new GsonBuilder().create();
+			Type type = new TypeToken<ArrayList<T>>(){}.getType();
+			ArrayList<T> records_ = gson.fromJson(reader, type);
+			System.out.println("inside_______");
+			for (T r : records)
+				System.out.println(((T)r).toString());
+			for (T r : records_)
+				System.out.println(((T)r).toString());
+			reader.close();
+		} catch (IOException e) {}
+	}
+	public String toString() {
+		return records.toString();
 	}
 }
 
@@ -128,6 +223,7 @@ class EmployeeDBMock implements Cachable {
 	}
 }
 
+
 class StringDBMock implements Cachable {
 	private ArrayList<RecordString> records;
 	public void insert(RecordString r) {
@@ -164,6 +260,7 @@ class StringDBMock implements Cachable {
 		return records.toString();
 	}
 }
+
 
 class IntDBMock implements Cachable {
 	private ArrayList<RecordInt> records;
@@ -355,6 +452,8 @@ public class CachableTest {
 
 		ModelMock mm2 = new ModelMock(new EmployeeDBMock(), new ProductsDBMock());
 
+		//System.out.println("1:" + mm1.toString());
+		//System.out.println("2:" + mm2.toString());
 		assertEquals(mm2, mm1);
 	}
 
@@ -375,6 +474,8 @@ public class CachableTest {
 		mm1.cache();
 		mm1.load();
 
+		System.out.println("1:" + mm1.toString());
+		System.out.println("2:" + mm2.toString());
 		assertEquals(mm2, mm1);
 	}
 
@@ -387,6 +488,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		//System.out.println("1:" + db1.toString());
+		//System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 
@@ -399,6 +502,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		//System.out.println("1:" + db1.toString());
+		//System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 
@@ -411,6 +516,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		//System.out.println("1:" + db1.toString());
+		//System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 
@@ -421,6 +528,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		//System.out.println("1:" + db1.toString());
+		//System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 
@@ -433,6 +542,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		//System.out.println("1:" + db1.toString());
+		//System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 
@@ -446,6 +557,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		//System.out.println("1:" + db1.toString());
+		//System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 
@@ -459,6 +572,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		System.out.println("1:" + db1.toString());
+		System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 
@@ -471,6 +586,8 @@ public class CachableTest {
 		db1.cache();
 		db1.load();
 
+		//System.out.println("1:" + db1.toString());
+		//System.out.println("2:" + db2.toString());
 		assertEquals(db2, db1);
 	}
 }
