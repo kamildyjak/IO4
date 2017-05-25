@@ -1,18 +1,19 @@
 package pl.io4.model.entities;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Basic;
 import org.json.JSONObject;
-import pl.io4.model.Cachable;
+import pl.io4.model.cachable.CachableObject;
+
 /**
  * Created by Marcin on 26.03.2017.
  */
 @Entity
 @Table(name = "Discount", schema = "dbo", catalog = "io4")
-public final class Discount extends Cachable {
+public final class Discount extends CachableObject {
     public enum DiscountType {
         PERCENTAGE,
         VOUCHER;
@@ -100,7 +101,7 @@ public final class Discount extends Cachable {
     }
 
     @Override
-    protected JSONObject cache() {
+    public JSONObject cache() {
         JSONObject ret = new JSONObject();
         ret.put("id", this.id);
         ret.put("type", this.type == DiscountType.VOUCHER);
@@ -109,7 +110,7 @@ public final class Discount extends Cachable {
     }
 
     @Override
-    protected void load(JSONObject data) {
+    public void load(JSONObject data) {
         id = data.getInt("id");
         type = DiscountType.fromBoolean(data.getBoolean("type"));
         value = data.getDouble("value");

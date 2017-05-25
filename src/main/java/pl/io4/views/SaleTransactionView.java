@@ -1,8 +1,5 @@
 package pl.io4.views;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -13,6 +10,7 @@ import static pl.io4.NextGen.V_HEIGHT;
 import static pl.io4.NextGen.V_WIDTH;
 import pl.io4.model.entities.Discount;
 import pl.io4.model.entities.Product;
+import pl.io4.model.machines.DiscountsMachine;
 import pl.io4.model.machines.LocalizationMachine;
 import pl.io4.model.transactions.TransactionItem;
 
@@ -25,14 +23,15 @@ public final class SaleTransactionView extends View {
     private TextField productCodeTextField;
     private TextField productQuantityTextField;
     private TextField discountCodeTextField;
-    private TextField discountQuantityTextField;
 
-    private static final int PAD_SMALL = 10;
-    private static final int PAD_BIG = 20;
-    private static final int COLSPAN = 4;
+    private static final int COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT = 6;
+    private static final int COLUMNS_COUNT_PRODUCTS_LIST_SUM_ROW = 2;
+    private static final int COLUMNS_COUNT_MENU = 2;
     private static final double PANEL_PROPORTIONS = 0.6;
+    private static final int INPUT_MAX_LENGTH = 20;
 
-    public void setProductsList(List<TransactionItem> transactionItems, List<Discount> discounts, double priceTotal) {
+    public void setProductsList(List<TransactionItem> transactionItems,
+                                DiscountsMachine discountsMachine, double priceTotal) {
         inner.clear();
         inner.add().expandY().row();
         for (TransactionItem item : transactionItems) {
@@ -46,21 +45,29 @@ public final class SaleTransactionView extends View {
             inner.row();
         }
 
-        for (Discount discount : discounts) {
-            String suffix;
-            if (discount.getType() == Discount.DiscountType.PERCENTAGE) {
-                suffix = " %";
-            } else {
-                suffix = LocalizationMachine.getCurrencySymbol();
-            }
-            inner.add("").colspan(COLSPAN + 1);
-            inner.add("-" + LocalizationMachine.formatPrice(discount.getValue(),
-                    false) + suffix).expandX().center();
+        if (!discountsMachine.getDiscounts().isEmpty()) {
+            inner.add("ZNIŻKI:").expandX().left();
+            inner.add("").colspan(COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT - 1);
             inner.row();
-        }
 
+            for (Discount.DiscountType type : Discount.DiscountType.values()) {
+                String suffix;
+                if (type == Discount.DiscountType.PERCENTAGE) {
+                    suffix = " %";
+                } else {
+                    suffix = LocalizationMachine.getCurrencySymbol();
+                }
+                double value = discountsMachine.getTotalDiscount(type);
+                if (value > 0) {
+                    inner.add("").colspan(COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT - 1);
+                    inner.add("-" + LocalizationMachine.formatPrice(value,
+                            false) + suffix).expandX().right();
+                    inner.row();
+                }
+            }
+        }
         inner.add("Suma").padTop(PAD_BIG).expandX().left();
-        inner.add("").colspan(COLSPAN);
+        inner.add("").colspan(COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT - COLUMNS_COUNT_PRODUCTS_LIST_SUM_ROW);
         inner.add(LocalizationMachine.formatPrice(priceTotal, true)).padTop(PAD_BIG).expandX().right();
         inner.row();
     }
@@ -75,65 +82,47 @@ public final class SaleTransactionView extends View {
         table.add(scroll).expand().left().bottom()
                 .width((int)(V_WIDTH * PANEL_PROPORTIONS)).height(V_HEIGHT);
         Table menu = new Table(skin).background("gray").bottom().padBottom(PAD_SMALL);
+        table.add(menu).expand().right().bottom()
+                .width((int)(V_WIDTH * (1 - PANEL_PROPORTIONS))).height(V_HEIGHT);
+        table.row();
 
-        skin.add("textfieldback", new Texture("raw/bg.png"));
-        skin.add("cursor", new Texture("raw/cursor.png"));
-        skin.add("selection", new Texture("raw/selection.png"));
-
-        TextField.TextFieldStyle textfieldstyle = new TextField.TextFieldStyle();
-        textfieldstyle.background = skin.getDrawable("textfieldback");
-        textfieldstyle.disabledFontColor = Color.BLACK;
-        textfieldstyle.font = skin.getFont("default");
-        textfieldstyle.fontColor = Color.BLACK;
-        textfieldstyle.cursor = skin.getDrawable("cursor");
-        textfieldstyle.selection = skin.getDrawable("selection");
-
-        productCodeTextField = new TextField("", textfieldstyle);
-        productCodeTextField.setPosition(100, 100);
-        productCodeTextField.setSize(300, 40);
+        productCodeTextField = new TextField("", skin);
         productCodeTextField.setMessageText("Kod produktu");
-        productCodeTextField.setMaxLength(20);
-        menu.add(productCodeTextField).width(120).height(30).spaceTop(10);
+        productCodeTextField.setMaxLength(INPUT_MAX_LENGTH);
+        menu.add(productCodeTextField).spaceTop(PAD_SMALL);
 
-        productQuantityTextField = new TextField("", textfieldstyle);
-        productQuantityTextField.setPosition(100, 100);
-        productQuantityTextField.setSize(300, 40);
+        productQuantityTextField = new TextField("", skin);
         productQuantityTextField.setMessageText("Ilość");
-        productQuantityTextField.setMaxLength(20);
-        menu.add(productQuantityTextField).width(50).height(30).spaceTop(10);
+        productQuantityTextField.setMaxLength(INPUT_MAX_LENGTH);
+        menu.add(productQuantityTextField).padLeft(PAD_SMALL).spaceTop(PAD_SMALL);
 
         menu.row();
 
         TextButton addProductButton = new TextButton("Dodaj produkt", skin);
-        menu.add(addProductButton).spaceTop(10);
+        menu.add(addProductButton).colspan(COLUMNS_COUNT_MENU)
+                .fillX().spaceTop(PAD_SMALL).spaceBottom(PAD_BIG);
 
         menu.row();
 
-        discountCodeTextField = new TextField("", textfieldstyle);
-        discountCodeTextField.setPosition(100, 100);
-        discountCodeTextField.setSize(300, 40);
+        discountCodeTextField = new TextField("", skin);
         discountCodeTextField.setMessageText("Kod zniżki");
-        discountCodeTextField.setMaxLength(20);
-        menu.add(discountCodeTextField).width(120).height(30).spaceTop(10);
+        discountCodeTextField.setMaxLength(INPUT_MAX_LENGTH);
+        menu.add(discountCodeTextField).colspan(COLUMNS_COUNT_MENU)
+                .fillX().spaceTop(PAD_SMALL);
 
-        discountQuantityTextField = new TextField("", textfieldstyle);
-        discountQuantityTextField.setPosition(100, 100);
-        discountQuantityTextField.setSize(300, 40);
-        discountQuantityTextField.setMessageText("Ilość");
-        discountQuantityTextField.setMaxLength(20);
-        menu.add(discountQuantityTextField).width(50).height(30).spaceTop(10);
         menu.row();
 
         TextButton addDiscountButton = new TextButton("Dodaj zniżkę", skin);
-        menu.add(addDiscountButton).spaceTop(10);
+        menu.add(addDiscountButton).colspan(COLUMNS_COUNT_MENU)
+                .fillX().spaceTop(PAD_SMALL);
 
         menu.row();
 
         TextButton endButton = new TextButton("Zakończ transakcję", skin);
-        menu.add(endButton).spaceTop(10);
+        menu.add(endButton).colspan(COLUMNS_COUNT_MENU)
+                .fillX().spaceTop(PAD_SMALL);
 
-        table.add(menu).expand().right().bottom().width((int)(V_WIDTH * 0.4)).height(V_HEIGHT);
-        table.row();
+        menu.row();
 
         addElement("addDiscountButton", addDiscountButton);
         addElement("addProductButton", addProductButton);
@@ -153,23 +142,10 @@ public final class SaleTransactionView extends View {
         return discountCodeTextField.getText();
     }
 
-    public String getDiscountQuantity() {
-        return discountQuantityTextField.getText();
-    }
-
-    public void addErrorMessage(String message) {
-        Dialog popup = new Dialog("Błąd", getSkin());
-        popup.text(message).pad(30, 30, 30, 30);
-        popup.button("OK");
-        popup.background("gray");
-        popup.show(getStage());
-    }
-
     public void clearTextFields() {
         productCodeTextField.setText("");
         productQuantityTextField.setText("");
         discountCodeTextField.setText("");
-        discountQuantityTextField.setText("");
     }
 
 }

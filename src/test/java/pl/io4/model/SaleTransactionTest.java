@@ -30,7 +30,7 @@ public class SaleTransactionTest {
         saleTransaction.addProduct(product);
 
         TransactionItem transactionItem = saleTransaction
-                .getProductList()
+                .getProductsList()
                 .stream()
                 .filter(p -> p.getProduct().equals(product))
                 .findFirst()
@@ -49,7 +49,7 @@ public class SaleTransactionTest {
         saleTransaction.addProduct(product);
 
         TransactionItem transactionItem = saleTransaction
-                .getProductList()
+                .getProductsList()
                 .stream()
                 .filter(p -> p.getProduct().equals(product))
                 .findFirst()

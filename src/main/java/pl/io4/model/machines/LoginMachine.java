@@ -1,11 +1,11 @@
 package pl.io4.model.machines;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
-import pl.io4.model.Cachable;
 import pl.io4.model.Model;
+import pl.io4.model.cachable.CachableEnumSet;
+import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Employee;
 import pl.io4.model.exceptions.IncorrectEmployeeDataException;
 import pl.io4.model.exceptions.UnknownMethodException;
@@ -14,12 +14,12 @@ import pl.io4.model.exceptions.UnknownMethodException;
  * Created by Zax37 on 22.03.2017.
  */
 
-public final class LoginMachine extends Cachable {
+public final class LoginMachine extends CachableObject {
     public enum LoginMethod {
         threeFirstLettersFiveLastPeselDigits,
         withPESEL, withEMAIL, withFullName
     }
-    private EnumSet<LoginMethod> legalMethods = EnumSet.noneOf(LoginMethod.class);
+    private CachableEnumSet<LoginMethod> legalMethods = new CachableEnumSet(LoginMethod.class);
     private Map<String, Employee> correctLogins;
 
     private static final int NAME_LETTERS_NB = 3;
@@ -89,12 +89,12 @@ public final class LoginMachine extends Cachable {
     @Override
     public JSONObject cache() {
         JSONObject ret = new JSONObject();
-        ret.put("legalMethods", Cachable.cache(legalMethods));
+        ret.put("legalMethods", legalMethods.cache());
         return ret;
     }
 
     @Override
     public void load(JSONObject data) {
-        legalMethods = Cachable.load(LoginMethod.class, data.getJSONArray("legalMethods"));
+        legalMethods.load(data.getJSONArray("legalMethods"));
     }
 }

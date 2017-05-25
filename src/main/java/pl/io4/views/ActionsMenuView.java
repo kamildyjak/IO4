@@ -12,8 +12,6 @@ import pl.io4.model.Model;
  * Created by Zax37 on 23.05.2017.
  */
 public final class ActionsMenuView extends View {
-    private static final int PAD_SMALL = 10;
-
     @Override
     protected void addViewElements() {
         Skin skin = getSkin();

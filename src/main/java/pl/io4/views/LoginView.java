@@ -1,13 +1,11 @@
 package pl.io4.views;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-
+import pl.io4.NextGen;
 import static pl.io4.NextGen.V_HEIGHT;
 import static pl.io4.NextGen.V_WIDTH;
 
@@ -15,10 +13,9 @@ import static pl.io4.NextGen.V_WIDTH;
  * Created by kamil on 12.04.2017.
  */
 public final class LoginView extends View {
-    private static final int INPUT_WIDTH = 300;
+    private static final int INPUT_WIDTH = NextGen.V_WIDTH / 2;
     private static final int INPUT_HEIGHT = 30;
     private static final int INPUT_MAX_LENGTH = 20;
-    private static final int PAD_SMALL = 10;
     private Table inner;
     private TextField login;
     private TextField password;
@@ -65,28 +62,19 @@ public final class LoginView extends View {
         ScrollPane scroll = new ScrollPane(inner);
         table.add(scroll).expand().left().bottom().width(V_WIDTH).height(V_HEIGHT);
 
-        skin.add("textfieldback", new Texture("raw/bg.png"));
-        skin.add("cursor", new Texture("raw/cursor.png"));
-        skin.add("selection", new Texture("raw/selection.png"));
         submit = new TextButton("Zaloguj", skin);
         createLoginInputs();
     }
 
     private void createLoginInputs() {
         Skin skin = getSkin();
-        TextField.TextFieldStyle textfieldstyle = new TextField.TextFieldStyle();
-        textfieldstyle.background = skin.getDrawable("textfieldback");
-        textfieldstyle.disabledFontColor = Color.BLACK;
-        textfieldstyle.font = skin.getFont("default");
-        textfieldstyle.fontColor = Color.BLACK;
-        textfieldstyle.cursor = skin.getDrawable("cursor");
-        textfieldstyle.selection = skin.getDrawable("selection");
 
-        login = new TextField("", textfieldstyle);
+        login = new TextField("", skin);
         login.setMessageText("Login");
         login.setMaxLength(INPUT_MAX_LENGTH);
+        login.getStyle().background.setLeftWidth(PAD_SMALL);
 
-        password = new TextField("", textfieldstyle);
+        password = new TextField("", skin);
         password.setMessageText("Password");
         password.setPasswordMode(true);
         password.setPasswordCharacter('*');
@@ -96,7 +84,7 @@ public final class LoginView extends View {
         inner.row();
         inner.add(password).width(INPUT_WIDTH).height(INPUT_HEIGHT);
         inner.row();
-        inner.add(submit).center();
+        inner.add(submit).width(INPUT_WIDTH);
         if (!getInteractiveElements().containsKey("submit")) {
             addElement("submit", submit);
         }

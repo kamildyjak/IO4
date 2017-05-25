@@ -2,10 +2,10 @@ package pl.io4.model.machines;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-import static pl.io4.model.machines.EncryptionMachine.EncryptionMethod.MD5;
-import static pl.io4.model.machines.EncryptionMachine.EncryptionMethod.SHA1;
 import pl.io4.model.entities.Employee;
 import pl.io4.model.exceptions.UnknownMethodException;
+import static pl.io4.model.machines.EncryptionMachine.EncryptionMethod.MD5;
+import static pl.io4.model.machines.EncryptionMachine.EncryptionMethod.SHA1;
 
 /**
  * Created by Zax37 on 21.05.2017.

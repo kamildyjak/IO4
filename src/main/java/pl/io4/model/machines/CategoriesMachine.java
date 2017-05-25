@@ -1,19 +1,25 @@
 package pl.io4.model.machines;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.json.JSONObject;
-import pl.io4.model.Cachable;
+import pl.io4.model.cachable.CachableArrayList;
+import pl.io4.model.cachable.CachableList;
+import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Category;
+import pl.io4.model.entities.Product;
 
 /**
  * Created by Zax37 on 22.05.2017.
  */
-public final class CategoriesMachine extends Cachable {
-    private List<Category> categories;
+public final class CategoriesMachine extends CachableObject {
+    private CachableList<Category> categories;
+    private Map<Category, List<Product>> productsMap;
 
     public CategoriesMachine() {
-        categories = new ArrayList<Category>();
+        categories = new CachableArrayList<>(Category.class);
+        productsMap = new HashMap<>();
     }
 
     public Category getCategory(int id) {
@@ -25,15 +31,19 @@ public final class CategoriesMachine extends Cachable {
         return null;
     }
 
+    public List<Product> getCategoryProducts(Category category) {
+        return productsMap.get(category);
+    }
+
     @Override
     public JSONObject cache() {
         JSONObject ret = new JSONObject();
-        ret.put("categories", Cachable.cache(categories));
+        ret.put("categories", categories.cache());
         return ret;
     }
 
     @Override
     public void load(JSONObject data) {
-        Cachable.load(categories, Category.class, data.getJSONArray("categories"));
+        categories.load(data.getJSONArray("categories"));
     }
 }

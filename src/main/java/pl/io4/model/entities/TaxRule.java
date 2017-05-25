@@ -1,19 +1,19 @@
 package pl.io4.model.entities;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Basic;
 import org.json.JSONObject;
-import pl.io4.model.Cachable;
+import pl.io4.model.cachable.CachableObject;
 
 /**
  * Created by jacob on 25.04.2017.
  */
 @Entity
 @Table(name = "TaxRule", schema = "dbo", catalog = "io4")
-public final class TaxRule extends Cachable {
+public final class TaxRule extends CachableObject {
     private int id;
     private String symbol;
     private byte percent;
@@ -77,7 +77,7 @@ public final class TaxRule extends Cachable {
     }
 
     @Override
-    protected JSONObject cache() {
+    public JSONObject cache() {
         JSONObject ret = new JSONObject();
         ret.put("id", this.id);
         ret.put("symbol", this.symbol);
@@ -86,7 +86,7 @@ public final class TaxRule extends Cachable {
     }
 
     @Override
-    protected void load(JSONObject data) {
+    public void load(JSONObject data) {
         id = data.getInt("id");
         symbol = data.getString("symbol");
         percent = (byte)data.getInt("percent");

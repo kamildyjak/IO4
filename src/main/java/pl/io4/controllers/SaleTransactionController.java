@@ -5,11 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.io4.NextGen;
 import pl.io4.model.Model;
+import pl.io4.model.entities.Discount;
 import pl.io4.model.entities.Product;
-import pl.io4.model.machines.DiscountsMachine;
 import pl.io4.model.machines.ProductsMachine;
 import pl.io4.model.transactions.SaleTransaction;
-import pl.io4.model.entities.Discount;
 import pl.io4.views.PaymentView;
 import pl.io4.views.SaleTransactionView;
 
@@ -19,7 +18,6 @@ import pl.io4.views.SaleTransactionView;
 public class SaleTransactionController extends Controller {
     private SaleTransaction saleTransaction;
     private ProductsMachine productsMachine;
-    private DiscountsMachine discountsMachine;
     private SaleTransactionView view;
     private static final int TO_BOTTOM = 100;
 
@@ -28,7 +26,6 @@ public class SaleTransactionController extends Controller {
         view = getView();
         saleTransaction = new SaleTransaction();
         productsMachine = Model.getProductsMachine();
-        discountsMachine = Model.getDiscountsMachine();
 
         addButtonClickListener("addProductButton", new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
@@ -38,8 +35,8 @@ public class SaleTransactionController extends Controller {
                     saleTransaction.addProduct(product, quantity);
 
                     view.setProductsList(
-                            saleTransaction.getProductList(),
-                            saleTransaction.getDiscountList(),
+                            saleTransaction.getProductsList(),
+                            saleTransaction.getDiscountsMachine(),
                             saleTransaction.calculateTotalPrice()
                     );
                     ScrollPane scroll = getElement("scroll");
@@ -55,12 +52,13 @@ public class SaleTransactionController extends Controller {
         addButtonClickListener("addDiscountButton", new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    Discount discount = discountsMachine.getDiscount(Integer.parseInt(view.getDiscountCode()));
+                    Discount discount = Model.getDiscountsMachine()
+                            .getDiscount(Integer.parseInt(view.getDiscountCode()));
                     saleTransaction.addDiscount(discount);
 
                     view.setProductsList(
-                            saleTransaction.getProductList(),
-                            saleTransaction.getDiscountList(),
+                            saleTransaction.getProductsList(),
+                            saleTransaction.getDiscountsMachine(),
                             saleTransaction.calculateTotalPrice()
                     );
                     ScrollPane scroll = getElement("scroll");
