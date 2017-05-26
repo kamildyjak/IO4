@@ -1,0 +1,12 @@
+{
+  "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+    "default": {
+      "background": "input",
+      "font": "input",
+      "fontColor": "black",
+      "disabledFontColor": "gray",
+      "cursor": "gray",
+      "selection": "gray"
+    }
+  }
+}
