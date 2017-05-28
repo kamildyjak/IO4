@@ -1,19 +1,19 @@
 package pl.io4.model.entities;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Basic;
 import org.json.JSONObject;
-import pl.io4.model.Cachable;
+import pl.io4.model.cachable.CachableObject;
 
 /**
  * Created by jacob on 25.04.2017.
  */
 @Entity
 @Table(name = "Shop", schema = "dbo", catalog = "io4")
-public final class Shop extends Cachable {
+public final class Shop extends CachableObject {
     private static final int LENGTH_NAME = 10;
     private static final int LENGTH_MAX = 2147483647;
     private int id;
@@ -79,7 +79,7 @@ public final class Shop extends Cachable {
     }
 
     @Override
-    protected JSONObject cache() {
+    public JSONObject cache() {
         JSONObject ret = new JSONObject();
         ret.put("id", this.id);
         ret.put("name", this.name);
@@ -88,7 +88,7 @@ public final class Shop extends Cachable {
     }
 
     @Override
-    protected void load(JSONObject data) {
+    public void load(JSONObject data) {
         id = data.getInt("id");
         name = data.getString("name");
         address = data.getString("address");

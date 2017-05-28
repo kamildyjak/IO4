@@ -1,11 +1,11 @@
 package pl.io4.model.entities;
 
+import java.sql.Timestamp;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Basic;
-import java.sql.Timestamp;
 
 /**
  * Created by jacob on 25.04.2017.

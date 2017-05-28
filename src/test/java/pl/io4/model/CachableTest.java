@@ -3,19 +3,20 @@ package pl.io4.model;
 import org.json.JSONObject;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import pl.io4.model.cachable.CachableObject;
 
 /**
  * Created by Zax37 on 20.05.2017.
  */
 public class CachableTest {
-    class SimpleTypesTestContainer extends Cachable {
+    class SimpleTypesTestContainer extends CachableObject {
         public int integerValue;
         public double doubleValue;
         public boolean boolValue;
         public String string;
 
         @Override
-        protected JSONObject cache() {
+        public JSONObject cache() {
             JSONObject ret = new JSONObject();
             ret.put("1", integerValue);
             ret.put("2", doubleValue);
@@ -25,7 +26,7 @@ public class CachableTest {
         }
 
         @Override
-        protected void load(JSONObject data) {
+        public void load(JSONObject data) {
             integerValue = data.getInt("1");
             doubleValue = data.getDouble("2");
             boolValue = data.getBoolean("3");

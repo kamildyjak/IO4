@@ -22,7 +22,6 @@ public final class LoadingView extends View {
     private AnimatedActor animation;
 
     private static final float ANIMATION_SPEED = 2.5f;
-    private static final int PAD_SMALL = 10;
 
     @Override
     protected void addViewElements() {

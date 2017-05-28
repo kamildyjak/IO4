@@ -3,9 +3,9 @@ package pl.io4.model;
 import org.junit.Before;
 import org.junit.Test;
 import pl.io4.model.entities.Product;
+import pl.io4.model.exceptions.DiscountOverflowException;
 import pl.io4.model.transactions.*;
 import pl.io4.model.entities.Discount;
-import pl.io4.model.exceptions.DiscountException;
 import pl.io4.model.entities.Discount.DiscountType;
 
 import static org.junit.Assert.*;
@@ -30,7 +30,7 @@ public class SaleTransactionTest {
         saleTransaction.addProduct(product);
 
         TransactionItem transactionItem = saleTransaction
-                .getProductList()
+                .getProductsList()
                 .stream()
                 .filter(p -> p.getProduct().equals(product))
                 .findFirst()
@@ -49,7 +49,7 @@ public class SaleTransactionTest {
         saleTransaction.addProduct(product);
 
         TransactionItem transactionItem = saleTransaction
-                .getProductList()
+                .getProductsList()
                 .stream()
                 .filter(p -> p.getProduct().equals(product))
                 .findFirst()
@@ -93,8 +93,8 @@ public class SaleTransactionTest {
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException threw", false);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException threw", false);
         }
     }
 
@@ -118,8 +118,8 @@ public class SaleTransactionTest {
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException threw", false);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException threw", false);
         }
     }
 
@@ -139,8 +139,8 @@ public class SaleTransactionTest {
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException threw", false);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException threw", false);
         }
     }
 
@@ -164,8 +164,8 @@ public class SaleTransactionTest {
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException threw", false);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException threw", false);
         }
     }
 
@@ -189,8 +189,8 @@ public class SaleTransactionTest {
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException threw", false);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException threw", false);
         }
     }
 
@@ -212,8 +212,8 @@ public class SaleTransactionTest {
 
             assertTrue(false);
 
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException should be thrown", true);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException should be thrown", true);
         }
     }
 
@@ -235,8 +235,8 @@ public class SaleTransactionTest {
 
             assertTrue(false);
 
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException should be thrown", true);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException should be thrown", true);
         }
     }
 
@@ -258,8 +258,8 @@ public class SaleTransactionTest {
 
             assertTrue(false);
 
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException should be thrown", true);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException should be thrown", true);
         }
     }
 
@@ -281,8 +281,8 @@ public class SaleTransactionTest {
 
             assertTrue(false);
 
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException should be thrown", true);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountNotFoundException should be thrown", true);
         }
     }
 
@@ -297,14 +297,14 @@ public class SaleTransactionTest {
                 Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
                 double discountValue2 = 7;
-                Discount discount2 = new Discount(2, DiscountType.VOUCHER, discountValue1);
+                Discount discount2 = new Discount(2, DiscountType.VOUCHER, discountValue2);
 
                 saleTransaction.addProduct(product);
                 saleTransaction.addDiscount(discount1);
                 saleTransaction.addDiscount(discount2);
 
-                assertTrue("DiscountException should be thrown", false);
-            } catch (DiscountException exc) {
+                assertTrue("DiscountOverflowException should be thrown", false);
+            } catch (DiscountOverflowException exc) {
 
                 double discountValue3 = 3;
                 Discount discount3 = new Discount(3, DiscountType.VOUCHER, discountValue3);
@@ -312,8 +312,8 @@ public class SaleTransactionTest {
 
                 assertTrue( true);
             }
-        } catch (DiscountException exc) {
-            assertTrue("DiscountException threw", false);
+        } catch (DiscountOverflowException exc) {
+            assertTrue("DiscountOverflowException threw", false);
         }
     }
 }

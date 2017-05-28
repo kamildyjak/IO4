@@ -6,15 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.json.JSONObject;
-import pl.io4.model.Cachable;
 import pl.io4.model.Model;
+import pl.io4.model.cachable.CachableObject;
 
 /**
  * Created by Zax37 on 21.05.2017.
  */
 @Entity
 @Table(name = "Permissions", schema = "dbo", catalog = "io4")
-public final class Permissions extends Cachable {
+public final class Permissions extends CachableObject {
     private Employee employee;
     private Shop shop;
     private Integer accessLevel;
@@ -88,7 +88,7 @@ public final class Permissions extends Cachable {
     }
 
     @Override
-    protected JSONObject cache() {
+    public JSONObject cache() {
         JSONObject ret = new JSONObject();
         ret.put("employee", employee.getPesel());
         ret.put("shop", shop.getId());
@@ -97,7 +97,7 @@ public final class Permissions extends Cachable {
     }
 
     @Override
-    protected void load(JSONObject data) {
+    public void load(JSONObject data) {
         employee = Model.getEmployeesMachine().getEmployee(data.getString("employee"));
         shop = Model.getShopsMachine().getShop(data.getInt("shop"));
         accessLevel = data.getInt("accessLevel");
