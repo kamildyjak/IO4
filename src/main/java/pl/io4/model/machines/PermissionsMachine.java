@@ -16,6 +16,23 @@ public final class PermissionsMachine extends CachableObject {
         permissions = new CachableArrayList<>(Permissions.class);
     }
 
+    public void addPermission(Permissions permissions_) {
+        permissions.add(permissions_);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        PermissionsMachine that = (PermissionsMachine) o;
+        return permissions.equals(that.permissions);
+    }
+
     @Override
     public JSONObject cache() {
         JSONObject ret = new JSONObject();

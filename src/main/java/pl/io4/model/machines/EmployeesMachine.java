@@ -17,6 +17,8 @@ public final class EmployeesMachine extends CachableObject {
         employees = new CachableArrayList<>(Employee.class);
     }
 
+    public void addEmployee(Employee employee) { employees.add(employee); }
+
     public List<Employee> getEmployees() {
         return employees;
     }
@@ -28,6 +30,19 @@ public final class EmployeesMachine extends CachableObject {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        EmployeesMachine that = (EmployeesMachine) o;
+        return employees.equals(that.employees);
     }
 
     @Override

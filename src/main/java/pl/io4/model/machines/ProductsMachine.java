@@ -18,12 +18,29 @@ public final class ProductsMachine extends CachableObject {
         products = new CachableArrayList<>(Product.class);
     }
 
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
     public Product getProduct(int id) throws ProductNotFoundException {
         return products
                 .stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new ProductNotFoundException(ExceptionsLabels.PRODUCT_NOT_FOUND));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ProductsMachine that = (ProductsMachine) o;
+        return products.equals(that.products);
     }
 
     @Override

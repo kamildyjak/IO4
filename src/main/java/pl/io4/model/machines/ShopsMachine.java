@@ -17,6 +17,10 @@ public final class ShopsMachine extends CachableObject {
         shops = new CachableArrayList<>(Shop.class);
     }
 
+    public void addShop(Shop shop) {
+        shops.add(shop);
+    }
+
     public List<Shop> getShops() {
         return shops;
     }
@@ -28,6 +32,19 @@ public final class ShopsMachine extends CachableObject {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ShopsMachine that = (ShopsMachine) o;
+        return shops.equals(that.shops);
     }
 
     @Override
