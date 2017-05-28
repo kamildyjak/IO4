@@ -25,5 +25,10 @@ public final class ActionsMenuView extends View {
                 Model.getString("START_NEW_SALE_TRANSACTION"), skin);
         inner.add(startNewSaleTransaction);
         addElement("startNewSaleTransaction", startNewSaleTransaction);
+        inner.row();
+        TextButton logout = new TextButton(
+                Model.getString("LOGOUT"), skin);
+        inner.add(logout);
+        addElement("logout", logout);
     }
 }

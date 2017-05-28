@@ -1,12 +1,12 @@
 package pl.io4.model.machines;
 
 import org.json.JSONObject;
+import pl.io4.model.Model;
 import pl.io4.model.cachable.CachableArrayList;
 import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Product;
 import pl.io4.model.exceptions.ProductNotFoundException;
-import pl.io4.model.labels.ExceptionsLabels;
 
 /**
  * Created by Zax37 on 22.05.2017.
@@ -23,7 +23,7 @@ public final class ProductsMachine extends CachableObject {
                 .stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new ProductNotFoundException(ExceptionsLabels.PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new ProductNotFoundException(Model.getString("PRODUCT_NOT_FOUND")));
     }
 
     @Override

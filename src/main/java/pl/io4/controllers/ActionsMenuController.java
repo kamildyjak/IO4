@@ -3,6 +3,7 @@ package pl.io4.controllers;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.io4.NextGen;
+import pl.io4.views.LoginView;
 import pl.io4.views.SaleTransactionView;
 
 /**
@@ -17,6 +18,14 @@ public class ActionsMenuController extends Controller {
             public void changed(ChangeEvent event, Actor actor) {
                 switchTo(SaleTransactionView.class,
                         SaleTransactionController.class);
+            }
+        });
+
+        addButtonClickListener("logout", new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                switchTo(LoginView.class,
+                        LoginController.class);
             }
         });
     }

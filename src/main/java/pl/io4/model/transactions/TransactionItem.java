@@ -30,4 +30,10 @@ public final class TransactionItem {
     public double getTotalPrice() {
         return product.getPrice() * quantity;
     }
+
+    public String toString() {
+        return getProduct().getName() + " * " +
+                getQuantity() + " = " +
+                getTotalPrice();
+    }
 }

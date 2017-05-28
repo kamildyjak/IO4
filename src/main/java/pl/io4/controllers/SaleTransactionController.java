@@ -7,10 +7,10 @@ import pl.io4.NextGen;
 import pl.io4.model.Model;
 import pl.io4.model.entities.Discount;
 import pl.io4.model.entities.Product;
-import pl.io4.model.exceptions.CodeReadOutException;
-import pl.io4.model.labels.ExceptionsLabels;
+import pl.io4.model.exceptions.CodeReadingException;
 import pl.io4.model.machines.ProductsMachine;
 import pl.io4.model.transactions.SaleTransaction;
+import pl.io4.model.wrappers.ReceiptGenerator1;
 import pl.io4.views.PaymentView;
 import pl.io4.views.SaleTransactionView;
 
@@ -31,45 +31,44 @@ public class SaleTransactionController extends Controller {
 
         addButtonClickListener("addProductButton", new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    Product product = productsMachine.getProduct(getCode(view.getProductCode()));
-                    double quantity = getQuantity(view.getProductQuantity());
-                    saleTransaction.addProduct(product, quantity);
-
-                    view.setProductsList(
-                            saleTransaction.getProductsList(),
-                            saleTransaction.getDiscountsMachine(),
-                            saleTransaction.calculateTotalPrice()
-                    );
-                    ScrollPane scroll = getElement("scroll");
-                    scroll.setScrollPercentY(TO_BOTTOM);
-                } catch (Exception exc) {
-                    view.addErrorMessage(exc.getMessage());
-                } finally {
-                    view.clearTextFields();
-                }
+            try {
+                Product product = productsMachine.getProduct(getCode(view.getProductCode()));
+                double quantity = getQuantity(view.getProductQuantity());
+                saleTransaction.addProduct(product, quantity);
+                view.setProductsList(
+                        saleTransaction.getProductsList(),
+                        saleTransaction.getDiscountsMachine(),
+                        saleTransaction.calculateTotalPrice()
+                );
+                ScrollPane scroll = getElement("scroll");
+                scroll.setScrollPercentY(TO_BOTTOM);
+            } catch (Exception exc) {
+                view.addErrorMessage(exc.getMessage());
+            } finally {
+                view.clearTextFields();
+            }
             }
         });
 
         addButtonClickListener("addDiscountButton", new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    Discount discount = Model.getDiscountsMachine()
-                            .getDiscount(getCode(view.getDiscountCode()));
-                    saleTransaction.addDiscount(discount);
+            try {
+                Discount discount = Model.getDiscountsMachine()
+                        .getDiscount(getCode(view.getDiscountCode()));
+                saleTransaction.addDiscount(discount);
 
-                    view.setProductsList(
-                            saleTransaction.getProductsList(),
-                            saleTransaction.getDiscountsMachine(),
-                            saleTransaction.calculateTotalPrice()
-                    );
-                    ScrollPane scroll = getElement("scroll");
-                    scroll.setScrollPercentY(TO_BOTTOM);
-                } catch (Exception exc) {
-                    view.addErrorMessage(exc.getMessage());
-                } finally {
-                    view.clearTextFields();
-                }
+                view.setProductsList(
+                        saleTransaction.getProductsList(),
+                        saleTransaction.getDiscountsMachine(),
+                        saleTransaction.calculateTotalPrice()
+                );
+                ScrollPane scroll = getElement("scroll");
+                scroll.setScrollPercentY(TO_BOTTOM);
+            } catch (Exception exc) {
+                view.addErrorMessage(exc.getMessage());
+            } finally {
+                view.clearTextFields();
+            }
             }
         });
 
@@ -77,13 +76,13 @@ public class SaleTransactionController extends Controller {
 
             @Override
             public void changed(ChangeEvent event, Actor actor)  {
-                try {
-                    switchTo(PaymentView.class, PaymentController.class);
-                    PaymentController controller = app.getController();
-                    controller.setSaleTransaction(saleTransaction);
-                } catch (Exception exc) {
-                    view.addErrorMessage(exc.getMessage());
-                }
+            try {
+                switchTo(PaymentView.class, PaymentController.class);
+                PaymentController controller = app.getController();
+                controller.setSaleTransaction(saleTransaction);
+            } catch (Exception exc) {
+                view.addErrorMessage(exc.getMessage());
+            }
             }
         });
     }
@@ -95,11 +94,11 @@ public class SaleTransactionController extends Controller {
         return Double.valueOf(quantity);
     }
 
-    private int getCode(String code) throws CodeReadOutException {
+    private int getCode(String code) throws CodeReadingException {
         try {
             return Integer.parseInt(code);
         } catch(NumberFormatException exc) {
-            throw new CodeReadOutException(ExceptionsLabels.CODE_READ_OUT_ERROR);
+            throw new CodeReadingException(Model.getString("CODE_READING_ERROR"));
         }
 
     }

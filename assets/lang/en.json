@@ -7,9 +7,30 @@
   "CACHE_SUCCESS": "Successfully parsed cached data!",
   "CACHE_FAILURE": "Failed on parsing cached data!",
 
-  "START_NEW_SALE_TRANSACTION": "New sale transaction",
+  "START_NEW_SALE_TRANSACTION" : "New sale transaction",
+  "LOGOUT" : "Logout",
 
+  "PRODUCT_CODE" : "Product code",
+  "DISCOUNT_CODE" : "Discount code",
+  "QUANTITY" : "Quantity",
+  "ADD_PRODUCT" : "Add product",
+  "ADD_DISCOUNT" : "Add discount",
+  "PAY" : "Pay",
   "TOTAL": "Total",
   "PAY_BY_CASH": "Pay by cash",
-  "PAY_WITH_CARD": "Pay with credit card"
+  "PAY_WITH_CARD": "Pay with credit card",
+
+  "PRODUCT_NOT_FOUND" : "Product not found",
+  "DISCOUNT_NOT_FOUND" : "Discount not found",
+  "DISCOUNT_OVERFLOW" : "Discount overflow",
+  "CODE_READING_ERROR" : "Code reading error",
+
+  "LOGIN" : "Login",
+  "PASSWORD" : "Password",
+  "LOGIN_TO_MANY_ERRORS" : "Login limit exceeded",
+  "LOGIN_INPUTS_NOT_FILLED" : "Fill all inputs",
+  "LOGIN_INVALID" : "Invalid login data",
+  "LOGIN_SUCCESS" : "Login succeeded",
+
+  "ERROR" : "Error"
 }
