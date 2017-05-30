@@ -48,7 +48,7 @@ public final class SaleTransactionView extends View {
         }
 
         if (!discountsMachine.getDiscounts().isEmpty()) {
-            inner.add("ZNIŻKI:").expandX().left();
+            inner.add(Model.getString("DISCOUNTS") + ":").expandX().left();
             inner.add("").colspan(COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT - 1);
             inner.row();
 
@@ -68,7 +68,7 @@ public final class SaleTransactionView extends View {
                 }
             }
         }
-        inner.add("Suma").padTop(PAD_BIG).expandX().left();
+        inner.add(Model.getString("TOTAL") + ":").padTop(PAD_BIG).expandX().left();
         inner.add("").colspan(COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT - COLUMNS_COUNT_PRODUCTS_LIST_SUM_ROW);
         inner.add(LocalizationMachine.formatPrice(priceTotal, true)).padTop(PAD_BIG).expandX().right();
         inner.row();
@@ -120,7 +120,7 @@ public final class SaleTransactionView extends View {
 
         menu.row();
 
-        TextButton endButton = new TextButton(Model.getString("PAY"), skin);
+        TextButton endButton = new TextButton(Model.getString("GOTO_PAYMENT"), skin);
         menu.add(endButton).colspan(COLUMNS_COUNT_MENU)
                 .fillX().spaceTop(PAD_SMALL);
 

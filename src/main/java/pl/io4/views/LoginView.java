@@ -68,7 +68,7 @@ public final class LoginView extends View {
         Skin skin = getSkin();
 
         login = new TextField("", skin);
-        login.setMessageText(Model.getString("LOGIN"));
+        login.setMessageText(Model.getString("USERNAME"));
         login.setMaxLength(INPUT_MAX_LENGTH);
         login.getStyle().background.setLeftWidth(PAD_SMALL);
 

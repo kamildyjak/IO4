@@ -3,6 +3,7 @@ package pl.io4;
 import com.badlogic.gdx.Game;
 import pl.io4.controllers.Controller;
 import pl.io4.controllers.LoadingController;
+import pl.io4.model.Model;
 import pl.io4.views.LoadingView;
 import pl.io4.views.View;
 
@@ -42,12 +43,21 @@ public final class NextGen extends Game {
         }
     }
 
+    @Override
+    public void render() {
+        super.render();
+    }
+
+    @Override
     public void resize(int width, int height) {
+        super.resize(width, height);
         view.resize(width, height);
     }
 
+    @Override
     public void dispose() {
+        super.dispose();
         view.dispose();
-        //Model.cacheData();
+        Model.cacheData();
     }
 }

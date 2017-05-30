@@ -3,13 +3,15 @@ package pl.io4.model.machines;
 import com.badlogic.gdx.Gdx;
 import java.text.DecimalFormat;
 import org.json.JSONObject;
+import pl.io4.model.cachable.CachableObject;
 
 /**
  * Created by Zax37 on 19.05.2017.
  */
-public final class LocalizationMachine {
+public final class LocalizationMachine extends CachableObject {
     private JSONObject strings;
     private static final String CURRENCY_SYMBOL = " zł";
+    private String currentLanguage;
 
     public LocalizationMachine() {
         setLanguage("en");
@@ -23,6 +25,7 @@ public final class LocalizationMachine {
         String file = Gdx.files.internal("lang/" + lang + ".json")
                 .readString();
         strings = new JSONObject(file);
+        currentLanguage = lang;
     }
 
     public static String formatQuantity(double quantity) {
@@ -43,5 +46,17 @@ public final class LocalizationMachine {
 
     public static String getCurrencySymbol() {
         return CURRENCY_SYMBOL;
+    }
+
+    @Override
+    public JSONObject cache() {
+        JSONObject ret = new JSONObject();
+        ret.put("lang", currentLanguage);
+        return ret;
+    }
+
+    @Override
+    public void load(JSONObject data) {
+        setLanguage(data.getString("lang"));
     }
 }

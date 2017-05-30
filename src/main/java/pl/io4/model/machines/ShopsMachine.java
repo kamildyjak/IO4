@@ -1,10 +1,12 @@
 package pl.io4.model.machines;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONObject;
 import pl.io4.model.cachable.CachableArrayList;
 import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
+import pl.io4.model.entities.Employee;
 import pl.io4.model.entities.Shop;
 
 /**

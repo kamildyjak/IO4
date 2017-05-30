@@ -18,7 +18,6 @@ import pl.io4.views.elements.AnimationDrawable;
  */
 
 public final class LoadingView extends View {
-    private TextButton button;
     private AnimatedActor animation;
 
     private static final float ANIMATION_SPEED = 2.5f;

@@ -10,7 +10,6 @@ import pl.io4.model.entities.Product;
 import pl.io4.model.exceptions.CodeReadingException;
 import pl.io4.model.machines.ProductsMachine;
 import pl.io4.model.transactions.SaleTransaction;
-import pl.io4.model.wrappers.ReceiptGenerator1;
 import pl.io4.views.PaymentView;
 import pl.io4.views.SaleTransactionView;
 
@@ -101,5 +100,16 @@ public class SaleTransactionController extends Controller {
             throw new CodeReadingException(Model.getString("CODE_READING_ERROR"));
         }
 
+    }
+
+    void setSaleTransaction(SaleTransaction saleTransaction) {
+        this.saleTransaction = saleTransaction;
+        view.setProductsList(
+                saleTransaction.getProductsList(),
+                saleTransaction.getDiscountsMachine(),
+                saleTransaction.calculateTotalPrice()
+        );
+        ScrollPane scroll = getElement("scroll");
+        scroll.setScrollPercentY(TO_BOTTOM);
     }
 }

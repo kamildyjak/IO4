@@ -113,7 +113,7 @@ public abstract class View implements Screen {
     public final void addErrorMessage(String message) {
         Dialog popup = new Dialog(Model.getString("ERROR"), getSkin());
         popup.text(message).pad(PAD_BIG, PAD_BIG, PAD_BIG, PAD_BIG);
-        popup.button("OK");
+        popup.button(Model.getString("OK"));
         popup.background("gray");
         popup.show(stage);
     }
