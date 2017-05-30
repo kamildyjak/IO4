@@ -7,12 +7,11 @@ import pl.io4.model.transactions.TransactionItem;
 /**
  * Created by Marcin on 28.05.2017.
  */
-public class ReceiptGenerator1 implements ReceiptGenerator {
-
+public final class ReceiptGenerator1 implements ReceiptGenerator {
     @Override
     public void generateReceipt(SaleTransaction transaction) {
         String receiptText = "";
-        for(TransactionItem item : transaction.getProductsList()) {
+        for (TransactionItem item : transaction.getProductsList()) {
             receiptText += item.toString();
             receiptText += "\n";
         }

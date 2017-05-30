@@ -25,7 +25,7 @@ public final class DiscountsMachine extends CachableObject {
         return discounts;
     }
 
-    public Discount getDiscount(int id) throws DiscountNotFoundException{
+    public Discount getDiscount(int id) throws DiscountNotFoundException {
         return discounts
                 .stream()
                 .filter(d -> d.getId() == id)

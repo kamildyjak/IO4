@@ -96,13 +96,13 @@ public class SaleTransactionController extends Controller {
     private int getCode(String code) throws CodeReadingException {
         try {
             return Integer.parseInt(code);
-        } catch(NumberFormatException exc) {
+        } catch (NumberFormatException exc) {
             throw new CodeReadingException(Model.getString("CODE_READING_ERROR"));
         }
 
     }
 
-    void setSaleTransaction(SaleTransaction saleTransaction) {
+    final void setSaleTransaction(SaleTransaction saleTransaction) {
         this.saleTransaction = saleTransaction;
         view.setProductsList(
                 saleTransaction.getProductsList(),

@@ -90,8 +90,8 @@ public final class PaymentView extends View {
 
     public void showCashBack(double amount) {
         inner.clear();
-        Label label = new Label(Model.getString("PAY_GIVE_OUT") + ": " +
-                LocalizationMachine.formatPrice(amount, true), skin);
+        Label label = new Label(Model.getString("PAY_GIVE_OUT") + ": "
+                + LocalizationMachine.formatPrice(amount, true), skin);
         inner.add(label).fillX();
         inner.row();
         TextButton finalize = new TextButton(Model.getString("PAY_FINALIZE"), skin);

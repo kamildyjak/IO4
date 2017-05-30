@@ -36,7 +36,6 @@ public final class PaymentController extends Controller {
                 } catch (NoSuchElementException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
@@ -55,7 +54,7 @@ public final class PaymentController extends Controller {
                                 TextField cash = getElement("acceptCash");
                                 double paid = Double.parseDouble(cash.getText());
                                 double price = saleTransaction.calculateTotalPrice();
-                                if(paid < price) {
+                                if (paid < price) {
                                     view.addErrorMessage(Model.getString("PAYMENT_DOES_NOT_COVER_VALUE"));
                                 } else {
                                     view.showCashBack(paid - price);

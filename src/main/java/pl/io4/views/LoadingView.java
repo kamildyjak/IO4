@@ -7,9 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import pl.io4.model.Model;
 import out.parsers.GifDecoder;
+import pl.io4.model.Model;
 import pl.io4.views.elements.AnimatedActor;
 import pl.io4.views.elements.AnimationDrawable;
 

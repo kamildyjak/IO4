@@ -13,12 +13,12 @@ public final class LocalizationMachine extends CachableObject {
     private static final String CURRENCY_SYMBOL = " zł";
     private String currentLanguage;
 
-    public LocalizationMachine() {
-        setLanguage("en");
-    }
-
     public String getString(String string) {
-        return strings.get(string).toString();
+        try {
+            return strings.get(string).toString();
+        } catch (NullPointerException e) {
+            return string;
+        }
     }
 
     public void setLanguage(String lang) {

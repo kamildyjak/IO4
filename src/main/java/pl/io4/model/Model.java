@@ -110,15 +110,17 @@ public final class Model {
 
     public static void updatePermissions() throws EmployeePermissionException {
         currentUserPermissions = pem.getPermissionsOf(currentlyLoggedInUser);
-        if(currentUserPermissions.isEmpty()) {
+        if (currentUserPermissions.isEmpty()) {
             throw new EmployeePermissionException(getString("EMPLOYEE_NOT_ASSIGNED_TO_SHOP"));
-        } else if(currentUserPermissions.size() == 1) {
+        } else if (currentUserPermissions.size() == 1) {
             currentlyChosenShop = currentUserPermissions.get(0).getShop();
         }
     }
 
     public static boolean cacheData() {
-        if(!changes) return false;
+        if (!changes) {
+            return false;
+        }
 
         JSONObject model = new JSONObject();
         model.put("LocalizationMachine", stm.cache());

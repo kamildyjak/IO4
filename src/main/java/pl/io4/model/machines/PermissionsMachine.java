@@ -8,7 +8,6 @@ import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Employee;
 import pl.io4.model.entities.Permissions;
-import pl.io4.model.entities.Shop;
 
 /**
  * Created by Zax37 on 21.05.2017.

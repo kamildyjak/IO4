@@ -32,8 +32,7 @@ public final class TransactionItem {
     }
 
     public String toString() {
-        return getProduct().getName() + " * " +
-                getQuantity() + " = " +
-                getTotalPrice();
+        return getProduct().getName() + " * "
+                + getQuantity() + " = " + getTotalPrice();
     }
 }
