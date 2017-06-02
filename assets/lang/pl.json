@@ -1,0 +1,48 @@
+{
+  "DATABASE_CONNECTING": "Łączenie z bazą danych...",
+  "DATABASE_CONNECT_SUCCESS": "Połączono z bazą danych!",
+  "DATABASE_CONNECT_FAILURE": "Nie udało się połączyć z bazą danych!",
+
+  "CACHE_LOADING": "Parsowanie zapisanych danych...",
+  "CACHE_SUCCESS": "Prawidłowo odczytano zapisane dane!",
+  "CACHE_FAILURE": "Nie udało się odczytać zapisanych danych!",
+
+  "START_NEW_SALE_TRANSACTION": "Nowa transakcja sprzedaży",
+  "LOGOUT": "Wyloguj się",
+
+  "SHOP": "Sklep",
+
+  "PRODUCT_CODE": "Kod produktu",
+  "DISCOUNT_CODE": "Kod zniżki",
+  "QUANTITY": "Ilość",
+  "ADD_PRODUCT": "Dodaj produkt",
+  "ADD_DISCOUNT": "Dodaj zniżkę",
+  "GOTO_PAYMENT": "Przejdź do zapłaty",
+  "TOTAL": "Suma",
+  "PAY_BY_CASH": "Zapłata gotówką",
+  "PAY_WITH_CARD": "Zapłata kartą kredytową",
+  "PAY_RETURN_SALE": "Anuluj płatność",
+  "PAY_RETURN_SELECT_METHOD": "Wybierz inną metodę",
+  "PAYMENT_DOES_NOT_COVER_VALUE": "Płatność nie pokrywa wartości sprzedaży",
+  "PAY_GIVE_OUT": "Wydaj resztę",
+  "PAY_FINALIZE": "Sfinalizuj transakcję",
+
+  "PRODUCT_NOT_FOUND": "Nie znaleziono produktu",
+  "DISCOUNT_NOT_FOUND": "Nie znaleziono zniżki",
+  "DISCOUNT_OVERFLOW": "Nadmiar zniżek",
+  "CODE_READING_ERROR": "Błąd odczytu kodu",
+  "EMPLOYEE_NOT_ASSIGNED_TO_SHOP": "Aktualnie zalogowany użytkownik nie posiada przypisanych uprawnień",
+
+  "USERNAME": "Login",
+  "PASSWORD": "Hasło",
+  "LOGIN": "Zaloguj się",
+  "LOGIN_TO_MANY_ERRORS": "Przekroczono ilość dopuszczalnych prób",
+  "LOGIN_INPUTS_NOT_FILLED": "Wypełnij wszystkie pola",
+  "LOGIN_INVALID": "Nieprawidłowe dane logowania",
+  "LOGIN_SUCCESS": "Zalogowano prawidłowo",
+
+  "ERROR": "Błąd",
+  "OK": "Ok",
+
+  "DISCOUNTS": "Zniżki"
+}
