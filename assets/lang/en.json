@@ -1,0 +1,48 @@
+{
+  "DATABASE_CONNECTING": "Connecting to database...",
+  "DATABASE_CONNECT_SUCCESS": "Connected to database!",
+  "DATABASE_CONNECT_FAILURE": "NOT connected to database!",
+
+  "CACHE_LOADING": "Parsing cached data...",
+  "CACHE_SUCCESS": "Successfully parsed cached data!",
+  "CACHE_FAILURE": "Failed on parsing cached data!",
+
+  "START_NEW_SALE_TRANSACTION": "New sale transaction",
+  "LOGOUT": "Logout",
+
+  "SHOP": "Shop",
+
+  "PRODUCT_CODE": "Product code",
+  "DISCOUNT_CODE": "Discount code",
+  "QUANTITY": "Quantity",
+  "ADD_PRODUCT": "Add product",
+  "ADD_DISCOUNT": "Add discount",
+  "GOTO_PAYMENT": "Go to payment",
+  "TOTAL": "Total",
+  "PAY_BY_CASH": "Pay by cash",
+  "PAY_WITH_CARD": "Pay with credit card",
+  "PAY_RETURN_SALE": "Cancel payment",
+  "PAY_RETURN_SELECT_METHOD": "Select other method",
+  "PAYMENT_DOES_NOT_COVER_VALUE": "Payment does not cover the sale value",
+  "PAY_GIVE_OUT": "Give out",
+  "PAY_FINALIZE": "Finalize transaction",
+
+  "PRODUCT_NOT_FOUND": "Product not found",
+  "DISCOUNT_NOT_FOUND": "Discount not found",
+  "DISCOUNT_OVERFLOW": "Discount overflow",
+  "CODE_READING_ERROR": "Code reading error",
+  "EMPLOYEE_NOT_ASSIGNED_TO_SHOP": "Currently logged in user got no assigned permissions",
+
+  "USERNAME": "Login",
+  "PASSWORD": "Password",
+  "LOGIN": "Login",
+  "LOGIN_TO_MANY_ERRORS": "Login limit exceeded",
+  "LOGIN_INPUTS_NOT_FILLED": "Fill all inputs",
+  "LOGIN_INVALID": "Invalid login data",
+  "LOGIN_SUCCESS": "Login succeeded",
+
+  "ERROR": "Error",
+  "OK": "Ok",
+
+  "DISCOUNTS": "Discounts"
+}
