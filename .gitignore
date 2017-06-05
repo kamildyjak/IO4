@@ -7,7 +7,3 @@
 #output
 *.class
 target
-src/pl/io4/controllers/LoginController.java
-src/pl/io4/views/LoginView.java
-src/pl/io4/controllers/LoginController.java
-src/pl/io4/views/LoginView.java
