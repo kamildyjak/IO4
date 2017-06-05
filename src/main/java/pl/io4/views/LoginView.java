@@ -31,10 +31,6 @@ public final class LoginView extends View {
         return password.getText();
     }
 
-    public void tooManyErrors() {
-        inner.clear();
-        inner.add(Model.getString("LOGIN_TO_MANY_ERRORS")).center();
-    }
 
     public void inputsNotFilled() {
         inner.clear();
@@ -46,6 +42,13 @@ public final class LoginView extends View {
     public void loginError() {
         inner.clear();
         inner.add(Model.getString("LOGIN_ERROR")).center();
+        inner.row();
+        createLoginInputs();
+    }
+
+    public void tooManyErrors() {
+        inner.clear();
+        inner.add(Model.getString("LOGIN_BLOCKED")).center();
         inner.row();
         createLoginInputs();
     }

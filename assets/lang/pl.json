@@ -38,7 +38,8 @@
   "LOGIN": "Zaloguj się",
   "LOGIN_TO_MANY_ERRORS": "Przekroczono ilość dopuszczalnych prób",
   "LOGIN_INPUTS_NOT_FILLED": "Wypełnij wszystkie pola",
-  "LOGIN_INVALID": "Nieprawidłowe dane logowania",
+  "LOGIN_ERROR": "Nieprawidłowe dane logowania",
+  "LOGIN_BLOCKED": "Logowanie zostało zablokowane na 30 minut",
   "LOGIN_SUCCESS": "Zalogowano prawidłowo",
 
   "ERROR": "Błąd",

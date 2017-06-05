@@ -20,6 +20,7 @@ public final class LoginController extends Controller {
     private LoginMachine loginMachine;
     private boolean succes;
     private int count;
+    private boolean stop;
 
     static final int MAX_ERRORS_COUNT = 4;
 
@@ -33,33 +34,44 @@ public final class LoginController extends Controller {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (count > MAX_ERRORS_COUNT) {
+                    //loginMachine.blockLogin(login);
                     view.tooManyErrors();
-                    return;
-                }
-                login = view.getLogin();
-                password = view.getPassword();
-                if (login == null || password == null) {
-                    view.inputsNotFilled();
-                    count++;
-                } else {
-                    succes = loginMachine.tryToLogIn(login, password);
-                    if (succes) {
-                        view.loginSucces();
-                        try {
-                            Model.updatePermissions();
-                            if (Model.needsShopChoosing()) {
-                                app.switchTo(ShopsListView.class,
-                                        ShopsListController.class);
-                            } else {
-                                app.switchTo(ActionsMenuView.class,
-                                        ActionsMenuController.class);
+                    count = 0;
+                }else{
+                    login = view.getLogin();
+                    password = view.getPassword();
+
+                    if (login.equals("") || password.equals("")) {
+                        view.inputsNotFilled();
+                    }else{
+                        if(loginMachine.checkLogin(login)){
+                            if(loginMachine.checkIfLoginBlocked(login)){
+                                view.tooManyErrors();
+                            }else{
+                                succes = loginMachine.tryToLogIn(login, password);
+                                if (succes) {
+                                    view.loginSucces();
+                                    try {
+                                        Model.updatePermissions();
+                                        if (Model.needsShopChoosing()) {
+                                            app.switchTo(ShopsListView.class,
+                                                    ShopsListController.class);
+                                        } else {
+                                            app.switchTo(ActionsMenuView.class,
+                                                    ActionsMenuController.class);
+                                        }
+                                    } catch (EmployeePermissionException e) {
+                                        view.addErrorMessage(e.getMessage());
+                                    }
+                                } else{
+                                    view.loginError();
+                                    count++;
+                                }
                             }
-                        } catch (EmployeePermissionException e) {
-                            view.addErrorMessage(e.getMessage());
+                        }else {
+                            view.loginError();
+                            count++;
                         }
-                    } else {
-                        view.loginError();
-                        count++;
                     }
                 }
             }

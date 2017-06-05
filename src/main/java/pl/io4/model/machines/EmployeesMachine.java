@@ -1,11 +1,12 @@
 package pl.io4.model.machines;
 
-import java.util.List;
 import org.json.JSONObject;
 import pl.io4.model.cachable.CachableArrayList;
 import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Employee;
+
+import java.util.List;
 
 /**
  * Created by Zax37 on 21.05.2017.
@@ -23,7 +24,7 @@ public final class EmployeesMachine extends CachableObject {
 
     public Employee getEmployee(String pesel) {
         for (Employee employee : employees) {
-            if (employee.getPesel().equals(pesel)) {
+            if (employee.getPesel().equals(pesel)){
                 return employee;
             }
         }

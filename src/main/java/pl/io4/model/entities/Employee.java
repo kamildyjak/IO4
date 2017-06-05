@@ -1,12 +1,9 @@
 package pl.io4.model.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import org.json.JSONObject;
 import pl.io4.model.cachable.CachableObject;
+
+import javax.persistence.*;
 
 /**
  * Created by jacob on 25.04.2017.
@@ -20,23 +17,26 @@ public final class Employee extends CachableObject {
     private String email;
     private String hashSha1;
     private String hashMd5;
+    private String loginBlocked;
 
     private static final int LENGTH_PESEL = 11;
     private static final int LENGTH_MAX = 2147483647;
     private static final int LENGTH_SHA1 = 40;
     private static final int LENGTH_MD5 = 32;
+    private static final int LENGTH_LOGIN = 2;
 
     public Employee() {
 
     }
 
-    public Employee(String pesel, String firstName, String lastName, String email, String hs, String hmd) {
+    public Employee(String pesel, String firstName, String lastName, String email, String hs, String hmd, String loginBlocked) {
         this.pesel = pesel;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.hashSha1 = hs;
         this.hashMd5 = hmd;
+        this.loginBlocked = loginBlocked;
     }
 
     @Id
@@ -99,6 +99,16 @@ public final class Employee extends CachableObject {
         this.hashMd5 = hashMd5;
     }
 
+    @Basic
+    @Column(name = "loginBlocked", nullable = false, length = LENGTH_LOGIN)
+    public String getLoginBlocked() {
+        return loginBlocked;
+    }
+
+    public void setLoginBlocked(String loginBlocked) {
+        this.loginBlocked = loginBlocked;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -147,6 +157,7 @@ public final class Employee extends CachableObject {
         ret.put("lastName", this.lastName);
         ret.put("email", this.email);
         ret.put("hash", this.hashSha1);
+        ret.put("loginBlocked", this.loginBlocked);
         return ret;
     }
 
@@ -157,5 +168,6 @@ public final class Employee extends CachableObject {
         this.lastName = data.getString("lastName");
         this.email = data.getString("email");
         this.hashSha1 = data.getString("hash");
+        this.loginBlocked = data.getString("loginBlocked");
     }
 }

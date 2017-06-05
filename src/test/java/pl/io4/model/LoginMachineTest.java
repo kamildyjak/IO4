@@ -1,14 +1,12 @@
 package pl.io4.model;
 
 import org.junit.Test;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import pl.io4.model.entities.Employee;
 import pl.io4.model.machines.EmployeesMachine;
 import pl.io4.model.machines.LoginMachine;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Zax37 on 22.03.2017.
@@ -21,7 +19,7 @@ public class LoginMachineTest {
 
     static final Employee testEmployee = new Employee(
             "12345678910", "Andrzej", "Testowy",
-            "test@gmail.com", sha1, md5 );
+            "test@gmail.com", sha1, md5, "" );
 
     static final LoginMachine lm = new LoginMachine();
     static final EmployeesMachine em = new EmployeesMachine();

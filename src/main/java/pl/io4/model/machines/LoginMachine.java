@@ -1,7 +1,5 @@
 package pl.io4.model.machines;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.json.JSONObject;
 import pl.io4.model.Model;
 import pl.io4.model.cachable.CachableEnumSet;
@@ -9,6 +7,12 @@ import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Employee;
 import pl.io4.model.exceptions.IncorrectEmployeeDataException;
 import pl.io4.model.exceptions.UnknownMethodException;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Zax37 on 22.03.2017.
@@ -75,6 +79,46 @@ public final class LoginMachine extends CachableObject {
             }
         }
         return false;
+    }
+
+    public boolean checkLogin(String login){
+        if (correctLogins.containsKey(login)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean checkIfLoginBlocked(String login){
+        EmployeesMachine employeesMachine = new EmployeesMachine();
+        Employee employee = employeesMachine.getEmployee(login);
+
+        String lastLoginError = employee.getLoginBlocked();
+
+        int lastLoginErrorMinute = Integer.parseInt(lastLoginError);
+
+        DateFormat dateFormat = new SimpleDateFormat("mm");
+        Date date = new Date();
+        String currentTime = dateFormat.format(date);
+
+        int currentMinute = Integer.parseInt(currentTime);
+
+        if(currentMinute < lastLoginErrorMinute || currentMinute - lastLoginErrorMinute > 30){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public void blockLogin(String login){
+        EmployeesMachine employeesMachine = new EmployeesMachine();
+        Employee employee = employeesMachine.getEmployee(login);
+
+        DateFormat dateFormat = new SimpleDateFormat("mm");
+        Date date = new Date();
+        String currentTime = dateFormat.format(date);
+
+        employee.setLoginBlocked(currentTime);
     }
 
     public void addLoginMethod(LoginMethod loginMethod) {
