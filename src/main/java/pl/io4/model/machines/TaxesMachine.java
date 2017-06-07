@@ -6,6 +6,7 @@ import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Product;
 import pl.io4.model.entities.TaxRule;
+import pl.io4.model.exceptions.TaxSystemConnectionException;
 import pl.io4.model.wrappers.TaxCalculator;
 import pl.io4.model.wrappers.TaxCalculator1;
 
@@ -29,7 +30,7 @@ public final class TaxesMachine extends CachableObject {
         return null;
     }
 
-    public static double getTax(Product product) {
+    public static double getTax(Product product) throws TaxSystemConnectionException {
         return TAX_CALCULATOR.calculateTax(product);
     }
 
