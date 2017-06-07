@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.io4.NextGen;
 import pl.io4.model.Model;
 import pl.io4.model.exceptions.EmployeePermissionException;
+import pl.io4.model.exceptions.IncorrectEmployeeDataException;
+import pl.io4.model.exceptions.UnknownMethodException;
 import pl.io4.model.machines.LoginMachine;
 import pl.io4.views.ActionsMenuView;
 import pl.io4.views.LoginView;
@@ -24,7 +26,7 @@ public final class LoginController extends Controller {
 
     static final int MAX_ERRORS_COUNT = 4;
 
-    public LoginController(NextGen app) throws NoSuchElementException {
+    public LoginController(NextGen app) throws NoSuchElementException, IncorrectEmployeeDataException, UnknownMethodException {
         super(app);
         view = getView();
         loginMachine = Model.getLoginMachine();
