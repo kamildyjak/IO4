@@ -2,8 +2,12 @@ package pl.io4.model;
 
 import org.json.JSONObject;
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import pl.io4.model.cachable.CachableArrayList;
+import pl.io4.model.cachable.CachableEnumSet;
 import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.*;
@@ -12,7 +16,42 @@ import pl.io4.model.machines.*;
 /**
  * Created by Zax37 on 20.05.2017.
  */
+
+
+
+
 public class CachableTest {
+    static private JSONObject emptyEmployeesMachineCache;
+    static private JSONObject emptyLoginMachineCache;
+    static private JSONObject emptyShopsMachineCache;
+    static private JSONObject emptyPermissionsMachineCache;
+    static private JSONObject emptyCategoriesMachineCache;
+    static private JSONObject emptyProductsMachineCache;
+    static private JSONObject emptyDiscountsMachineCache;
+
+    @BeforeClass
+    static public void createEmptyCaches() {
+        emptyEmployeesMachineCache = Model.getEmployeesMachine().cache();
+        emptyLoginMachineCache = Model.getLoginMachine().cache();
+        emptyShopsMachineCache = Model.getShopsMachine().cache();
+        emptyPermissionsMachineCache = Model.getPermissionsMachine().cache();
+        emptyCategoriesMachineCache = Model.getCategoriesMachine().cache();
+        emptyProductsMachineCache = Model.getProductsMachine().cache();
+        emptyDiscountsMachineCache = Model.getDiscountsMachine().cache();
+    }
+
+    @Before
+    public void ensureEmptyModel() {
+        // ensure that model is just as new
+        Model.getEmployeesMachine().load(emptyEmployeesMachineCache);
+        Model.getLoginMachine().load(emptyLoginMachineCache);
+        Model.getShopsMachine().load(emptyShopsMachineCache);
+        Model.getPermissionsMachine().load(emptyPermissionsMachineCache);
+        Model.getCategoriesMachine().load(emptyCategoriesMachineCache);
+        Model.getProductsMachine().load(emptyProductsMachineCache);
+        Model.getDiscountsMachine().load(emptyDiscountsMachineCache);
+    }
+
     class SimpleTypesTestContainer extends CachableObject {
         public int integerValue;
         public double doubleValue;
@@ -56,9 +95,10 @@ public class CachableTest {
         }
     }
 
-    class IntegerTypeTestContainer extends CachableObject {
+    static public class IntegerTypeTestContainer extends CachableObject {
         public int v1, v2, v3;
-        IntegerTypeTestContainer(int s1, int s2, int s3) {
+        public IntegerTypeTestContainer() {}
+        public IntegerTypeTestContainer(int s1, int s2, int s3) {
             v1 = s1;
             v2 = s2;
             v3 = s3;
@@ -90,9 +130,12 @@ public class CachableTest {
         }
     }
 
-    class FloatingTypeTestContainer extends CachableObject {
+    static public class FloatingTypeTestContainer extends CachableObject {
         public double v1, v2, v3;
-        FloatingTypeTestContainer(double s1, double s2, double s3) {
+        public FloatingTypeTestContainer() {
+            v1 = -1;
+        }
+        public FloatingTypeTestContainer(double s1, double s2, double s3) {
             v1 = s1;
             v2 = s2;
             v3 = s3;
@@ -124,9 +167,10 @@ public class CachableTest {
         }
     }
 
-    class StringTestContainer extends CachableObject {
+    static public class StringTestContainer extends CachableObject {
         public String v1, v2, v3;
-        StringTestContainer(String s1, String s2, String s3) {
+        public StringTestContainer() {}
+        public StringTestContainer(String s1, String s2, String s3) {
             v1 = s1;
             v2 = s2;
             v3 = s3;
@@ -535,6 +579,23 @@ public class CachableTest {
         assertEquals(em2, em1);
     }
 
+    enum TestEnum {
+        uno, dos, tres
+    }
+    @Test
+    public void CachableEnumSetEqualsTest() {
+        CachableEnumSet<TestEnum> set1 = new CachableEnumSet<TestEnum>(TestEnum.class);
+        CachableEnumSet<TestEnum> set2 = new CachableEnumSet<TestEnum>(TestEnum.class);
+        set1.add(TestEnum.uno);
+        set2.add(TestEnum.uno);
+        set1.add(TestEnum.tres);
+        set2.add(TestEnum.tres);
+        set1.add(TestEnum.dos);
+        set2.add(TestEnum.dos);
+
+        assertEquals(set1, set2);
+    }
+
     @Test
     public void EqualsLoginMachineCacheTest() {
         LoginMachine lm1 = new LoginMachine();
@@ -655,10 +716,13 @@ public class CachableTest {
         c1.setName("Nabiał");
         c2.setId(33333333);
         c2.setName("Warzywa");
+        Model.getCategoriesMachine().addCategory(c1);
+        Model.getCategoriesMachine().addCategory(c1);
         TaxRule t1 = new TaxRule();
         t1.setId(0);
         t1.setPercent((byte)23);
         t1.setSymbol("vat?");
+        Model.getTaxesMachine().addTaxRule(t1);
         o1.addProduct(new Product(0, "Mleko Łaciate", c1, t1, 2.35));
         o1.addProduct(new Product(1, "Masło", c1, t1, 12.35));
         o1.addProduct(new Product(2, "Ser salami", c1, t1, 12.35));
@@ -702,6 +766,18 @@ public class CachableTest {
         o2.load(cache);
 
         assertEquals(o2, o1);
+    }
+
+    @Test
+    public void EmptyModelTest() {
+        // tests if model is indeed empty at the start of a test
+        assertEquals(Model.getEmployeesMachine(), new EmployeesMachine());
+        assertEquals(Model.getLoginMachine(), new LoginMachine());
+        assertEquals(Model.getShopsMachine(), new ShopsMachine());
+        assertEquals(Model.getPermissionsMachine(), new PermissionsMachine());
+        assertEquals(Model.getCategoriesMachine(), new CategoriesMachine());
+        assertEquals(Model.getProductsMachine(), new ProductsMachine());
+        assertEquals(Model.getDiscountsMachine(), new DiscountsMachine());
     }
 
     @Test
@@ -785,13 +861,6 @@ public class CachableTest {
         pm_clean.addPermission(p2);
         pm_clean.addPermission(p3);
 
-        CategoriesMachine catm = Model.getCategoriesMachine();
-        catm.addCategory(c1);
-        catm.addCategory(c2);
-        CategoriesMachine catm_clean = new CategoriesMachine();
-        catm_clean.addCategory(c1);
-        catm_clean.addCategory(c2);
-
         ProductsMachine prodm = Model.getProductsMachine();
         prodm.addProduct(prod1);
         prodm.addProduct(prod2);
@@ -810,23 +879,19 @@ public class CachableTest {
             d1 = new Discount(0, true, 5.);
             d2 = new Discount(1, false, 0.5);
             dm.add(d1, 123.);
-            dm.add(d2, 0.0000543);
+            dm.add(d2, 5.643);
             dm_clean.add(d1, 123.);
-            dm_clean.add(d2, 0.0000543);
+            dm_clean.add(d2, 5.643);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-
-        //Model.cacheData();
-        //Model.loadData();
 
         assertEquals(cm, cm_clean);
         assertEquals(em, em_clean);
         assertEquals(lm, lm_clean);
         assertEquals(sm, sm_clean);
         assertEquals(pm, pm_clean);
-        assertEquals(catm, catm_clean);
         assertEquals(prodm, prodm_clean);
         assertEquals(dm, dm_clean);
     }
@@ -912,13 +977,6 @@ public class CachableTest {
         pm_clean.addPermission(p2);
         pm_clean.addPermission(p3);
 
-        CategoriesMachine catm = Model.getCategoriesMachine();
-        catm.addCategory(c1);
-        catm.addCategory(c2);
-        CategoriesMachine catm_clean = new CategoriesMachine();
-        catm_clean.addCategory(c1);
-        catm_clean.addCategory(c2);
-
         ProductsMachine prodm = Model.getProductsMachine();
         prodm.addProduct(prod1);
         prodm.addProduct(prod2);
@@ -937,9 +995,9 @@ public class CachableTest {
             d1 = new Discount(0, true, 5.);
             d2 = new Discount(1, false, 0.5);
             dm.add(d1, 123.);
-            dm.add(d2, 0.0000543);
+            dm.add(d2, 5.643);
             dm_clean.add(d1, 123.);
-            dm_clean.add(d2, 0.0000543);
+            dm_clean.add(d2, 5.643);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -953,7 +1011,6 @@ public class CachableTest {
         assertEquals(lm, lm_clean);
         assertEquals(sm, sm_clean);
         assertEquals(pm, pm_clean);
-        assertEquals(catm, catm_clean);
         assertEquals(prodm, prodm_clean);
         assertEquals(dm, dm_clean);
     }

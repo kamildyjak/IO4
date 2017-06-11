@@ -21,6 +21,8 @@ public final class TaxesMachine extends CachableObject {
         taxRules = new CachableArrayList<>(TaxRule.class);
     }
 
+    public void addTaxRule(TaxRule tr) { taxRules.add(tr); }
+
     public TaxRule getTaxRule(int id) {
         for (TaxRule rule : taxRules) {
             if (rule.getId() == id) {
