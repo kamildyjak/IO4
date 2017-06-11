@@ -18,7 +18,7 @@ public final class PermissionsMachine extends CachableObject {
     public PermissionsMachine() {
         permissions = new CachableArrayList<>(Permissions.class);
     }
-    
+
     public void addPermission(Permissions permissions_) {
         permissions.add(permissions_);
     }

@@ -9,6 +9,15 @@ import pl.io4.model.exceptions.TaxSystemConnectionException;
  * Created by Marcin on 10.05.2017.
  */
 public final class TaxCalculator1 implements TaxCalculator {
+    public TaxCalculator1() {
+        Calc1.connect();
+    }
+
+    @Override
+    public void connect() {
+        if (Calc1.isConnected() == false)
+            Calc1.connect();
+    }
 
     @Override
     public double calculateTax(Product product) throws TaxSystemConnectionException {
