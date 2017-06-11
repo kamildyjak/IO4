@@ -57,6 +57,7 @@ public class LoadingController extends Controller {
                 db.start(new Runnable() { // Udało się połączyć
                     @Override
                     public void run() {
+                        db.end();
                         changeInfoString(Model.getString("DATABASE_CONNECT_SUCCESS"));
                         shortDelay();
                         Gdx.app.postRunnable(new Runnable() {

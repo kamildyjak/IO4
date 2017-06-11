@@ -2,13 +2,13 @@ package pl.io4.model.machines;
 
 import java.util.List;
 import org.json.JSONObject;
+import pl.io4.model.Model;
 import pl.io4.model.cachable.CachableArrayList;
 import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Discount;
 import pl.io4.model.exceptions.DiscountNotFoundException;
 import pl.io4.model.exceptions.DiscountOverflowException;
-import pl.io4.model.labels.ExceptionsLabels;
 
 /**
  * Created by Marcin on 27.03.2017.
@@ -25,27 +25,28 @@ public final class DiscountsMachine extends CachableObject {
         return discounts;
     }
 
-    public Discount getDiscount(int id) throws DiscountNotFoundException{
+    public Discount getDiscount(int id) throws DiscountNotFoundException {
         return discounts
                 .stream()
                 .filter(d -> d.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new DiscountNotFoundException(ExceptionsLabels.DISCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new DiscountNotFoundException(Model.getString("DISCOUNT_NOT_FOUND")));
     }
 
     public void add(Discount discount, double totalPrice) throws DiscountOverflowException {
         try {
             discounts.add(discount);
-            checkForOverflow(totalPrice);
+            checkForOverfow(totalPrice);
         } catch (DiscountOverflowException exc) {
             discounts.remove(discount);
             throw exc;
         }
     }
 
-    private void checkForOverflow(double totalPrice) throws DiscountOverflowException {
+
+    private void checkForOverfow(double totalPrice) throws DiscountOverflowException {
         if (calculateTotalDiscount(totalPrice) > totalPrice) {
-            throw new DiscountOverflowException(ExceptionsLabels.DISCOUNT_OVERFLOW);
+            throw new DiscountOverflowException(Model.getString("DISCOUNT_OVERFLOW"));
         }
     }
 

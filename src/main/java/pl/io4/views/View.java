@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import pl.io4.model.Model;
+
 import java.util.HashMap;
 
 /**
@@ -109,9 +111,9 @@ public abstract class View implements Screen {
     }
 
     public final void addErrorMessage(String message) {
-        Dialog popup = new Dialog("Błąd", getSkin());
+        Dialog popup = new Dialog(Model.getString("ERROR"), getSkin());
         popup.text(message).pad(PAD_BIG, PAD_BIG, PAD_BIG, PAD_BIG);
-        popup.button("OK");
+        popup.button(Model.getString("OK"));
         popup.background("gray");
         popup.show(stage);
     }

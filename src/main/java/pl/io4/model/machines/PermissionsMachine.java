@@ -1,9 +1,12 @@
 package pl.io4.model.machines;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONObject;
 import pl.io4.model.cachable.CachableArrayList;
 import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
+import pl.io4.model.entities.Employee;
 import pl.io4.model.entities.Permissions;
 
 /**
@@ -15,7 +18,7 @@ public final class PermissionsMachine extends CachableObject {
     public PermissionsMachine() {
         permissions = new CachableArrayList<>(Permissions.class);
     }
-
+    
     public void addPermission(Permissions permissions_) {
         permissions.add(permissions_);
     }
@@ -31,6 +34,16 @@ public final class PermissionsMachine extends CachableObject {
 
         PermissionsMachine that = (PermissionsMachine) o;
         return permissions.equals(that.permissions);
+    }
+
+    public List<Permissions> getPermissionsOf(Employee employee) {
+        List<Permissions> ret = new ArrayList<>();
+        for (Permissions rule : permissions) {
+            if (rule.getEmployee().equals(employee)) {
+                ret.add(rule);
+            }
+        }
+        return ret;
     }
 
     @Override

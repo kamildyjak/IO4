@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import pl.io4.NextGen;
+import pl.io4.model.Model;
+
 import static pl.io4.NextGen.V_HEIGHT;
 import static pl.io4.NextGen.V_WIDTH;
 
@@ -31,26 +33,26 @@ public final class LoginView extends View {
 
     public void tooManyErrors() {
         inner.clear();
-        inner.add("Przekroczyles limit prob").center();
+        inner.add(Model.getString("LOGIN_TO_MANY_ERRORS")).center();
     }
 
     public void inputsNotFilled() {
         inner.clear();
-        inner.add("Wypełnij wszystkie pola").center();
+        inner.add(Model.getString("LOGIN_INPUTS_NOT_FILLED")).center();
         inner.row();
         createLoginInputs();
     }
 
     public void loginError() {
         inner.clear();
-        inner.add("Wprowadziłeś błędne dane").center();
+        inner.add(Model.getString("LOGIN_ERROR")).center();
         inner.row();
         createLoginInputs();
     }
 
     public void loginSucces() {
         inner.clear();
-        inner.add("Poprawnie zalogowałeś się do systemu");
+        inner.add(Model.getString("LOGIN_SUCCESS"));
     }
 
     @Override
@@ -62,7 +64,7 @@ public final class LoginView extends View {
         ScrollPane scroll = new ScrollPane(inner);
         table.add(scroll).expand().left().bottom().width(V_WIDTH).height(V_HEIGHT);
 
-        submit = new TextButton("Zaloguj", skin);
+        submit = new TextButton(Model.getString("LOGIN"), skin);
         createLoginInputs();
     }
 
@@ -70,12 +72,12 @@ public final class LoginView extends View {
         Skin skin = getSkin();
 
         login = new TextField("", skin);
-        login.setMessageText("Login");
+        login.setMessageText(Model.getString("USERNAME"));
         login.setMaxLength(INPUT_MAX_LENGTH);
         login.getStyle().background.setLeftWidth(PAD_SMALL);
 
         password = new TextField("", skin);
-        password.setMessageText("Password");
+        password.setMessageText(Model.getString("PASSWORD"));
         password.setPasswordMode(true);
         password.setPasswordCharacter('*');
         password.setMaxLength(INPUT_MAX_LENGTH);

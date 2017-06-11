@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import java.util.List;
 import static pl.io4.NextGen.V_HEIGHT;
 import static pl.io4.NextGen.V_WIDTH;
+
+import pl.io4.model.Model;
 import pl.io4.model.entities.Discount;
 import pl.io4.model.entities.Product;
 import pl.io4.model.machines.DiscountsMachine;
@@ -46,7 +48,7 @@ public final class SaleTransactionView extends View {
         }
 
         if (!discountsMachine.getDiscounts().isEmpty()) {
-            inner.add("ZNIŻKI:").expandX().left();
+            inner.add(Model.getString("DISCOUNTS") + ":").expandX().left();
             inner.add("").colspan(COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT - 1);
             inner.row();
 
@@ -66,7 +68,7 @@ public final class SaleTransactionView extends View {
                 }
             }
         }
-        inner.add("Suma").padTop(PAD_BIG).expandX().left();
+        inner.add(Model.getString("TOTAL") + ":").padTop(PAD_BIG).expandX().left();
         inner.add("").colspan(COLUMNS_COUNT_PRODUCTS_LIST_DEFAULT - COLUMNS_COUNT_PRODUCTS_LIST_SUM_ROW);
         inner.add(LocalizationMachine.formatPrice(priceTotal, true)).padTop(PAD_BIG).expandX().right();
         inner.row();
@@ -87,38 +89,38 @@ public final class SaleTransactionView extends View {
         table.row();
 
         productCodeTextField = new TextField("", skin);
-        productCodeTextField.setMessageText("Kod produktu");
+        productCodeTextField.setMessageText(Model.getString("PRODUCT_CODE"));
         productCodeTextField.setMaxLength(INPUT_MAX_LENGTH);
         menu.add(productCodeTextField).spaceTop(PAD_SMALL);
 
         productQuantityTextField = new TextField("", skin);
-        productQuantityTextField.setMessageText("Ilość");
+        productQuantityTextField.setMessageText(Model.getString("QUANTITY"));
         productQuantityTextField.setMaxLength(INPUT_MAX_LENGTH);
         menu.add(productQuantityTextField).padLeft(PAD_SMALL).spaceTop(PAD_SMALL);
 
         menu.row();
 
-        TextButton addProductButton = new TextButton("Dodaj produkt", skin);
+        TextButton addProductButton = new TextButton(Model.getString("ADD_PRODUCT"), skin);
         menu.add(addProductButton).colspan(COLUMNS_COUNT_MENU)
                 .fillX().spaceTop(PAD_SMALL).spaceBottom(PAD_BIG);
 
         menu.row();
 
         discountCodeTextField = new TextField("", skin);
-        discountCodeTextField.setMessageText("Kod zniżki");
+        discountCodeTextField.setMessageText(Model.getString("DISCOUNT_CODE"));
         discountCodeTextField.setMaxLength(INPUT_MAX_LENGTH);
         menu.add(discountCodeTextField).colspan(COLUMNS_COUNT_MENU)
                 .fillX().spaceTop(PAD_SMALL);
 
         menu.row();
 
-        TextButton addDiscountButton = new TextButton("Dodaj zniżkę", skin);
+        TextButton addDiscountButton = new TextButton(Model.getString("ADD_DISCOUNT"), skin);
         menu.add(addDiscountButton).colspan(COLUMNS_COUNT_MENU)
                 .fillX().spaceTop(PAD_SMALL);
 
         menu.row();
 
-        TextButton endButton = new TextButton("Zakończ transakcję", skin);
+        TextButton endButton = new TextButton(Model.getString("GOTO_PAYMENT"), skin);
         menu.add(endButton).colspan(COLUMNS_COUNT_MENU)
                 .fillX().spaceTop(PAD_SMALL);
 

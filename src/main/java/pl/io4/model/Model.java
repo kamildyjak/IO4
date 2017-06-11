@@ -3,9 +3,13 @@ package pl.io4.model;
 import com.badlogic.gdx.Gdx;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.List;
 import org.json.JSONObject;
 import pl.io4.model.database.Database;
 import pl.io4.model.entities.Employee;
+import pl.io4.model.entities.Permissions;
+import pl.io4.model.entities.Shop;
+import pl.io4.model.exceptions.EmployeePermissionException;
 import pl.io4.model.machines.CategoriesMachine;
 import pl.io4.model.machines.DiscountsMachine;
 import pl.io4.model.machines.EmployeesMachine;
@@ -36,8 +40,11 @@ public final class Model {
     private static ProductsMachine prm = new ProductsMachine();
     private static DiscountsMachine dm = new DiscountsMachine();
     private static TaxesMachine tm = new TaxesMachine();
+    private static boolean changes = true;
 
     private static Employee currentlyLoggedInUser;
+    private static List<Permissions> currentUserPermissions;
+    private static Shop currentlyChosenShop;
 
     private static final String MODEL_CACHE_PATH = "cache/model";
 
@@ -93,12 +100,30 @@ public final class Model {
         return currentlyLoggedInUser;
     }
 
+    public static Shop getCurrentlyChosenShop() {
+        return currentlyChosenShop;
+    }
+
     public static void setCurrentlyLoggedInUser(Employee currentlyLoggedInUser) {
         Model.currentlyLoggedInUser = currentlyLoggedInUser;
     }
 
+    public static void updatePermissions() throws EmployeePermissionException {
+        currentUserPermissions = pem.getPermissionsOf(currentlyLoggedInUser);
+        if (currentUserPermissions.isEmpty()) {
+            throw new EmployeePermissionException(getString("EMPLOYEE_NOT_ASSIGNED_TO_SHOP"));
+        } else if (currentUserPermissions.size() == 1) {
+            currentlyChosenShop = currentUserPermissions.get(0).getShop();
+        }
+    }
+
     public static boolean cacheData() {
+        if (!changes) {
+            return false;
+        }
+
         JSONObject model = new JSONObject();
+        model.put("LocalizationMachine", stm.cache());
         model.put("EmployeesMachine", em.cache());
         model.put("LoginMachine", lm.cache());
         model.put("ShopsMachine", shm.cache());
@@ -122,6 +147,7 @@ public final class Model {
         try {
             String file = Gdx.files.internal(MODEL_CACHE_PATH).readString();
             JSONObject model = new JSONObject(EncryptionMachine.dataDecode(file));
+            stm.load(model.getJSONObject("LocalizationMachine"));
             em.load(model.getJSONObject("EmployeesMachine"));
             lm.load(model.getJSONObject("LoginMachine"));
             lm.reloadLogins(em);
@@ -135,5 +161,9 @@ public final class Model {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static boolean needsShopChoosing() {
+        return currentlyChosenShop == null;
     }
 }

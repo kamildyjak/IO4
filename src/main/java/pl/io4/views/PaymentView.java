@@ -2,6 +2,7 @@ package pl.io4.views;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -20,6 +21,8 @@ public final class PaymentView extends View {
     private Label total;
     private Table inner;
     private Skin skin;
+    private Button returnSale, returnPaymentSelect, payByCash, payWithCard, acceptPayment;
+    private TextField acceptCash;
 
     @Override
     protected void addViewElements() {
@@ -40,6 +43,20 @@ public final class PaymentView extends View {
         ScrollPane scroll = new ScrollPane(inner);
         table.add(scroll).expand().left().width(V_WIDTH);
 
+        returnSale = new TextButton(Model.getString("PAY_RETURN_SALE"), skin);
+        addElement("returnSale", returnSale);
+        returnPaymentSelect = new TextButton(Model.getString("PAY_RETURN_SELECT_METHOD"), skin);
+        addElement("returnPaymentSelect", returnPaymentSelect);
+        payByCash = new TextButton(Model.getString("PAY_BY_CASH"), skin);
+        addElement("payByCash", payByCash);
+        payWithCard = new TextButton(Model.getString("PAY_WITH_CARD"), skin);
+        addElement("payWithCard", payWithCard);
+        acceptCash = new TextField("", skin);
+        acceptCash.setMessageText("");
+        addElement("acceptCash", acceptCash);
+        acceptPayment = new TextButton(Model.getString("PAY_BY_CASH"), skin);
+        addElement("acceptPayment", acceptPayment);
+
         showPaymentMethods();
     }
 
@@ -50,37 +67,35 @@ public final class PaymentView extends View {
 
     public void showPaymentMethods() {
         inner.clear();
-
-        TextButton payByCash = new TextButton(
-                Model.getString("PAY_BY_CASH"), skin);
         inner.add(payByCash).fillX();
         inner.row();
-        addElement("payByCash", payByCash);
-
-        TextButton payWithCard = new TextButton(
-                Model.getString("PAY_WITH_CARD"), skin);
         inner.add(payWithCard).fillX();
-        addElement("payWithCard", payWithCard);
+        inner.row();
+        inner.add(returnSale).fillX();
     }
 
     public void showPayByCash() {
         inner.clear();
-
-        TextField acceptCash = new TextField("", skin);
-        acceptCash.setMessageText("");
         inner.add(acceptCash).fillX();
         inner.row();
-
-        TextButton acceptPayment = new TextButton(
-                Model.getString("PAY_BY_CASH"), skin);
         inner.add(acceptPayment).fillX();
         inner.row();
-        addElement("acceptPayment", acceptPayment);
-
-        inner.add();
+        inner.add(returnPaymentSelect).fillX();
     }
 
     public void showPayWithCard() {
         inner.clear();
+        inner.add(returnPaymentSelect).fillX();
+    }
+
+    public void showCashBack(double amount) {
+        inner.clear();
+        Label label = new Label(Model.getString("PAY_GIVE_OUT") + ": "
+                + LocalizationMachine.formatPrice(amount, true), skin);
+        inner.add(label).fillX();
+        inner.row();
+        TextButton finalize = new TextButton(Model.getString("PAY_FINALIZE"), skin);
+        addElement("finalize", finalize);
+        inner.add(finalize).fillX();
     }
 }

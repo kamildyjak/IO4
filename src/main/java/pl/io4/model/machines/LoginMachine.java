@@ -66,16 +66,15 @@ public final class LoginMachine extends CachableObject {
     }
 
     public boolean tryToLogIn(String login, String password) {
-        return true;
-//        if (correctLogins.containsKey(login)) {
-//            Employee employee = correctLogins.get(login);
-//            if (EncryptionMachine.getEmployeePasswordLocalHash(employee)
-//                .equals(EncryptionMachine.encryptLocal(password))) {
-//                Model.setCurrentlyLoggedInUser(employee);
-//                return true;
-//            }
-//        }
-//        return false;
+        if (correctLogins.containsKey(login)) {
+            Employee employee = correctLogins.get(login);
+            if (EncryptionMachine.getEmployeePasswordLocalHash(employee)
+                .equals(EncryptionMachine.encryptLocal(password))) {
+                Model.setCurrentlyLoggedInUser(employee);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addLoginMethod(LoginMethod loginMethod) {

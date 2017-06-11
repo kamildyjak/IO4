@@ -39,7 +39,7 @@ public class SaleTransactionTest {
         double expected = 1;
         double actual = transactionItem.getQuantity();
 
-        assertEquals(expected , actual);
+        assertEquals(expected , actual, 0.001);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class SaleTransactionTest {
         double expected = 2;
         double actual = transactionItem.getQuantity();
 
-        assertEquals(expected , actual);
+        assertEquals(expected , actual, 0.001);
     }
 
     @Test
@@ -83,13 +83,13 @@ public class SaleTransactionTest {
             double price = 10;
             Product product = new Product(1, "test", price);
 
-            Double discountValue = 0.2;
+            double discountValue = 20;
             Discount discount = new Discount(1, DiscountType.PERCENTAGE, discountValue);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount);
 
-            double expected = price - price * discountValue;
+            double expected = price - price * discountValue / 100;
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
@@ -104,17 +104,17 @@ public class SaleTransactionTest {
             double price = 10;
             Product product = new Product(1, "test", price);
 
-            double discountValue1 = 0.2;
+            double discountValue1 = 20;
             Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
-            double discountValue2 = 0.3;
+            double discountValue2 = 30;
             Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
             saleTransaction.addDiscount(discount2);
 
-            double expected = price - price * (discountValue1 + discountValue2);
+            double expected = price - price * (discountValue1 + discountValue2) / 100;
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
@@ -178,14 +178,14 @@ public class SaleTransactionTest {
             double discountValue1 = 3;
             Discount discount1 = new Discount(1, DiscountType.VOUCHER, discountValue1);
 
-            double discountValue2 = 0.2;
+            double discountValue2 = 20;
             Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
             saleTransaction.addDiscount(discount2);
 
-            double expected = price - discountValue1 - discountValue2 * price;
+            double expected = price - discountValue1 - discountValue2 * price / 100;
             double actual = saleTransaction.calculateTotalPrice();
 
             assertEquals(expected, actual, 0.001);
@@ -200,10 +200,10 @@ public class SaleTransactionTest {
             double price = 10;
             Product product = new Product(1, "test", price);
 
-            double discountValue1 = 0.6;
+            double discountValue1 = 60;
             Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
-            double discountValue2 = 0.5;
+            double discountValue2 = 50;
             Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
@@ -249,15 +249,14 @@ public class SaleTransactionTest {
             double discountValue1 = 5;
             Discount discount1 = new Discount(1, DiscountType.VOUCHER, discountValue1);
 
-            double discountValue2 = 0.7;
+            double discountValue2 = 70;
             Discount discount2 = new Discount(2, DiscountType.PERCENTAGE, discountValue2);
 
             saleTransaction.addProduct(product);
             saleTransaction.addDiscount(discount1);
             saleTransaction.addDiscount(discount2);
 
-            assertTrue(false);
-
+            assertTrue("DiscountOverflowException should be thrown",false);
         } catch (DiscountOverflowException exc) {
             assertTrue("DiscountOverflowException should be thrown", true);
         }
@@ -269,7 +268,7 @@ public class SaleTransactionTest {
             double price = 10;
             Product product = new Product(1, "test", price);
 
-            double discountValue1 = 0.8;
+            double discountValue1 = 80;
             Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
             double discountValue2 = 3;
@@ -293,7 +292,7 @@ public class SaleTransactionTest {
                 double price = 10;
                 Product product = new Product(1, "test", price);
 
-                double discountValue1 = 0.5;
+                double discountValue1 = 50;
                 Discount discount1 = new Discount(1, DiscountType.PERCENTAGE, discountValue1);
 
                 double discountValue2 = 7;
