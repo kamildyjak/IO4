@@ -36,7 +36,7 @@ public final class DiscountsMachine extends CachableObject {
     public void add(Discount discount, double totalPrice) throws DiscountOverflowException {
         try {
             discounts.add(discount);
-            checkForOverfow(totalPrice);
+            checkForOverflow(totalPrice);
         } catch (DiscountOverflowException exc) {
             discounts.remove(discount);
             throw exc;
@@ -44,7 +44,7 @@ public final class DiscountsMachine extends CachableObject {
     }
 
 
-    private void checkForOverfow(double totalPrice) throws DiscountOverflowException {
+    private void checkForOverflow(double totalPrice) throws DiscountOverflowException {
         if (calculateTotalDiscount(totalPrice) > totalPrice) {
             throw new DiscountOverflowException(Model.getString("DISCOUNT_OVERFLOW"));
         }
