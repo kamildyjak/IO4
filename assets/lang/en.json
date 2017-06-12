@@ -11,6 +11,8 @@
   "LOGOUT": "Logout",
 
   "SHOP": "Shop",
+  "CHOOSE_SHOP": "Choose a shop:",
+  "SHOP_CHOICE": "Shop choice",
 
   "PRODUCT_CODE": "Product code",
   "DISCOUNT_CODE": "Discount code",
@@ -19,6 +21,7 @@
   "ADD_DISCOUNT": "Add discount",
   "GOTO_PAYMENT": "Go to payment",
   "TOTAL": "Total",
+  "CANCEL_TRANSACTION": "Cancel transaction",
   "PAY_BY_CASH": "Pay by cash",
   "PAY_WITH_CARD": "Pay with credit card",
   "PAY_RETURN_SALE": "Cancel payment",

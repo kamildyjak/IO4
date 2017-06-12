@@ -11,6 +11,8 @@
   "LOGOUT": "Wyloguj się",
 
   "SHOP": "Sklep",
+  "CHOOSE_SHOP": "Wybierz sklep:",
+  "SHOP_CHOICE": "Wybór sklepu",
 
   "PRODUCT_CODE": "Kod produktu",
   "DISCOUNT_CODE": "Kod zniżki",
@@ -19,6 +21,7 @@
   "ADD_DISCOUNT": "Dodaj zniżkę",
   "GOTO_PAYMENT": "Przejdź do zapłaty",
   "TOTAL": "Suma",
+  "CANCEL_TRANSACTION": "Anuluj transakcję",
   "PAY_BY_CASH": "Zapłata gotówką",
   "PAY_WITH_CARD": "Zapłata kartą kredytową",
   "PAY_RETURN_SALE": "Anuluj płatność",

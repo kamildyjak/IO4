@@ -38,11 +38,13 @@ public class LoadingController extends Controller {
         queue.add(new Runnable() { // Odczyt zapisanych danych
             @Override
             public void run() {
-                changeInfoString(Model.getString("CACHE_LOADING"));
-                shortDelay();
                 if (Model.loadData()) {
+                    changeInfoString(Model.getString("CACHE_LOADING"));
+                    shortDelay();
                     changeInfoString(Model.getString("CACHE_SUCCESS"));
                 } else {
+                    changeInfoString(Model.getString("CACHE_LOADING"));
+                    shortDelay();
                     changeInfoString(Model.getString("CACHE_FAILURE"));
                 }
                 shortDelay();

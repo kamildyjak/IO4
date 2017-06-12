@@ -43,9 +43,9 @@ public final class LoginView extends View {
         createLoginInputs();
     }
 
-    public void loginError() {
+    public void loginInvalid() {
         inner.clear();
-        inner.add(Model.getString("LOGIN_ERROR")).center();
+        inner.add(Model.getString("LOGIN_INVALID")).center();
         inner.row();
         createLoginInputs();
     }

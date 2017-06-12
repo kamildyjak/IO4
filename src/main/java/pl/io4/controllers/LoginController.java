@@ -58,7 +58,7 @@ public final class LoginController extends Controller {
                             view.addErrorMessage(e.getMessage());
                         }
                     } else {
-                        view.loginError();
+                        view.loginInvalid();
                         count++;
                     }
                 }

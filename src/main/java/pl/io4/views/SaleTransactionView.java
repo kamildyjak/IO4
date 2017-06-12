@@ -126,10 +126,17 @@ public final class SaleTransactionView extends View {
 
         menu.row();
 
+        TextButton endButton2 = new TextButton(Model.getString("CANCEL_TRANSACTION"), skin);
+        menu.add(endButton2).colspan(COLUMNS_COUNT_MENU)
+                .fillX().spaceTop(PAD_SMALL);
+
+        menu.row();
+
         addElement("addDiscountButton", addDiscountButton);
         addElement("addProductButton", addProductButton);
         addElement("scroll", scroll);
         addElement("endButton", endButton);
+        addElement("endButton2", endButton2);
     }
 
     public String getProductCode() {

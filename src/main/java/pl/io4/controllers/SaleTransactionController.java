@@ -10,6 +10,7 @@ import pl.io4.model.entities.Product;
 import pl.io4.model.exceptions.CodeReadingException;
 import pl.io4.model.machines.ProductsMachine;
 import pl.io4.model.transactions.SaleTransaction;
+import pl.io4.views.ActionsMenuView;
 import pl.io4.views.PaymentView;
 import pl.io4.views.SaleTransactionView;
 
@@ -82,6 +83,18 @@ public class SaleTransactionController extends Controller {
             } catch (Exception exc) {
                 view.addErrorMessage(exc.getMessage());
             }
+            }
+        });
+
+        addButtonClickListener("endButton2", new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor)  {
+                try {
+                    switchTo(ActionsMenuView.class, ActionsMenuController.class);
+                } catch (Exception exc) {
+                    view.addErrorMessage(exc.getMessage());
+                }
             }
         });
     }

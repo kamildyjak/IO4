@@ -31,14 +31,14 @@ import pl.io4.model.transactions.TransactionRegister;
 public final class Model {
     private static Database db = new Database();
     private static TransactionRegister tr = new TransactionRegister();
-    private static EmployeesMachine em = new EmployeesMachine();
-    private static LoginMachine lm = new LoginMachine();
-    private static LocalizationMachine stm = new LocalizationMachine();
-    private static ShopsMachine shm = new ShopsMachine();
-    private static PermissionsMachine pem = new PermissionsMachine();
-    private static CategoriesMachine cm = new CategoriesMachine();
-    private static ProductsMachine prm = new ProductsMachine();
-    private static DiscountsMachine dm = new DiscountsMachine();
+    private static EmployeesMachine employeesMachine = new EmployeesMachine();
+    private static LoginMachine loginMachine = new LoginMachine();
+    private static LocalizationMachine localizationMachine = new LocalizationMachine();
+    private static ShopsMachine shopsMachine = new ShopsMachine();
+    private static PermissionsMachine permissionsMachine = new PermissionsMachine();
+    private static CategoriesMachine categoriesMachine = new CategoriesMachine();
+    private static ProductsMachine productsMachine = new ProductsMachine();
+    private static DiscountsMachine discountsMachine = new DiscountsMachine();
     private static TaxesMachine tm = new TaxesMachine();
     private static boolean changes = true;
 
@@ -46,6 +46,7 @@ public final class Model {
     private static List<Permissions> currentUserPermissions;
     private static Shop currentlyChosenShop;
 
+    private static final String LANG_CACHE_PATH = "cache/lang";
     private static final String MODEL_CACHE_PATH = "cache/model";
 
     private Model() {
@@ -53,7 +54,7 @@ public final class Model {
     }
 
     public static EmployeesMachine getEmployeesMachine() {
-        return em;
+        return employeesMachine;
     }
 
     public static Database getDatabase() {
@@ -65,23 +66,23 @@ public final class Model {
     }
 
     public static LoginMachine getLoginMachine() {
-        return lm;
+        return loginMachine;
     }
 
     public static ShopsMachine getShopsMachine() {
-        return shm;
+        return shopsMachine;
     }
 
     public static PermissionsMachine getPermissionsMachine() {
-        return pem;
+        return permissionsMachine;
     }
 
     public static CategoriesMachine getCategoriesMachine() {
-        return cm;
+        return categoriesMachine;
     }
 
     public static ProductsMachine getProductsMachine() {
-        return prm;
+        return productsMachine;
     }
 
     public static TaxesMachine getTaxesMachine() {
@@ -89,11 +90,11 @@ public final class Model {
     }
 
     public static DiscountsMachine getDiscountsMachine() {
-        return dm;
+        return discountsMachine;
     }
 
     public static String getString(String string) {
-        return stm.getString(string);
+        return localizationMachine.getString(string);
     }
 
     public static Employee getCurrentlyLoggedInUser() {
@@ -104,12 +105,16 @@ public final class Model {
         return currentlyChosenShop;
     }
 
+    public static void setCurrentlyChosenShop(Shop shop) {
+        currentlyChosenShop = shop;
+    }
+
     public static void setCurrentlyLoggedInUser(Employee currentlyLoggedInUser) {
         Model.currentlyLoggedInUser = currentlyLoggedInUser;
     }
 
     public static void updatePermissions() throws EmployeePermissionException {
-        currentUserPermissions = pem.getPermissionsOf(currentlyLoggedInUser);
+        currentUserPermissions = permissionsMachine.getPermissionsOf(currentlyLoggedInUser);
         if (currentUserPermissions.isEmpty()) {
             throw new EmployeePermissionException(getString("EMPLOYEE_NOT_ASSIGNED_TO_SHOP"));
         } else if (currentUserPermissions.size() == 1) {
@@ -123,14 +128,14 @@ public final class Model {
         }
 
         JSONObject model = new JSONObject();
-        model.put("LocalizationMachine", stm.cache());
-        model.put("EmployeesMachine", em.cache());
-        model.put("LoginMachine", lm.cache());
-        model.put("ShopsMachine", shm.cache());
-        model.put("PermissionsMachine", pem.cache());
-        model.put("CategoriesMachine", cm.cache());
-        model.put("ProductsMachine", prm.cache());
-        model.put("DiscountsMachine", dm.cache());
+        model.put("LocalizationMachine", localizationMachine.cache());
+        model.put("EmployeesMachine", employeesMachine.cache());
+        model.put("LoginMachine", loginMachine.cache());
+        model.put("ShopsMachine", shopsMachine.cache());
+        model.put("PermissionsMachine", permissionsMachine.cache());
+        model.put("CategoriesMachine", categoriesMachine.cache());
+        model.put("ProductsMachine", productsMachine.cache());
+        model.put("DiscountsMachine", discountsMachine.cache());
         try {
             FileOutputStream fos = new FileOutputStream(MODEL_CACHE_PATH);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -145,17 +150,19 @@ public final class Model {
 
     public static boolean loadData() {
         try {
+            String lang = Gdx.files.internal(LANG_CACHE_PATH).readString();
+            localizationMachine.setLanguage(lang);
             String file = Gdx.files.internal(MODEL_CACHE_PATH).readString();
             JSONObject model = new JSONObject(EncryptionMachine.dataDecode(file));
-            stm.load(model.getJSONObject("LocalizationMachine"));
-            em.load(model.getJSONObject("EmployeesMachine"));
-            lm.load(model.getJSONObject("LoginMachine"));
-            lm.reloadLogins(em);
-            shm.load(model.getJSONObject("ShopsMachine"));
-            pem.load(model.getJSONObject("PermissionsMachine"));
-            cm.load(model.getJSONObject("CategoriesMachine"));
-            prm.load(model.getJSONObject("ProductsMachine"));
-            dm.load(model.getJSONObject("DiscountsMachine"));
+            //localizationMachine.load(model.getJSONObject("LocalizationMachine"));
+            employeesMachine.load(model.getJSONObject("EmployeesMachine"));
+            loginMachine.load(model.getJSONObject("LoginMachine"));
+            loginMachine.reloadLogins(employeesMachine);
+            shopsMachine.load(model.getJSONObject("ShopsMachine"));
+            permissionsMachine.load(model.getJSONObject("PermissionsMachine"));
+            categoriesMachine.load(model.getJSONObject("CategoriesMachine"));
+            productsMachine.load(model.getJSONObject("ProductsMachine"));
+            discountsMachine.load(model.getJSONObject("DiscountsMachine"));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
