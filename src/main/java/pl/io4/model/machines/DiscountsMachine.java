@@ -36,14 +36,15 @@ public final class DiscountsMachine extends CachableObject {
     public void add(Discount discount, double totalPrice) throws DiscountOverflowException {
         try {
             discounts.add(discount);
-            checkForOverfow(totalPrice);
+            checkForOverflow(totalPrice);
         } catch (DiscountOverflowException exc) {
             discounts.remove(discount);
             throw exc;
         }
     }
 
-    private void checkForOverfow(double totalPrice) throws DiscountOverflowException {
+
+    private void checkForOverflow(double totalPrice) throws DiscountOverflowException {
         if (calculateTotalDiscount(totalPrice) > totalPrice) {
             throw new DiscountOverflowException(Model.getString("DISCOUNT_OVERFLOW"));
         }
@@ -97,5 +98,18 @@ public final class DiscountsMachine extends CachableObject {
     @Override
     public void load(JSONObject data) {
         discounts.load(data.getJSONArray("discounts"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        DiscountsMachine that = (DiscountsMachine) o;
+        return discounts.equals(that.discounts);
     }
 }

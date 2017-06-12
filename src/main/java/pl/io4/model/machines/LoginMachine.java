@@ -87,6 +87,19 @@ public final class LoginMachine extends CachableObject {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        LoginMachine that = (LoginMachine) o;
+        return legalMethods.equals(that.legalMethods); // && correctLogins.equals(that.correctLogins);
+    }
+
+    @Override
     public JSONObject cache() {
         JSONObject ret = new JSONObject();
         ret.put("legalMethods", legalMethods.cache());

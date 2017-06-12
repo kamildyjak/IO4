@@ -6,18 +6,33 @@ import pl.io4.model.cachable.CachableList;
 import pl.io4.model.cachable.CachableObject;
 import pl.io4.model.entities.Product;
 import pl.io4.model.entities.TaxRule;
+import pl.io4.model.exceptions.TaxSystemConnectionException;
 import pl.io4.model.wrappers.TaxCalculator;
 import pl.io4.model.wrappers.TaxCalculator1;
+
+import java.util.Calendar;
 
 /**
  * Created by Zax37 on 22.05.2017.
  */
 public final class TaxesMachine extends CachableObject {
     private CachableList<TaxRule> taxRules;
+    private Calendar lastUpdateDate;
     private static final TaxCalculator TAX_CALCULATOR = new TaxCalculator1();
 
     public TaxesMachine() {
         taxRules = new CachableArrayList<>(TaxRule.class);
+        lastUpdateDate = Calendar.getInstance();
+    }
+
+    public void addTaxRule(TaxRule tr) {
+        try {
+            TAX_CALCULATOR.updateTaxRule(tr);
+            taxRules.add(tr);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public TaxRule getTaxRule(int id) {
@@ -29,8 +44,24 @@ public final class TaxesMachine extends CachableObject {
         return null;
     }
 
-    public static double getTax(Product product) {
+    public double getTax(Product product) throws TaxSystemConnectionException {
+        Calendar now = Calendar.getInstance(); // todo: move checking if tax rules should be updated to a better place
+        now.add(Calendar.DAY_OF_MONTH, -1);
+        if (now.after(lastUpdateDate))
+            updateTaxRules();
+
         return TAX_CALCULATOR.calculateTax(product);
+    }
+
+    void updateTaxRules() {
+        try {
+            for (TaxRule tr : taxRules)
+                TAX_CALCULATOR.updateTaxRule(tr);
+            lastUpdateDate = Calendar.getInstance();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -43,5 +74,6 @@ public final class TaxesMachine extends CachableObject {
     @Override
     public void load(JSONObject data) {
         taxRules.load(data.getJSONArray("taxRules"));
+        updateTaxRules();
     }
 }

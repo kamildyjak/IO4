@@ -21,6 +21,9 @@ public final class CategoriesMachine extends CachableObject {
         categories = new CachableArrayList<>(Category.class);
         productsMap = new HashMap<>();
     }
+    public void addCategory(Category category) {
+        categories.add(category);
+    }
 
     public Category getCategory(int id) {
         for (Category category : categories) {
@@ -33,6 +36,19 @@ public final class CategoriesMachine extends CachableObject {
 
     public List<Product> getCategoryProducts(Category category) {
         return productsMap.get(category);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        CategoriesMachine that = (CategoriesMachine) o;
+        return categories.equals(that.categories);
     }
 
     @Override

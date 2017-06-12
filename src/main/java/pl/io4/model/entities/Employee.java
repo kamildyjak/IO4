@@ -146,7 +146,8 @@ public final class Employee extends CachableObject {
         ret.put("firstName", this.firstName);
         ret.put("lastName", this.lastName);
         ret.put("email", this.email);
-        ret.put("hash", this.hashSha1);
+        ret.put("hashSha1", this.hashSha1);
+        ret.put("hashMd5", this.hashMd5);
         return ret;
     }
 
@@ -156,6 +157,7 @@ public final class Employee extends CachableObject {
         this.firstName = data.getString("firstName");
         this.lastName = data.getString("lastName");
         this.email = data.getString("email");
-        this.hashSha1 = data.getString("hash");
+        this.hashSha1 = data.getString("hashSha1");
+        this.hashMd5 = data.getString("hashMd5");
     }
 }
