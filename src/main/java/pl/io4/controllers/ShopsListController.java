@@ -15,7 +15,7 @@ public class ShopsListController extends Controller {
     public ShopsListController(NextGen app) throws NoSuchElementException {
         super(app);
 
-        for (Shop shop : Model.getShopsMachine().getShops()) {
+        for (Shop shop : Model.getAvaibleShops()) {
             addButtonClickListener(Integer.toString(shop.getId()), new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

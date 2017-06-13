@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.json.JSONObject;
+import org.lwjgl.Sys;
 import pl.io4.model.Model;
 import pl.io4.model.cachable.CachableObject;
 
@@ -100,20 +101,7 @@ public final class Product extends CachableObject {
         }
 
         Product that = (Product) o;
-
-        if (id != that.id) {
-            return false;
-        }
-        if (name != that.name) {
-            return false;
-        }
-        if (Double.compare(that.price, price) != 0) {
-            return false;
-        }
-        if (category != null ? !category.equals(that.category) : that.category != null) {
-            return false;
-        }
-        return taxRule != null ? taxRule.equals(that.taxRule) : that.taxRule == null;
+        return hashCode() == that.hashCode();
     }
 
     @Override

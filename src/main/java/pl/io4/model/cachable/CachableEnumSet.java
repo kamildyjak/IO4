@@ -38,10 +38,9 @@ public final class CachableEnumSet<T extends Enum<T>>
 
     @Override
     public boolean equals(Object o) {
-        if (o == null)
+        if (o == null || getClass() != o.getClass()) {
             return false;
-        if (getClass() != o.getClass())
-            return false;
+        }
         CachableEnumSet<T> that = (CachableEnumSet<T>) o;
         return set.equals(that.set);
     }

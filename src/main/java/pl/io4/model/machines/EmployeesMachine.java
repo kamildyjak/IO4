@@ -17,7 +17,9 @@ public final class EmployeesMachine extends CachableObject {
         employees = new CachableArrayList<>(Employee.class);
     }
 
-    public void addEmployee(Employee employee) { employees.add(employee); }
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+    }
 
     public List<Employee> getEmployees() {
         return employees;

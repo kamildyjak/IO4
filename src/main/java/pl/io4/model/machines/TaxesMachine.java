@@ -25,12 +25,24 @@ public final class TaxesMachine extends CachableObject {
         lastUpdateDate = Calendar.getInstance();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        TaxesMachine that = (TaxesMachine) o;
+        return taxRules.hashCode() == that.taxRules.hashCode();
+    }
+
     public void addTaxRule(TaxRule tr) {
         try {
             TAX_CALCULATOR.updateTaxRule(tr);
             taxRules.add(tr);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -47,19 +59,25 @@ public final class TaxesMachine extends CachableObject {
     public double getTax(Product product) throws TaxSystemConnectionException {
         Calendar now = Calendar.getInstance(); // todo: move checking if tax rules should be updated to a better place
         now.add(Calendar.DAY_OF_MONTH, -1);
-        if (now.after(lastUpdateDate))
+        if (now.after(lastUpdateDate)) {
             updateTaxRules();
+        }
 
         return TAX_CALCULATOR.calculateTax(product);
     }
 
+    public TaxesMachine clean() {
+        taxRules.clear();
+        return this;
+    }
+
     void updateTaxRules() {
         try {
-            for (TaxRule tr : taxRules)
+            for (TaxRule tr : taxRules) {
                 TAX_CALCULATOR.updateTaxRule(tr);
+            }
             lastUpdateDate = Calendar.getInstance();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

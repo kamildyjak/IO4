@@ -58,6 +58,6 @@ public final class NextGen extends Game {
     public void dispose() {
         super.dispose();
         view.dispose();
-        Model.cacheData();
+        Model.cacheData(null);
     }
 }

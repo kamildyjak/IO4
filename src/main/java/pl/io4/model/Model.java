@@ -1,8 +1,10 @@
 package pl.io4.model;
 
-import com.badlogic.gdx.Gdx;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONObject;
 import pl.io4.model.database.Database;
@@ -14,11 +16,11 @@ import pl.io4.model.machines.CategoriesMachine;
 import pl.io4.model.machines.DiscountsMachine;
 import pl.io4.model.machines.EmployeesMachine;
 import pl.io4.model.machines.EncryptionMachine;
+import pl.io4.model.machines.LocalizationMachine;
 import pl.io4.model.machines.LoginMachine;
 import pl.io4.model.machines.PermissionsMachine;
 import pl.io4.model.machines.ProductsMachine;
 import pl.io4.model.machines.ShopsMachine;
-import pl.io4.model.machines.LocalizationMachine;
 import pl.io4.model.machines.TaxesMachine;
 import pl.io4.model.transactions.TransactionRegister;
 
@@ -46,8 +48,9 @@ public final class Model {
     private static List<Permissions> currentUserPermissions;
     private static Shop currentlyChosenShop;
 
-    private static final String LANG_CACHE_PATH = "cache/lang";
-    private static final String MODEL_CACHE_PATH = "cache/model";
+    private static final String PATH_PART_CACHE = "cache";
+    private static final String PATH_PART_LANG = "lang";
+    private static final String PATH_PART_MODEL = "model";
 
     private Model() {
         //Utility class - nie powinna być instancjonowana
@@ -113,6 +116,16 @@ public final class Model {
         Model.currentlyLoggedInUser = currentlyLoggedInUser;
     }
 
+    public static List<Shop> getAvaibleShops() {
+        List<Shop> shops = new ArrayList<>();
+        if (currentUserPermissions != null) {
+            for (Permissions permission : currentUserPermissions) {
+                shops.add(permission.getShop());
+            }
+        }
+        return shops;
+    }
+
     public static void updatePermissions() throws EmployeePermissionException {
         currentUserPermissions = permissionsMachine.getPermissionsOf(currentlyLoggedInUser);
         if (currentUserPermissions.isEmpty()) {
@@ -122,9 +135,13 @@ public final class Model {
         }
     }
 
-    public static boolean cacheData() {
+    public static boolean cacheData(String path) {
         if (!changes) {
             return false;
+        }
+
+        if (path == null) {
+            path = PATH_PART_CACHE;
         }
 
         JSONObject model = new JSONObject();
@@ -137,7 +154,7 @@ public final class Model {
         model.put("ProductsMachine", productsMachine.cache());
         model.put("DiscountsMachine", discountsMachine.cache());
         try {
-            FileOutputStream fos = new FileOutputStream(MODEL_CACHE_PATH);
+            FileOutputStream fos = new FileOutputStream(path + "/" + PATH_PART_MODEL);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             osw.write(EncryptionMachine.dataEncode(model.toString()));
             osw.close();
@@ -148,13 +165,15 @@ public final class Model {
         }
     }
 
-    public static boolean loadData() {
+    public static boolean loadData(String path) {
         try {
-            String lang = Gdx.files.internal(LANG_CACHE_PATH).readString();
+            if (path == null) {
+                path = PATH_PART_CACHE;
+            }
+            String lang = new String(Files.readAllBytes(Paths.get(path + "/" + PATH_PART_LANG)));
             localizationMachine.setLanguage(lang);
-            String file = Gdx.files.internal(MODEL_CACHE_PATH).readString();
+            String file = new String(Files.readAllBytes(Paths.get(path + "/" + PATH_PART_MODEL)));
             JSONObject model = new JSONObject(EncryptionMachine.dataDecode(file));
-            //localizationMachine.load(model.getJSONObject("LocalizationMachine"));
             employeesMachine.load(model.getJSONObject("EmployeesMachine"));
             loginMachine.load(model.getJSONObject("LoginMachine"));
             loginMachine.reloadLogins(employeesMachine);

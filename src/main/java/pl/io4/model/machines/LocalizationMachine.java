@@ -21,11 +21,16 @@ public final class LocalizationMachine extends CachableObject {
         }
     }
 
-    public void setLanguage(String lang) {
-        String file = Gdx.files.internal("lang/" + lang + ".json")
-                .readString();
-        strings = new JSONObject(file);
-        currentLanguage = lang;
+    public boolean setLanguage(String lang) {
+        try {
+            String file = Gdx.files.internal("lang/" + lang + ".json")
+                    .readString();
+            strings = new JSONObject(file);
+            currentLanguage = lang;
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     public static String formatQuantity(double quantity) {

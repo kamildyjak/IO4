@@ -6,7 +6,7 @@ import pl.io4.model.transactions.SaleTransaction;
 /**
  * Created by jperek on 12.06.2017.
  */
-public class SalesAnalysisSystem1 implements SalesAnalysisSystem {
+public final class SalesAnalysisSystem1 implements SalesAnalysisSystem {
     public void addTransaction(SaleTransaction st) {
         SalesAnalysis1.addTransaction(st);
     }

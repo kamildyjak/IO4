@@ -15,17 +15,18 @@ public final class TaxCalculator1 implements TaxCalculator {
 
     @Override
     public void connect() {
-        if (Calc1.isConnected() == false)
+        if (!Calc1.isConnected()) {
             Calc1.connect();
+        }
     }
 
     @Override
     public double calculateTax(Product product) throws TaxSystemConnectionException {
         if (Calc1.isConnected()) {
             return Calc1.calc(product.getPrice(), product.getTaxRule());
-        }
-        else
+        } else {
             throw new TaxSystemConnectionException("Tax system not connected");
+        }
     }
 
     @Override
@@ -33,11 +34,11 @@ public final class TaxCalculator1 implements TaxCalculator {
         if (Calc1.isConnected()) {
             if (Calc1.isTaxRuleValid(tr)) {
                 Calc1.updateTaxRule(tr);
-            }
-            else
+            } else {
                 throw new TaxSystemConnectionException("Invaid tax rule");
-        }
-        else
+            }
+        } else {
             throw new TaxSystemConnectionException("Tax system not connected");
+        }
     }
 }

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.lwjgl.Sys;
 import pl.io4.model.cachable.CachableArrayList;
 import pl.io4.model.cachable.CachableEnumSet;
 import pl.io4.model.cachable.CachableList;
@@ -937,6 +938,10 @@ public class CachableTest {
         Product prod2 = new Product(1, "Masło", c1, t1, 12.35);
         Product prod3 = new Product(2, "Ser salami", c1, t1, 12.35);
 
+        TaxesMachine tm = Model.getTaxesMachine().clean(),
+                tm_clean = new TaxesMachine();
+        tm.addTaxRule(t1);
+        tm_clean.addTaxRule(t1);
 
         CategoriesMachine cm = Model.getCategoriesMachine();
         cm.addCategory(c1);
@@ -1003,9 +1008,10 @@ public class CachableTest {
             e.printStackTrace();
         }
 
-        Model.cacheData();
-        Model.loadData();
+        Model.cacheData("test");
+        Model.loadData("test");
 
+        assertEquals(tm, tm_clean);
         assertEquals(cm, cm_clean);
         assertEquals(em, em_clean);
         assertEquals(lm, lm_clean);

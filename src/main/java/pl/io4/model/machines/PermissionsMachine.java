@@ -19,8 +19,8 @@ public final class PermissionsMachine extends CachableObject {
         permissions = new CachableArrayList<>(Permissions.class);
     }
 
-    public void addPermission(Permissions permissions_) {
-        permissions.add(permissions_);
+    public void addPermission(Permissions permission) {
+        permissions.add(permission);
     }
 
     @Override
@@ -33,7 +33,7 @@ public final class PermissionsMachine extends CachableObject {
         }
 
         PermissionsMachine that = (PermissionsMachine) o;
-        return permissions.equals(that.permissions);
+        return permissions.hashCode() == that.permissions.hashCode();
     }
 
     public List<Permissions> getPermissionsOf(Employee employee) {

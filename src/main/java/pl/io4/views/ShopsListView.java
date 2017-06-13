@@ -30,7 +30,7 @@ public final class ShopsListView extends View {
         table.row();
         table.add(scroll).expand().left().width(V_WIDTH);
 
-        for (Shop shop : Model.getShopsMachine().getShops()) {
+        for (Shop shop : Model.getAvaibleShops()) {
             TextButton shopI = new TextButton(shop.getName(), skin);
             inner.add(shopI).fillX();
             addElement(Integer.toString(shop.getId()), shopI);
