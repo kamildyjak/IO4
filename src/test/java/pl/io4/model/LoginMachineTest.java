@@ -1,14 +1,12 @@
 package pl.io4.model;
 
 import org.junit.Test;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import pl.io4.model.entities.Employee;
 import pl.io4.model.machines.EmployeesMachine;
 import pl.io4.model.machines.LoginMachine;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Zax37 on 22.03.2017.
@@ -53,10 +51,12 @@ public class LoginMachineTest {
 
     public static boolean isPasswordOK(String password){
         int length = password.length();
-        if(length<3) return false; // za krotkie
+        if (length<3) {
+            return false; // za krotkie
+        }
         boolean lowercase = false, uppercase = false,
                 digit = false, special = false;
-        for(int i=0; i<length; i++){
+        for (int i=0; i<length; i++){
             char c = password.charAt(i);
             if(c>='a' && c<='z') lowercase = true;
             else if(c>='A' && c<='Z') uppercase = true;

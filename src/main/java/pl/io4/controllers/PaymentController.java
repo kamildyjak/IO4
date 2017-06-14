@@ -1,11 +1,16 @@
 package pl.io4.controllers;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.io4.NextGen;
 import pl.io4.model.Model;
+import pl.io4.model.exceptions.AuthConnectionException;
+import pl.io4.model.exceptions.CardNoCashException;
+import pl.io4.model.exceptions.InvalidPinException;
 import pl.io4.model.transactions.SaleTransaction;
+import pl.io4.model.wrappers.AuthMethod1;
+import pl.io4.model.wrappers.Authorization;
 import pl.io4.views.ActionsMenuView;
 import pl.io4.views.PaymentView;
 import pl.io4.views.SaleTransactionView;
@@ -17,12 +22,15 @@ public final class PaymentController extends Controller {
     private SaleTransaction saleTransaction;
     private PaymentView view;
     private NextGen app;
+    private Authorization cardAuth;
+    private boolean returnButton;
 
     public PaymentController(NextGen app) throws NoSuchElementException {
         super(app);
         this.app = app;
         view = getView();
-
+        cardAuth = new AuthMethod1();
+        returnButton = false;
         addPaymentMethodButtonListeners();
     }
 
@@ -31,10 +39,12 @@ public final class PaymentController extends Controller {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 view.showPaymentMethods();
-                try {
-                    addPaymentMethodButtonListeners();
-                } catch (NoSuchElementException e) {
-                    e.printStackTrace();
+                if (!returnButton) {
+                    try {
+                        addPaymentMethodButtonListeners();
+                    } catch (NoSuchElementException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -77,14 +87,41 @@ public final class PaymentController extends Controller {
             }
         });
 
+
         addButtonClickListener("payWithCard", new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                view.showPayWithCard();
                 try {
-                    addReturnButtonListener();
-                } catch (NoSuchElementException e) {
-                    e.printStackTrace();
+                    double price = saleTransaction.calculateTotalPrice();
+                    final int pin = 1234;
+                    cardAuth.authorize(1, pin, price);
+                    view.cardAccepted();
+                    try {
+                        addButtonClickListener("finalize", new ChangeListener() {
+                            @Override
+                            public void changed(ChangeEvent event, Actor actor) {
+                                app.switchTo(ActionsMenuView.class,
+                                        ActionsMenuController.class);
+                            }
+                        });
+                    } catch (NoSuchElementException e) {
+                        e.printStackTrace();
+                    }
+                } catch (InvalidPinException e) {
+                    view.showException(e.getMessage());
+                } catch (CardNoCashException e) {
+                    view.showException(e.getMessage());
+                } catch (AuthConnectionException e) {
+                    view.showException(e.getMessage());
+                }
+
+                if (!returnButton) {
+                    try {
+                        addReturnButtonListener();
+                        returnButton = true;
+                    } catch (NoSuchElementException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });

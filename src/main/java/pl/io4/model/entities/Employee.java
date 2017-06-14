@@ -1,12 +1,11 @@
 package pl.io4.model.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.time.Instant;
+import java.util.Date;
 import org.json.JSONObject;
 import pl.io4.model.cachable.CachableObject;
+
+import javax.persistence.*;
 
 /**
  * Created by jacob on 25.04.2017.
@@ -147,7 +146,6 @@ public final class Employee extends CachableObject {
         ret.put("lastName", this.lastName);
         ret.put("email", this.email);
         ret.put("hashSha1", this.hashSha1);
-        ret.put("hashMd5", this.hashMd5);
         return ret;
     }
 
@@ -158,6 +156,5 @@ public final class Employee extends CachableObject {
         this.lastName = data.getString("lastName");
         this.email = data.getString("email");
         this.hashSha1 = data.getString("hashSha1");
-        this.hashMd5 = data.getString("hashMd5");
     }
 }

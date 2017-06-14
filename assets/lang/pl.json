@@ -30,6 +30,13 @@
   "PAY_GIVE_OUT": "Wydaj resztę",
   "PAY_FINALIZE": "Sfinalizuj transakcję",
 
+  "CARD_INVALID_PIN": "Błędny kod PIN",
+  "CARD_EMPTY" : "Brak środków na koncie",
+  "CARD_READ_FAILURE": "Błąd odczytu karty",
+  "AUTH_CONNECTION_FAILURE": "Nie udało się połączyć z serwisem autoryzacji",
+  "CARD_ACCEPTED": "Płatność zaakceptowana",
+  "CARD_TO_MANY_ERRORS": "Przekroczono limit błędnego kodu PIN",
+
   "PRODUCT_NOT_FOUND": "Nie znaleziono produktu",
   "DISCOUNT_NOT_FOUND": "Nie znaleziono zniżki",
   "DISCOUNT_OVERFLOW": "Nadmiar zniżek",
@@ -42,6 +49,7 @@
   "LOGIN_TO_MANY_ERRORS": "Przekroczono ilość dopuszczalnych prób",
   "LOGIN_INPUTS_NOT_FILLED": "Wypełnij wszystkie pola",
   "LOGIN_INVALID": "Nieprawidłowe dane logowania",
+  "LOGIN_BLOCKED": "Logowanie zostało zablokowane na 30 minut",
   "LOGIN_SUCCESS": "Zalogowano prawidłowo",
 
   "ERROR": "Błąd",

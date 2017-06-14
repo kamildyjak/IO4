@@ -9,9 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import static pl.io4.NextGen.V_WIDTH;
 import pl.io4.model.Model;
 import pl.io4.model.machines.LocalizationMachine;
+
+import static pl.io4.NextGen.V_WIDTH;
 
 /**
  * Created by Zax37 on 23.05.2017.
@@ -83,10 +84,22 @@ public final class PaymentView extends View {
         inner.add(returnPaymentSelect).fillX();
     }
 
-    public void showPayWithCard() {
+    public void showException(String message) {
         inner.clear();
+        inner.add(message).center();
+        inner.row();
         inner.add(returnPaymentSelect).fillX();
     }
+
+    public void cardAccepted() {
+        inner.clear();
+        inner.add(Model.getString("CARD_ACCEPTED")).center();
+        TextButton finalize = new TextButton(Model.getString("PAY_FINALIZE"), skin);
+        addElement("finalize", finalize);
+        inner.row();
+        inner.add(finalize).fillX();
+    }
+
 
     public void showCashBack(double amount) {
         inner.clear();

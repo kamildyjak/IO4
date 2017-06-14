@@ -1,5 +1,7 @@
 package pl.io4.model.machines;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
@@ -21,6 +23,11 @@ public final class LoginMachine extends CachableObject {
     }
     private CachableEnumSet<LoginMethod> legalMethods = new CachableEnumSet(LoginMethod.class);
     private Map<String, Employee> correctLogins;
+    private Instant loginBlockedAt;
+    private int errorsCount;
+
+    private static final int MAX_ERRORS_COUNT = 1;
+    private static final int INVALID_LOGINS_TIMEOUT_MINUTES = 1;
 
     private static final int NAME_LETTERS_NB = 3;
     private static final int PESEL_DIGITS_NB = 5;
@@ -72,9 +79,23 @@ public final class LoginMachine extends CachableObject {
                 .equals(EncryptionMachine.encryptLocal(password))) {
                 Model.setCurrentlyLoggedInUser(employee);
                 return true;
+            } else if (++errorsCount >= MAX_ERRORS_COUNT) {
+                loginBlockedAt = Instant.now();
+                errorsCount = 0;
             }
         }
         return false;
+    }
+
+    public boolean isBlocked() {
+        if (loginBlockedAt == null) {
+            return false;
+        }
+
+        Instant now = Instant.now();
+        Duration timeSinceLastLoginError = Duration.between(loginBlockedAt, now);
+
+        return timeSinceLastLoginError.toMinutes() <= INVALID_LOGINS_TIMEOUT_MINUTES;
     }
 
     public void addLoginMethod(LoginMethod loginMethod) {
